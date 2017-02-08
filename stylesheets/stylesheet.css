@@ -520,7 +520,10 @@ header h3 {
 
 #main-content {
   float: left;
-  width: 690px;
+/*  width: 690px; */
+
+  width: 100%;
+
 }
 
 #main-content img {
