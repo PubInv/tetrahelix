@@ -218,32 +218,21 @@ function get_member_color(gui,len) {
     }
 }
 
-function create_actuator(d,b_a,b_z,pos) {
+function create_actuator(d,b_a,b_z,pos,color) {
     var len = d+ -am.JOINT_RADIUS*2;
     var quat = new THREE.Quaternion();
 
-    var color = get_member_color(am,d);
+//    var color = get_member_color(am,d);
     var tcolor = new THREE.Color(color.r,color.g,color.b);
     var cmat = memo_color_mat(tcolor);
-
-    // This should really be created from b_a and b_a.
-
-    var c = new THREE.Vector3();
-    c.crossVectors(b_a,b_z);
-    var w = Math.sqrt((b_a.lengthSq()) * (b_z.lengthSq())) + b_a.dot(b_z);
-//    quat.set( c.x, c.y, c.z, w );
-    console.log("ba : ",b_a);
-    console.log("bz : ",b_a);    
-    console.log("quat : ",quat);
 
     var d = new THREE.Vector3(b_z.x,b_z.y,b_z.z);
     d.sub(b_a);
     d.divideScalar(2);
     d.add(pos);
-//    var new_pos = b_a.add(b_z.sub(b_a).divideScalar(2));
     var mesh =  createParalellepiped(
-	len/10,
-	len/10,
+	am.INITIAL_EDGE_WIDTH,
+	am.INITIAL_EDGE_WIDTH,
 	len,
 	pos,
 	quat,
@@ -279,7 +268,7 @@ function alphabetic_name(n) {
     }
 }
 
-function load_NTetGlussBot_Ammo(am,tets,pvec) {
+function load_NTetHelix(am,helix,tets,pvec,len,rho) {
 
     // Okay, so here we need to create the geometry of the tetrahelix.
     // This could be done in a variety of ways.
@@ -292,10 +281,18 @@ function load_NTetGlussBot_Ammo(am,tets,pvec) {
 
     var n = tets+3;    
 
-    var colors = [ "red", "yellow", "blue" ];
+    var colors = [ d3.rgb("red"), d3.rgb("yellow"), d3.rgb("blue") ];
+    var dcolor = [null,d3.rgb("green"),d3.rgb("purple")];
 
     for(var i = 0; i < n; i++) {
-	var v = ccw_tetrahelix_vertex(i,am.MEAN_EDGE_LENGTH);
+
+	var myRho = rho;
+	var BCr = find_rrho_from_d(myRho,BCd);
+	var rail = i % 3;
+	var num = Math.floor(i/3);
+	var q = H_general(num,rail,myRho,BCd,BCr);
+	
+	var v = new THREE.Vector3(q[0]*len, q[1]*len, q[2]*len);
 	v = v.add(pvec);
 
 	var material = new THREE.MeshPhongMaterial( { color: colors[i % 3] } );    
@@ -309,9 +306,11 @@ function load_NTetGlussBot_Ammo(am,tets,pvec) {
 	am.scene.add(mesh);
 	
 	var body = {};
+	body.rail =  rail;
+	body.number = i / 3;
 	body.name = alphabetic_name(i);
 	body.mesh = mesh;
-	am.robot.robot_joints.push(body);
+	helix.helix_joints.push(body);
 	am.push_body_mesh_pair(body,mesh);
 	
 	for(var k = 0; k < Math.min(3,i) && k < i; k++) {
@@ -324,13 +323,15 @@ function load_NTetGlussBot_Ammo(am,tets,pvec) {
 	    var pos = new THREE.Vector3();
 	    var quat = new THREE.Quaternion();
 
-	    var b_z = am.robot.robot_joints[i];
-	    var b_a = am.robot.robot_joints[h];
+	    var b_z = helix.helix_joints[i];
+	    var b_a = helix.helix_joints[h];
 	    var o_a = b_a.mesh.position;
-	    var o_z = b_z.mesh.position;	    
+	    var o_z = b_z.mesh.position;
+	    
 	    var v_z = new THREE.Vector3(o_a.x,o_a.y,o_a.z);
 	    var v_a = new THREE.Vector3(o_z.x,o_z.y,o_z.z);
-
+	    var d = v_a.distanceTo(v_z);
+	    
 	    var v_avg = new THREE.Vector3(v_z.x,v_z.y,v_z.z);
 	    v_avg.add(v_a);
 	    v_avg.multiplyScalar(0.5);
@@ -338,8 +339,10 @@ function load_NTetGlussBot_Ammo(am,tets,pvec) {
 	    pos.set( v_avg.x, v_avg.y, v_avg.z);
             quat.set( 0, 0, 0, 1 );
 
+	    var diff = ((b_a.rail - b_z.rail)+3) % 3;
+	    var member_color = (diff != 0) ? dcolor[diff] : colors[b_a.rail];
 
-	    var mesh = create_actuator(am.MEAN_EDGE_LENGTH,v_a,v_z,pos);
+	    var mesh = create_actuator(d,v_a,v_z,pos,member_color);
 	    if (b_a.name > b_z.name) {
 		var t = b_a;
 		b_a = b_z;
@@ -353,16 +356,36 @@ function load_NTetGlussBot_Ammo(am,tets,pvec) {
 	    memBody.endpoints[0] = b_a;
 	    memBody.endpoints[1] = b_z;
 
-	    for(var x = am.robot.robot_members.length -1; x >= 0; x--) {
-		if (am.robot.robot_members[x].body.name == memBody) {
-		    am.robot.robot_member.splice(x,1);
+	    for(var x = helix.helix_members.length -1; x >= 0; x--) {
+		if (helix.helix_members[x].body.name == memBody) {
+		    helix.helix_member.splice(x,1);
 		}
 	    }
 	    var link = { a: b_a, b: b_z, body: memBody};	    
-	    am.robot.robot_members.push(link);
+	    helix.helix_members.push(link);
 	    am.push_body_mesh_pair(memBody,mesh);
 	}
     }
+}
+
+function compute_helix_minimax(helix) {
+    var min = 100000000;
+    var max = 0.0;
+    for(var i = 0; i < helix.helix_members.length; i++) {
+	var member = helix.helix_members[i];
+	var a = member.a.mesh.position;
+	var b = member.b.mesh.position;
+	console.log("member:",i);
+	console.log("a:",member.a);
+	console.log("b:",member.b);
+	var d = a.distanceTo(b);
+	console.log("distance:",d);
+	
+	if (min > d) min = d;
+	if (max < d) max = d;
+    }
+    console.log("min, max", min, max);
+    return [min,max];
 }
 
 
@@ -412,26 +435,27 @@ var AM = function() {
     // Used in manipulation of objects
     this.gplane=false;
 
-    this.INITIAL_HEIGHT = 0.1;
 
+    this.INITIAL_EDGE_LENGTH = 1.0;
+    this.INITIAL_EDGE_WIDTH = 1.0/40;
+    this.INITIAL_HEIGHT = this.INITIAL_EDGE_LENGTH/2;
 
-    this.NUMBER_OF_TETRAHEDRA = 7;
+    this.NUMBER_OF_TETRAHEDRA = 70;
     //       this.NUMBER_OF_TETRAHEDRA = 5;
 
 
-    // These things should actually be a part of the ROBOT, not the mirrored world!
-    // These are in meters, measured joint-center to joint-center
-    this.BASIC_BODY_MASS = 1.0; // This is kilograms.
-    this.MEMBER_MASS = 1.0;
-    this.MAX_EDGE_LENGTH = 0.470;
-    this.MIN_EDGE_LENGTH = 0.330;
-    this.MEAN_EDGE_LENGTH = (this.MAX_EDGE_LENGTH + this.MIN_EDGE_LENGTH)/2;
     this.JOINT_RADIUS = 0.03; // This is the current turret joint ball.
 
-    this.robot = {
-	robot_joints: [],
-	robot_members: []
-    };
+    this.LENGTH_FACTOR = 20;
+
+// Helices look like this...
+    // {
+    // 	helix_joints: [],
+    // 	helix_members: []
+    // }
+    this.helices = [];
+
+    
     
     this.meshes = [];
     this.bodies = [];
@@ -443,7 +467,9 @@ var AM = function() {
     this.jointMaterial = new THREE.MeshPhongMaterial( { color: 0x0000ff } );
     
     this.floorTexture = new THREE.ImageUtils.loadTexture("images/logo-white-background.png");
-
+    
+    this.MIN_EDGE_LENGTH = this.INITIAL_EDGE_LENGTH/2;
+    this.MAX_EDGE_LENGTH  = this.INITIAL_EDGE_LENGTH*2;
     this.color_scale = d3.scale.quantile().domain([this.MIN_EDGE_LENGTH, this.MAX_EDGE_LENGTH])
 	.range(['violet', 'indigo', '#8A2BE2', 'blue', 'green', 'yellow', '#FFD700', 'orange', '#FF4500']);
     this.color_material_palette = {};
@@ -522,12 +548,12 @@ function initGraphics() {
     am.textureLoader = new THREE.TextureLoader();
 
     var ambientLight = new THREE.AmbientLight( 0x404040 );
-    am.scene.add( ambientLight );
+//    am.scene.add( ambientLight );
 
     // lights
     var light, materials;
-    am.scene.add( new THREE.AmbientLight( 0x666666 ) );
-    am.scene.add( new THREE.HemisphereLight( 0x443333, 0x111122 ) );
+//    am.scene.add( new THREE.AmbientLight( 0x666666 ) );
+//    am.scene.add( new THREE.HemisphereLight( 0x443333, 0x111122 ) );
 
     addShadowedLight(am.scene, 1, 1, 1, 0xffffff, 1.35 );
     addShadowedLight(am.scene, 0.5, 1, -1, 0xffaa00, 1 );
@@ -538,7 +564,7 @@ function initGraphics() {
     
     am.grid_scene.add( new THREE.AmbientLight( 0x666666 ) );
     
-    light = new THREE.DirectionalLight( 0xffffff, 1.75 );
+    light = new THREE.DirectionalLight( 0xffffff, 10 );
     var d = 20;
 
     light.position.set( -d, d, -d );
@@ -716,23 +742,6 @@ function init() {
     createGround(am);
 }
 
-function ccw_tetrahelix_vertex(n,edge_length) {
-    // TODO: memoize these functions.
-    var r = (3 * Math.sqrt(3) / 10) * edge_length;
-    var h = (1/Math.sqrt(10)) *edge_length;
-
-    // This is the percentage of rotation around the
-    // helix we go in some sense. I don't like this
-    // formulation, but there not be any other or better closed form
-    // formulation.  This comes from H.S.M. Coxeter by way of Robert W. Gray
-    var theta = Math.acos(-2/3);
-    // I want to make sure "B and C" land on the ground first!    
-    var twist = 45*(Math.PI / 180.0);
-    var third = 120*(Math.PI / 180.0);
-    console.log(n*theta+twist);
-    return new THREE.Vector3( r * Math.cos(n*theta+twist),  r * Math.sin(n*theta+twist), n*h );
-}
-
 var reds = [];
 var blues = [];
 var yells = [];
@@ -781,21 +790,37 @@ function test_ccw_tetrahelix_formula() {
     }
 }
 
-function add_robot(am) {
+function add_helix(am) {
     var pvec = new THREE.Vector3(0,am.INITIAL_HEIGHT,0);
+    am.helices.push(
+    {
+	helix_joints: [],
+	helix_members: []
+    });
     
-    load_NTetGlussBot_Ammo(am,
-			   am.NUMBER_OF_TETRAHEDRA,
-			   pvec);
-    
+    load_NTetHelix(am,am.helices[0],
+		   am.NUMBER_OF_TETRAHEDRA,
+		   pvec,am.INITIAL_EDGE_LENGTH/2,BCrho);
+
+    var pvec = new THREE.Vector3(2,am.INITIAL_HEIGHT,0);
+    am.helices.push(
+    {
+	helix_joints: [],
+	helix_members: []
+    });
+    load_NTetHelix(am,am.helices[1],
+		   am.NUMBER_OF_TETRAHEDRA,
+		   pvec,am.INITIAL_EDGE_LENGTH/2,BCrho/4);
+
 }
 
 initiation_stuff();
 
 init();
 animate();
-add_robot(am);
-
+add_helix(am);
+compute_helix_minimax(am.helices[0]);
+compute_helix_minimax(am.helices[1]);
 
     </script>
 
