@@ -27,10 +27,9 @@
 % See the ``Article customise'' template for come common customisations
 
 \title{Untwisting the Tetrahelix (v0.4)}
-\author{Robert L. Read
-  \thanks{read.robert@gmail.com}
+\author{Robert L. Read \texttt{read.robert@gmail.com} \and
+  Robert Gatliff \texttt{robert@toubat.org}
 }
-\affil{Founder, Public Invention, an educational non-profit.}
 
 
 \date{\today}
@@ -536,37 +535,57 @@ Where are invarinat for all $n$ and $c$.
 
 Just as $H_{general}$ constructs the BC helix (with careful and non-obvious choices of parameters) which is an important
 special case due to its regularity, it constructs an additional special (degenerate) case when the rail angle $\rho = 0$
-and $h = 1$ (the edgelength), which we call the \emph{equitetrabeam}.
+and $d = 1$ (the edgelength), where the cross sectional area is an equilateral triangle of unchanging orientation.
+We call this the \emph{equitetrabeam}.
 
-Note: place here a computation of the length classes, and a means of computing from $H_{general}$.
-We should have a close-form expression for the short, mid-length, and long classes.
+However, choosing $d = 1$ and $\rho = 0$ does fix the radius. We would like to choose the radius so that the
+minimax difference between the lengths is as small as possible.
 
-By theorem \ref{generalformulaoptimal}, the equitetrabeam is optimal in terms of its lengths.
+When $\rho = 0$, our formulae for distances are particular simple. Let $a$ be the length of the equilateral triangle
+forming the beam cross section. Then by geometry $r = a \sqrt(3)$.
+\begin{align*}
+  \text{rail} &=  1 \\
+  \text{one-hop} &= \sqrt{\frac{1}{3}^2 + (\frac{a}{\sqrt{3}})^2 + (a/2)^2}\\
+\text{one-hop}  &= \sqrt{\frac{1}{9} + \frac{7 a^2}{12}} \\
+    \text{two-hops} &= \sqrt{\frac{2}{3}^2 + (\frac{a}{\sqrt{3}})^2 + (a/2)^2}  \\
+\text{two-hops}    &= \sqrt{\frac{4}{9} + \frac{7 a^2}{12}}
+\end{align*}
+
+Note that two-hops increases more and more slowly as $a$ increases. Therefore the minimum maximum will
+be obtained with the value of $a$ that when $one-hop = 1$. This can be observed from the
+plot of two-hops - one-hops as a function of $a$, or by observing that the derivate of two-hops - one-hop
+is negative for $a > 0$. (That is, the value of one-hop increases faster than two-hops.) 
 
 
-\begin{theorem}
+We seek the value of $a$ that minimizes the maximum difference between these three lengths. We find
+by numerical experimentation that this difference is minimized that the one-hop distance is equal to $1$,
+which also has the pleasing property of giving us only two lengths. Then
+\begin{align*}
+   1  &=  \sqrt{\frac{1}{9} + \frac{7a^2}{12}} \\
+     a  &=  \sqrt{\frac{8 \cdot 12}{9 \cdot 7}} \\
+          a  &=  \sqrt{\frac{32}{21}}
+\end{align*}
+
+Therefore $ r = \sqrt{\frac{32}{63}} \approx 0.71267 $, producing length difference in the two-hop rail of
+$\frac{2}{\sqrt{3}}$
+and $1$ of $\approx 15.47\% $.
+
+Note: Another interesting solution occurs at $a = \sqrt(5)/2$, which produces three length
+classes of $11/12, 12/12, 13/12$.
+
+
+\begin{conjecture}
   The equitetrabeam is also optimal under the metric of the total length of all members 
   for an equilateral tetrabream isomorphic to the Boerdijk--Coxeter helix.
-\end{theorem}
+\end{conjecture}
 
 \begin{proof}
-  Summing together all lengths:
-  \begin{align*}
-  sum &= orange_e + orange_o + purple_e + purple_e + purple_o + green_e + green_o \\    
-  &= \sqrt{1 + Y^2} + \sqrt{1 + (1-Y)^2} + \sqrt{1 + B^2} + \sqrt{1+ (1-B)^2} + \\
-  & \sqrt{1 + (B - Y)^2} +  \sqrt{1 + ((1+Y) - B)^2} \\
-  \end{align*} 
-
-  Wolfram Alpha, evaluating this numerically, gives the same minima:
-  
-  \begin{tabular}{c}    
-$  min\{\sqrt(1 + Y^2) + \sqrt{1 + (1 - Y)^2} + \sqrt{1 + B^2} + \sqrt{1 + (1 - B)^2} + $\\
-    $  \sqrt{1 + (B - Y)^2} + \sqrt{1 + ((1 + Y) - B)^2}\} $ \\
-    $ \approx 6.76783 \text{at } (B, Y) \approx (0.666667, 0.333333) $
-  \end{tabular}
-
   
 \end{proof}
+
+We can then create a continuum of radius, length, rho to place into our general equation
+to create continuum of helices between the BC and equitetrabeam. This continuum is 
+minimax-length optimal at its endpoints, and may be optimal throughout.
 
 The equitetrabeam has chirality.
 

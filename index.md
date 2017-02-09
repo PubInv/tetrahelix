@@ -268,7 +268,7 @@ function alphabetic_name(n) {
     }
 }
 
-function load_NTetHelix(am,helix,tets,pvec,len,rho,d,radius) {
+function load_NTetHelix(am,helix,tets,pvec,hparams) {
 
     // Okay, so here we need to create the geometry of the tetrahelix.
     // This could be done in a variety of ways.
@@ -279,18 +279,28 @@ function load_NTetHelix(am,helix,tets,pvec,len,rho,d,radius) {
     // I guess I will use a CounterClockWise (ccw) tetrahelix:
     // Vn = (r cos(n*theta), r sin(n*theta), n*h)
 
+    var len = hparams.len;
+    var rho = hparams.rho;
+    var d = hparams.d;
+    var radius = hparams.radius;
+    var lambda = hparams.lambda;
     var n = tets+3;    
 
     var colors = [ d3.rgb("red"), d3.rgb("yellow"), d3.rgb("blue") ];
     var dcolor = [null,d3.rgb("green"),d3.rgb("purple")];
-
+    console.log("rho",rho);
     for(var i = 0; i < n; i++) {
 
 	var myRho = rho;
-//	var BCr = find_rrho_from_dl(myRho,d,len);
 	var rail = i % 3;
 	var num = Math.floor(i/3);
-	var q = H_general(num,rail,myRho,d,radius);
+	var q;
+	if ((typeof lambda === 'undefined') || lambda === null) {
+	    q = H_general(num,rail,myRho,d,radius);
+	} else {
+	    q = H_bc_eqt_lambda(num,rail,lambda);	    
+	}
+
 	
 	var v = new THREE.Vector3(q[0]*len, q[1]*len, q[2]*len);
 	v = v.add(pvec);
@@ -436,7 +446,7 @@ var AM = function() {
     this.gplane=false;
 
 
-    this.INITIAL_EDGE_LENGTH = 0.4;
+    this.INITIAL_EDGE_LENGTH = 1.0;
     this.INITIAL_EDGE_WIDTH = 1.0/40;
     this.INITIAL_HEIGHT = this.INITIAL_EDGE_LENGTH/2;
 
@@ -791,43 +801,38 @@ function test_ccw_tetrahelix_formula() {
 }
 var radius0;
 var radius1;
-function add_helix(am) {
-    var pvec = new THREE.Vector3(0,am.INITIAL_HEIGHT,-6);
+var helix_params = [];
+function add_helices(am,num) {
+    for(var i = 0; i < num; i++) {
+	
+    var pvec = new THREE.Vector3(-4 + i*2,am.INITIAL_HEIGHT,-3);
+    var len = am.INITIAL_EDGE_LENGTH/2;
     am.helices.push(
-    {
-	helix_joints: [],
-	helix_members: []
-    });
+	{
+	    helix_joints: [],
+	    helix_members: []
+	});
+	helix_params.push ({ rho: BCrho/(i+1),
+			 d: len*BCd,
+			     len: len,
+			     lambda: (num - i) / num});
+    var hp = helix_params[i];
+	radius = find_rrho_from_d_el(hp.rho,hp.d,hp.len);
+	
+    helix_params[i].radius = radius;
 
-    var len = am.INITIAL_EDGE_LENGTH;
-    radius0 = find_rrho_from_dl(BCrho,BCd,len);
-    load_NTetHelix(am,am.helices[0],
+    load_NTetHelix(am,am.helices[i],
 		   am.NUMBER_OF_TETRAHEDRA,
-		   pvec,am.INITIAL_EDGE_LENGTH,BCrho,BCd,radius0);
-
-    var pvec = new THREE.Vector3(2,am.INITIAL_HEIGHT,-6);
-    am.helices.push(
-    {
-	helix_joints: [],
-	helix_members: []
-    });
-    radius1 = find_rrho_from_dl(BCrho,len*0.94,len);
-    
-    load_NTetHelix(am,am.helices[1],
-		   am.NUMBER_OF_TETRAHEDRA,
-		   pvec,am.INITIAL_EDGE_LENGTH,BCrho,len*1.3,radius1);
-
+		   pvec,hp);
+    }
 }
 
 initiation_stuff();
 
 init();
 animate();
-add_helix(am);
-console.log("radius0",radius0);
+add_helices(am,5);
 compute_helix_minimax(am.helices[0]);
-console.log("radius1",radius1);
-compute_helix_minimax(am.helices[1]);
 
     </script>
 
