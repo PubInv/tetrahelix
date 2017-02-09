@@ -268,7 +268,7 @@ function alphabetic_name(n) {
     }
 }
 
-function load_NTetHelix(am,helix,tets,pvec,len,rho) {
+function load_NTetHelix(am,helix,tets,pvec,len,rho,d,radius) {
 
     // Okay, so here we need to create the geometry of the tetrahelix.
     // This could be done in a variety of ways.
@@ -287,10 +287,10 @@ function load_NTetHelix(am,helix,tets,pvec,len,rho) {
     for(var i = 0; i < n; i++) {
 
 	var myRho = rho;
-	var BCr = find_rrho_from_d(myRho,BCd);
+//	var BCr = find_rrho_from_dl(myRho,d,len);
 	var rail = i % 3;
 	var num = Math.floor(i/3);
-	var q = H_general(num,rail,myRho,BCd,BCr);
+	var q = H_general(num,rail,myRho,d,radius);
 	
 	var v = new THREE.Vector3(q[0]*len, q[1]*len, q[2]*len);
 	v = v.add(pvec);
@@ -330,7 +330,7 @@ function load_NTetHelix(am,helix,tets,pvec,len,rho) {
 	    
 	    var v_z = new THREE.Vector3(o_a.x,o_a.y,o_a.z);
 	    var v_a = new THREE.Vector3(o_z.x,o_z.y,o_z.z);
-	    var d = v_a.distanceTo(v_z);
+	    var dist = v_a.distanceTo(v_z);
 	    
 	    var v_avg = new THREE.Vector3(v_z.x,v_z.y,v_z.z);
 	    v_avg.add(v_a);
@@ -342,7 +342,7 @@ function load_NTetHelix(am,helix,tets,pvec,len,rho) {
 	    var diff = ((b_a.rail - b_z.rail)+3) % 3;
 	    var member_color = (diff != 0) ? dcolor[diff] : colors[b_a.rail];
 
-	    var mesh = create_actuator(d,v_a,v_z,pos,member_color);
+	    var mesh = create_actuator(dist,v_a,v_z,pos,member_color);
 	    if (b_a.name > b_z.name) {
 		var t = b_a;
 		b_a = b_z;
@@ -375,11 +375,11 @@ function compute_helix_minimax(helix) {
 	var member = helix.helix_members[i];
 	var a = member.a.mesh.position;
 	var b = member.b.mesh.position;
-	console.log("member:",i);
-	console.log("a:",member.a);
-	console.log("b:",member.b);
+//	console.log("member:",i);
+//	console.log("a:",member.a);
+//	console.log("b:",member.b);
 	var d = a.distanceTo(b);
-	console.log("distance:",d);
+//	console.log("distance:",d);
 	
 	if (min > d) min = d;
 	if (max < d) max = d;
@@ -436,7 +436,7 @@ var AM = function() {
     this.gplane=false;
 
 
-    this.INITIAL_EDGE_LENGTH = 1.0;
+    this.INITIAL_EDGE_LENGTH = 0.4;
     this.INITIAL_EDGE_WIDTH = 1.0/40;
     this.INITIAL_HEIGHT = this.INITIAL_EDGE_LENGTH/2;
 
@@ -506,7 +506,7 @@ function initGraphics() {
 
     am.container = document.getElementById( 'threecontainer' );
 
-    var PERSPECTIVE_NEAR = 0.1;
+    var PERSPECTIVE_NEAR = 0.3;
     am.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / (window.innerHeight * am.window_height_factor), PERSPECTIVE_NEAR, 2000 );
 
     am.camera.aspect = window.innerWidth / (window.innerHeight * am.window_height_factor);
@@ -789,28 +789,33 @@ function test_ccw_tetrahelix_formula() {
 
     }
 }
-
+var radius0;
+var radius1;
 function add_helix(am) {
-    var pvec = new THREE.Vector3(0,am.INITIAL_HEIGHT,0);
+    var pvec = new THREE.Vector3(0,am.INITIAL_HEIGHT,-6);
     am.helices.push(
     {
 	helix_joints: [],
 	helix_members: []
     });
-    
+
+    var len = am.INITIAL_EDGE_LENGTH;
+    radius0 = find_rrho_from_dl(BCrho,BCd,len);
     load_NTetHelix(am,am.helices[0],
 		   am.NUMBER_OF_TETRAHEDRA,
-		   pvec,am.INITIAL_EDGE_LENGTH/2,BCrho);
+		   pvec,am.INITIAL_EDGE_LENGTH,BCrho,BCd,radius0);
 
-    var pvec = new THREE.Vector3(2,am.INITIAL_HEIGHT,0);
+    var pvec = new THREE.Vector3(2,am.INITIAL_HEIGHT,-6);
     am.helices.push(
     {
 	helix_joints: [],
 	helix_members: []
     });
+    radius1 = find_rrho_from_dl(BCrho,len*0.94,len);
+    
     load_NTetHelix(am,am.helices[1],
 		   am.NUMBER_OF_TETRAHEDRA,
-		   pvec,am.INITIAL_EDGE_LENGTH/2,BCrho/4);
+		   pvec,am.INITIAL_EDGE_LENGTH,BCrho,len*1.3,radius1);
 
 }
 
@@ -819,7 +824,9 @@ initiation_stuff();
 init();
 animate();
 add_helix(am);
+console.log("radius0",radius0);
 compute_helix_minimax(am.helices[0]);
+console.log("radius1",radius1);
 compute_helix_minimax(am.helices[1]);
 
     </script>
