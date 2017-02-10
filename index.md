@@ -815,7 +815,7 @@ function add_helices(am,num) {
 	helix_params.push ({ rho: BCrho/(i+1),
 			 d: len*BCd,
 			     len: len,
-			     lambda: (num - i) / num});
+			     lambda: 2*(i - (num/2)) / (num - 1)});
     var hp = helix_params[i];
 	radius = find_rrho_from_d_el(hp.rho,hp.d,hp.len);
 	
@@ -831,7 +831,7 @@ initiation_stuff();
 
 init();
 animate();
-add_helices(am,5);
+add_helices(am,10);
 compute_helix_minimax(am.helices[0]);
 
     </script>
