@@ -29,56 +29,35 @@ var BCr = (3 * Math.sqrt(3) / 10);
 
 // This from https://github.com/josdejong/Mathjs/blob/develop/lib/utils/bignumber/nearlyEqual.js
 function nearlyEqual(x, y, epsilon) {
-  // if epsilon is null or undefined, test whether x and y are exactly equal
-  if (epsilon == null) {
-    return x === y;
-  }
+    // if epsilon is null or undefined, test whether x and y are exactly equal
+    if (epsilon == null) {
+	return x === y;
+    }
 
+    // use "==" operator, handles infinities
+    if (x == y) {
+	return true;
+    }
 
-  // use "==" operator, handles infinities
-  if (x == y) {
-    return true;
-  }
-
-  // NaN
-  if (isNaN(x) || isNaN(y)) {
-    return false;
-  }
+    // NaN
+    if (isNaN(x) || isNaN(y)) {
+	return false;
+    }
 
     // check numbers are very close, needed when comparing numbers near zero
     var diff = Math.abs(x-y);
     if (diff == 0) {
-      return true;
+	return true;
     }
     else {
 	if (diff < epsilon)
 	    return true;
     }
 
-  // Infinite and Number or negative Infinite and positive Infinite cases
-  return false;
+    // Infinite and Number or negative Infinite and positive Infinite cases
+    return false;
 };
 
-function PColorHelix(n,phase,lambda) {
-    var pnt = [];
-    var r = (3 * Math.sqrt(3) / 10);
-    var rl = (r - 1/Math.sqrt(3))*lambda + 1/Math.sqrt(3);
-    var h = BCh;
-    var hl = (h - 1/3)*lambda + 1/3;    
-    var x = n+phase/3.0;
-    var theta = Math.acos(-2/3);
-    var slow = (3*theta - Math.PIi*2);
-    var third = 2*Math.PI/3.0;
-    // Note the subtle distinct here...
-    // in fact:
-    //   slow *(n+phase/3.0) + phase*third == slow * n + phase*theta!
-    //
-    var angle = slow * x * lambda+ phase*third;
-    pnt[0] = rl * Math.cos(angle);
-    pnt[1] = rl * Math.sin(angle);
-    pnt[2] = (x) * 3 * hl;
-    return pnt;
-}
 
 function find_drho_from_r_el(rho,r,el) {
     var sin_r_2 = Math.sin(rho/2);
@@ -128,7 +107,7 @@ function H_bc_eqt_lambda(n,c,lambda) {
     // Now we must compute r and h....
     // "0" is the equitetrabeam
     // "1" is the BC helix
-    var r0 =  Math.sqrt(20/63);
+    var r0 =  (2/3)*Math.sqrt(2/3);
     var d0 = 1;
     var rho0 = 0;
     
@@ -170,114 +149,35 @@ function test_H_general_against_BC() {
 }
 
 function major_test() {
-var reds = [];
-var otherreds = [];
-var blues = [];
-var otheryells = [];
-var yells = [];
-var otherblues = [];
-// var lambda = 1.0;
-var lambda = 1.0;
-var third = 120*Math.PI/180.0;    
-for(var i = 0; i < 4; i++) {
+    var reds = [];
+    var otherreds = [];
+    var blues = [];
+    var otheryells = [];
+    var yells = [];
+    var otherblues = [];
+    // var lambda = 1.0;
+    var lambda = 1.0;
+    var third = 120*Math.PI/180.0;    
+    for(var i = 0; i < 4; i++) {
 
-    var red = H_bc_lambda(i,red_phase,lambda);    
-    var otherr = PColorHelix(i,red_phase,lambda);
-    otherreds.push(otherr);
-    var yell = H_bc_lambda(i,yellow_phase,lambda);        
-    var othery = PColorHelix(i,yellow_phase,lambda);
-    otheryells.push(othery);
-    var blue = H_bc_lambda(i,blue_phase,lambda);    
-    var otherb = PColorHelix(i,blue_phase,lambda);
-    otherblues.push(otherb);
-    
-    reds.push(red);
-    yells.push(yell);    
-    blues.push(blue);
-//    console.log(red,yell,blue);
-}
-console.log("reds");
-console.log(reds);
-console.log("otherreds");
-console.log(otherreds);
-console.log("yells");
-console.log(yells);
-console.log("otheryells");
-console.log(otheryells);
-console.log("blues");
-console.log(blues);
-console.log("otherblues");
-console.log(otherblues);
-for(var i = 0; i < 3; i++) {
-    console.log("red");
-//    console.log(Math.distance([Math.number(reds[i][0]),Math.number(reds[i][1]),Math.number(reds[i][2])],
-//			      [Math.number(reds[i+1][0]),Math.number(reds[i+1][1]),Math.number(reds[i+1][2])]));
-
-    console.log("blue");
- //   console.log(Math.distance([Math.number(blues[i][0]),Math.number(blues[i][1]),Math.number(blues[i][2])],
-//			      [Math.number(blues[i+1][0]),Math.number(blues[i+1][1]),Math.number(blues[i+1][2])]));
-   console.log(Math.distance(blues[i],blues[i+1]));
-    console.log("yellow");
-    console.log(Math.distance(yells[i],yells[i+1]));
- //   console.log(Math.distance([Math.number(yells[i][0]),Math.number(yells[i][1]),Math.number(yells[i][2])],
-//			      [Math.number(yells[i+1][0]),Math.number(yells[i+1][1]),Math.number(yells[i+1][2])]));
-    
-    console.log("orangeeven");
-    console.log(Math.distance(reds[i],yells[i]));
-
-  //  console.log(Math.distance([Math.number(reds[i][0]),Math.number(reds[i][1]),Math.number(reds[i][2])],
-//			      [Math.number(yells[i][0]),Math.number(yells[i][1]),Math.number(yells[i][2])]));
-
-  //  var red_dist = Math.distance([Math.number(reds[i][0]),Math.number(reds[i][1]),Math.number(reds[i][2])],
-//			      [Math.number(yells[i][0]),Math.number(yells[i][1]),Math.number(yells[i][2])])
-    
-    console.log("orangeodd");
-    
-    console.log(Math.distance(yells[i],reds[i+1]));
-  //  console.log(Math.distance([Math.number(yells[i][0]),Math.number(yells[i][1]),Math.number(yells[i][2])],
-//			      [Math.number(reds[i+1][0]),Math.number(reds[i+1][1]),Math.number(reds[i+1][2])]));
-
-    console.log("purpleeven");
-   console.log(Math.distance(reds[i],blues[i]));
- //   console.log(Math.distance([Math.number(reds[i][0]),Math.number(reds[i][1]),Math.number(reds[i][2])],
-//			      [Math.number(blues[i][0]),Math.number(blues[i][1]),Math.number(blues[i][2])]));
-    console.log("purpleodd");
-
- //   console.log(Math.distance([Math.number(blues[i][0]),Math.number(blues[i][1]),Math.number(blues[i][2])],
-//			      [Math.number(reds[i+1][0]),Math.number(reds[i+1][1]),Math.number(reds[i+1][2])]));
-
-    console.log(Math.distance(blues[i],reds[i+1]));
-
-    console.log("greeneven");
-    console.log(Math.distance(yells[i],blues[i]));
- //   console.log(Math.distance([Math.number(yells[i][0]),Math.number(yells[i][1]),Math.number(yells[i][2])],
-//			      [Math.number(blues[i][0]),Math.number(blues[i][1]),Math.number(blues[i][2])]));
-    
-    console.log("greenodd");
-    console.log(Math.distance(blues[i],yells[i+1]));
-//    console.log(Math.distance([Math.number(blues[i][0]),Math.number(blues[i][1]),Math.number(blues[i][2])],
-//			      [Math.number(yells[i+1][0]),Math.number(yells[i+1][1]),Math.number(yells[i+1][2])]));
-
- //   var green_odd_dist = Math.distance([Math.number(blues[i][0]),Math.number(blues[i][1]),Math.number(blues[i][2])],
-//			      [Math.number(yells[i+1][0]),Math.number(yells[i+1][1]),Math.number(yells[i+1][2])])
-
- //   console.log("longest by shortest");
-    //  console.log(red_dist/ green_odd_dist);
-/*    for(var j = 0; j < 1; j = j + 0.1) {
-	var azero = NColorHelix(j,red_phase);
-	var yzero = NColorHelix(j,yellow_phase);
-	//	var bzero = NColorHelix(j,blue_phase);
-	var bzero = NColorHelix(j,blue_phase);	
-	console.log(azero,yzero,bzero);
-	// These angle calculations appear to be wrong.
-	var ar = Math.tan(azero[1]/azero[0]);	
-	var ay = Math.tan(yzero[1]/yzero[0]);
-	var ab = Math.tan(bzero[1]/bzero[0]);
-	console.log(180*ar/Math.pi,180*ay/Math.pi,180*ab/Math.pi);
+	var red = H_bc_lambda(i,red_phase,lambda);    
+	var yell = H_bc_lambda(i,yellow_phase,lambda);        
+	var blue = H_bc_lambda(i,blue_phase,lambda);    
+	
+	reds.push(red);
+	yells.push(yell);    
+	blues.push(blue);
+	//    console.log(red,yell,blue);
     }
-*/
+    console.log("reds");
+    console.log(reds);
+
+    console.log("yells");
+    console.log(yells);
+    console.log("blues");
+    console.log(blues);
+
     
-}
 }
 
 //test_rail_angle_formula_against_BC();

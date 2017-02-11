@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Chaos Pendulum
+title: Untwisting the Tetrahelix
 ---
     
     
@@ -67,7 +67,38 @@ title: Chaos Pendulum
 </div>    
     
     </section>
-	
+	<script type="x-shader/x-vertex" id="vertexShader">
+
+			varying vec3 vWorldPosition;
+
+			void main() {
+
+				vec4 worldPosition = modelMatrix * vec4( position, 1.0 );
+				vWorldPosition = worldPosition.xyz;
+
+				gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+
+			}
+
+		</script>
+
+		<script type="x-shader/x-fragment" id="fragmentShader">
+
+			uniform vec3 topColor;
+			uniform vec3 bottomColor;
+			uniform float offset;
+			uniform float exponent;
+
+			varying vec3 vWorldPosition;
+
+			void main() {
+
+				float h = normalize( vWorldPosition + offset ).y;
+				gl_FragColor = vec4( mix( bottomColor, topColor, max( pow( max( h , 0.0), exponent ), 0.0 ) ), 1.0 );
+
+			}
+
+		</script>	
         <script>
 
 var HELIX_RADIUS = 34;
@@ -192,8 +223,9 @@ function addShadowedLight(scene, x, y, z, color, intensity ) {
 }
 function createParalellepiped( sx, sy, sz, pos, quat, material ) {
     var pp = new THREE.Mesh( new THREE.BoxGeometry( sx, sy, sz, 1, 1, 1 ), material );
+    pp.castShadow = true;
+    pp.receiveShadow = true;
     pp.position.set(pos.x,pos.y,pos.z);
-//    pp.quaternion.set(quat.x,quat.y,quat.z,quat.w);
     return pp;
 
 }
@@ -385,16 +417,20 @@ function compute_helix_minimax(helix) {
 	var member = helix.helix_members[i];
 	var a = member.a.mesh.position;
 	var b = member.b.mesh.position;
-//	console.log("member:",i);
-//	console.log("a:",member.a);
-//	console.log("b:",member.b);
 	var d = a.distanceTo(b);
-//	console.log("distance:",d);
+	if (i < 10) {
+	console.log("member:",i);
+	console.log("a:",member.a);
+	console.log("b:",member.b);
+
+	    console.log("distance:",d);
+	}
 	
 	if (min > d) min = d;
 	if (max < d) max = d;
     }
     console.log("min, max", min, max);
+    console.log("score: ", (100*max/min -100) + "%");
     return [min,max];
 }
 
@@ -446,15 +482,15 @@ var AM = function() {
     this.gplane=false;
 
 
-    this.INITIAL_EDGE_LENGTH = 1.0;
-    this.INITIAL_EDGE_WIDTH = 1.0/40;
-    this.INITIAL_HEIGHT = this.INITIAL_EDGE_LENGTH/2;
+    this.INITIAL_EDGE_LENGTH = 0.3;
+    this.INITIAL_EDGE_WIDTH = this.INITIAL_EDGE_LENGTH/40;
+    this.INITIAL_HEIGHT = 3*this.INITIAL_EDGE_LENGTH/2;
 
     this.NUMBER_OF_TETRAHEDRA = 70;
     //       this.NUMBER_OF_TETRAHEDRA = 5;
 
 
-    this.JOINT_RADIUS = 0.03; // This is the current turret joint ball.
+    this.JOINT_RADIUS = 0.03*this.INITIAL_EDGE_LENGTH; // This is the current turret joint ball.
 
     this.LENGTH_FACTOR = 20;
 
@@ -487,7 +523,9 @@ var AM = function() {
     this.GROUND_PLANE_MESH;
     this.GROUND_BODY;
 
-    this.latestLookAt = new THREE.Vector3(0,0,0);    
+    this.latestLookAt = new THREE.Vector3(0,0,0);
+
+    this.helix_params = [];    
 }
 AM.prototype.push_body_mesh_pair = function(body,mesh) {
     this.meshes.push(mesh);
@@ -511,6 +549,42 @@ AM.prototype.clear_non_floor_body_mesh_pairs = function() {
 }
 
 var am = new AM();
+
+
+var bulbLight, bulbMat, ambientLight, object, loader, stats;
+var ballMat, cubeMat, floorMat;
+// ref for lumens: http://www.power-sure.com/lumens.htm
+var bulbLuminousPowers = {
+    "110000 lm (1000W)": 110000,
+    "3500 lm (300W)": 3500,
+    "1700 lm (100W)": 1700,
+    "800 lm (60W)": 800,
+    "400 lm (40W)": 400,
+    "180 lm (25W)": 180,
+    "20 lm (4W)": 20,
+    "Off": 0
+};
+// ref for solar irradiances: https://en.wikipedia.org/wiki/Lux
+var hemiLuminousIrradiances = {
+    "0.0001 lx (Moonless Night)": 0.0001,
+    "0.002 lx (Night Airglow)": 0.002,
+    "0.5 lx (Full Moon)": 0.5,
+    "3.4 lx (City Twilight)": 3.4,
+    "50 lx (Living Room)": 50,
+    "100 lx (Very Overcast)": 100,
+    "350 lx (Office Room)": 350,
+    "400 lx (Sunrise/Sunset)": 400,
+    "1000 lx (Overcast)": 1000,
+    "18000 lx (Daylight)": 18000,
+    "50000 lx (Direct Sun)": 50000
+};
+var params = {
+    shadows: true,
+    exposure: 0.68,
+    bulbPower: Object.keys( bulbLuminousPowers )[ 4 ],
+    hemiIrradiance: Object.keys( hemiLuminousIrradiances )[0]
+};
+
 
 function initGraphics() {
 
@@ -551,29 +625,74 @@ function initGraphics() {
     am.cameraOrtho = new THREE.OrthographicCamera( 0, am.SCREEN_WIDTH, am.SCREEN_HEIGHT, 0, - 10, 10 );
     
     am.renderer.shadowMap.enabled = true;
-
+    am.renderer.physicallyCorrectLights = true;
     am.renderer.gammaInput = true;
     am.renderer.gammaOutput = true;
 
-    am.textureLoader = new THREE.TextureLoader();
+//    am.textureLoader = new THREE.TextureLoader();
 
+    
+    var bulbGeometry = new THREE.SphereGeometry( 0.02, 16, 8 );
+    bulbLight = new THREE.PointLight( 0xffee88, 6 , 1000, 2 );
+    bulbMat = new THREE.MeshStandardMaterial( {
+	emissive: 0xffffee,
+	emissiveIntensity: 1,
+	color: 0xFF0000
+    });
+
+    bulbLight.power = bulbLuminousPowers[ 3];
+    bulbMat.emissiveIntensity = bulbLight.intensity / Math.pow( 0.02, 2.0 ); // convert from intensity to irradiance at bulb surface
+
+    
+    bulbLight.add( new THREE.Mesh( bulbGeometry, bulbMat ) );
+    bulbLight.position.set( 0, 20, 20 );
+    bulbLight.castShadow = true;
+    //  am.scene.add( bulbLight );
+
+    var light = new THREE.PointLight( 0xffcccc, 100, 100 );
+    light.castShadow = true;
+    light.position.set( 0, 5, 0 );
+    am.scene.add( light );
+    
+    hemiLight = new THREE.HemisphereLight( 0xddeeff, 0xffffff, 1 );
+    am.scene.add( hemiLight );
+/*    floorMat = new THREE.MeshStandardMaterial( {
+	roughness: 0.8,
+	color: 0xffffff,
+	metalness: 0.2,
+	bumpScale: 0.0005
+    });
+    ballMat = new THREE.MeshStandardMaterial( {
+	color: 0xffffff,
+	roughness: 0.5,
+	metalness: 1.0
+    });
+    
+    var floorGeometry = new THREE.PlaneBufferGeometry( 20, 20 );
+    var floorMesh = new THREE.Mesh( floorGeometry, floorMat );
+    floorMesh.receiveShadow = true;
+    floorMesh.rotation.x = -Math.PI / 2.0;
+
+    am.scene.add( floorMesh );
+*/
+    /*
     var ambientLight = new THREE.AmbientLight( 0x404040 );
-//    am.scene.add( ambientLight );
+
 
     // lights
     var light, materials;
-//    am.scene.add( new THREE.AmbientLight( 0x666666 ) );
-//    am.scene.add( new THREE.HemisphereLight( 0x443333, 0x111122 ) );
+    am.scene.add( new THREE.AmbientLight( 0x666666 ) );
+    am.scene.add( new THREE.HemisphereLight( 0x443333, 0x111122 ) );
 
     addShadowedLight(am.scene, 1, 1, 1, 0xffffff, 1.35 );
     addShadowedLight(am.scene, 0.5, 1, -1, 0xffaa00, 1 );
 
-
+*/
     am.grid_scene = new THREE.Scene();
     am.grid_scene.fog = new THREE.Fog( 0x000000, 500, 10000 );    
     
     am.grid_scene.add( new THREE.AmbientLight( 0x666666 ) );
-    
+/*    
     light = new THREE.DirectionalLight( 0xffffff, 10 );
     var d = 20;
 
@@ -596,11 +715,83 @@ function initGraphics() {
     
     am.grid_scene.add(light);
     am.scene.add(light);    
-    //    grid_scene.fog = new THREE.Fog( 0x000000, 500, 10000 );
-    am.grid_scene.add( new THREE.AmbientLight( 0x666666 ) );    
 
-    addShadowedLight(am.grid_scene, 1, 1, 1, 0xffffff, 1.35 );
-    addShadowedLight(am.grid_scene, 0.5, 1, -1, 0xffaa00, 1 );
+*/
+    //    grid_scene.fog = new THREE.Fog( 0x000000, 500, 10000 );
+//    am.grid_scene.add( new THREE.AmbientLight( 0x666666 ) );    
+
+//    addShadowedLight(am.grid_scene, 1, 1, 1, 0xffffff, 1.35 );
+    //    addShadowedLight(am.grid_scene, 0.5, 1, -1, 0xffaa00, 1 );
+
+
+
+    
+    am.scene.fog = new THREE.Fog( 0xffffff, 1, 5000 );
+    am.scene.fog.color.setHSL( 0.6, 0, 1 );
+
+    // LIGHTS
+    var hemiLight,dirLight;
+    
+    hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
+    hemiLight.color.setHSL( 0.6, 1, 0.6 );
+    hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
+    hemiLight.position.set( 0, 500, 0 );
+    am.scene.add( hemiLight );
+
+    //
+
+    dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
+    dirLight.color.setHSL( 0.1, 1, 0.95 );
+    dirLight.position.set( -1, 1.75, 1 );
+    dirLight.position.multiplyScalar( 50 );
+    am.scene.add( dirLight );
+
+    dirLight.castShadow = true;
+
+    dirLight.shadow.mapSize.width = 2048;
+    dirLight.shadow.mapSize.height = 2048;
+
+    var d = 50;
+
+    dirLight.shadow.camera.left = -d;
+    dirLight.shadow.camera.right = d;
+    dirLight.shadow.camera.top = d;
+    dirLight.shadow.camera.bottom = -d;
+
+    dirLight.shadow.camera.far = 3500;
+    dirLight.shadow.bias = -0.0001;
+
+    // GROUND
+    var groundGeo = new THREE.PlaneBufferGeometry( 10000, 10000 );
+    var groundMat = new THREE.MeshPhongMaterial( { color: 0xffffff, specular: 0x050505 } );
+    groundMat.color.setHSL( 0.095, 1, 0.75 );
+
+    var ground = new THREE.Mesh( groundGeo, groundMat );
+    ground.rotation.x = -Math.PI/2;
+    ground.position.y = 0;
+    am.scene.add( ground );
+
+    ground.receiveShadow = true;
+    // SKYDOME
+
+    var vertexShader = document.getElementById( 'vertexShader' ).textContent;
+    var fragmentShader = document.getElementById( 'fragmentShader' ).textContent;
+    var uniforms = {
+	topColor:    { value: new THREE.Color( 0x000000 ) },
+	bottomColor: { value: new THREE.Color( 0xffffff ) },
+	offset:      { value: 33 },
+	exponent:    { value: 0.6 }
+    };
+    uniforms.topColor.value.copy( hemiLight.color );
+
+    am.scene.fog.color.copy( uniforms.bottomColor.value );
+
+    var skyGeo = new THREE.SphereGeometry( 4000, 32, 15 );
+    var skyMat = new THREE.ShaderMaterial( { vertexShader: vertexShader, fragmentShader: fragmentShader, uniforms: uniforms, side: THREE.BackSide } );
+
+    var sky = new THREE.Mesh( skyGeo, skyMat );
+    am.scene.add( sky );
+
     
     // HACK:  These diemensions are probably not right here!
     gridInit(am.grid_scene,am.playgroundDimensions);
@@ -639,18 +830,6 @@ AM.prototype.remove_body_mesh_pair = function(body,mesh) {
     }
 }
 
-function createGround(am) {
-    // Ground
-    // TODO: make these local!
-    //    am.pos.set( 0, -GROUND_WIDTH/2, 0 );
-    am.floorTexture.wrapS = am.floorTexture.wrapT = THREE.RepeatWrapping; 
-    am.floorTexture.repeat.set( 10, 10 );
-    
-    var floorMaterial = new THREE.MeshBasicMaterial( { map: am.floorTexture, side: THREE.DoubleSide } );
-
-    floorMaterial.transparent = true;
-    floorMaterial.opacity = 0.7;
-}
 
 function onWindowResize() {
     am.camera.aspect = window.innerWidth / (window.innerHeight * am.window_height_factor);
@@ -749,7 +928,7 @@ function initiation_stuff() {
 
 function init() {
     initGraphics();
-    createGround(am);
+//    createGround(am);
 }
 
 var reds = [];
@@ -801,7 +980,7 @@ function test_ccw_tetrahelix_formula() {
 }
 var radius0;
 var radius1;
-var helix_params = [];
+
 function add_helices(am,num) {
     for(var i = 0; i < num; i++) {
 	
@@ -812,14 +991,15 @@ function add_helices(am,num) {
 	    helix_joints: [],
 	    helix_members: []
 	});
-	helix_params.push ({ rho: BCrho/(i+1),
+	am.helix_params.push ({ rho: BCrho/(i+1),
 			 d: len*BCd,
 			     len: len,
-			     lambda: 2*(i - (num/2)) / (num - 1)});
-    var hp = helix_params[i];
+			     lambda: (i) / (num - 1)});
+	var hp = am.helix_params[i];
+	
 	radius = find_rrho_from_d_el(hp.rho,hp.d,hp.len);
 	
-    helix_params[i].radius = radius;
+    am.helix_params[i].radius = radius;
 
     load_NTetHelix(am,am.helices[i],
 		   am.NUMBER_OF_TETRAHEDRA,
@@ -827,13 +1007,74 @@ function add_helices(am,num) {
     }
 }
 
+function add_equitetrabeam_helix(am,lambda,rho,radius,pvec,len) {
+
+    am.helices.push(
+	{
+	    helix_joints: [],
+	    helix_members: []
+	});
+    am.helix_params.push ({ rho: rho,
+			    len: len,
+			    radius: radius,
+			    lambda: lambda});
+    
+    var hp = am.helix_params.slice(-1)[0];
+//    var d = find_drho_from_r_el(hp.rho,hp.r,hp.len);
+    
+    hp.d = len;
+
+    load_NTetHelix(am,am.helices.slice(-1)[0],
+		   am.NUMBER_OF_TETRAHEDRA,
+		   pvec,hp);
+}
+
+function add_equitetrabeam_helix_lambda(am,lambda,pvec,len) {
+
+    am.helices.push(
+	{
+	    helix_joints: [],
+	    helix_members: []
+	});
+    am.helix_params.push ({ 
+			    len: len,
+			    lambda: lambda});
+    
+    var hp = am.helix_params.slice(-1)[0];
+//    var d = find_drho_from_r_el(hp.rho,hp.r,hp.len);
+    
+    hp.d = len;
+
+    load_NTetHelix(am,am.helices.slice(-1)[0],
+		   am.NUMBER_OF_TETRAHEDRA,
+		   pvec,hp);
+}
+
 initiation_stuff();
 
 init();
 animate();
-add_helices(am,10);
-compute_helix_minimax(am.helices[0]);
+//add_helices(am,1);
 
+var len = am.INITIAL_EDGE_LENGTH;
+
+
+//  var r0 = (2/3)*Math.sqrt(2/3);
+var r0 = (2/3)*Math.sqrt(2/3);
+// This is the splitting difference.
+// var r0 = Math.sqrt(35/9)/4;
+
+var num = 10;
+for (var i = 0; i < num+1; i++ ) {
+    var pvec0 = new THREE.Vector3((i - 5)*2*am.INITIAL_EDGE_LENGTH,am.INITIAL_HEIGHT,-3);    
+    add_equitetrabeam_helix_lambda(am,2 * (i - 5) / (num) ,pvec0,len);
+}
+
+ for(var i = 0; i < am.helices.length; i++) {
+    console.log(am.helix_params[i]);
+    compute_helix_minimax(am.helices[i]);
+    console.log(am.helix_params[i]);    
+ }
     </script>
 
   
