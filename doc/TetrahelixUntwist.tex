@@ -565,8 +565,8 @@ axial growth can all be linearly interpolated with a parameter $\lambda$ between
 and low values (for the equitetrabeam):
 
 \begin{align*}
-r_{\lambda}  &=  \lambda (\frac{3 \sqrt{3}}{10}  - \sqrt{\frac{8}{27}}) + \sqrt{\frac{8}{27}}  \\
-d_{\lambda} &=   \lambda (3 \sqrt{10} - 1) + 1 \\
+r_{\lambda}  &=  \lvert \lambda \rvert (\frac{3 \sqrt{3}}{10}  - \sqrt{\frac{8}{27}}) + \sqrt{\frac{8}{27}}  \\
+d_{\lambda} &=   \lvert \lambda \rvert (3 \sqrt{10} - 1) + 1 \\
 \phi_{\lambda} &=  \lambda \rho_{bc}  + 0
 \end{align*}
 to create a formula that generates a continuum of tetrahedral structures:
@@ -664,9 +664,25 @@ To assist, contact \href{mailto:read.robert@gmail.com}{$<$read.robert@gmail.com$
 
 TODO:
 
-See if the continuum holds the short edge lengths at one perpetually.  Yes!!!
 
-Create working toolkit for desin/exploration. Improve code that way, use white background, floor.
+Understand why I can't control color completely!
+
+Note that Lamba = 16 almost produces a 2-rail helicoid.
+
+When abs(lambda) > 4, we seem to have marked differences in the parameters. Understand why this is and what is causing it.
+(it is possible that positive and negative rho values behave very differently?
+
+Note: Would be really nice to have the GUI show you all computed parameters.
+
+Note: Distance is clearly lower on first computations..
+
+Create working toolkit for desin/exploration.
+
+Improve code that way, use white background, floor.
+
+Figure out if I am computing something wrong.
+
+
 
 Try to compute optimal radius within our context. This would let us assert that we have
 an ``optimum'' continuum.  Not worth much to an engineer, but valuable.

@@ -21,11 +21,18 @@ var red_phase = 0;
 var yellow_phase = 1;
 var blue_phase = 2;
 
+// Fundamental constanstants for the Boerdijk-Coxeter Helix
 var BCtheta = Math.acos(-2/3);
 var BCrho = 3*BCtheta - 2 * Math.PI;
 var BCh = (1/Math.sqrt(10));
 var BCd = (3/Math.sqrt(10));
 var BCr = (3 * Math.sqrt(3) / 10);
+
+// The Equitetrabeam
+var EQTBr =  (2/3)*Math.sqrt(2/3);
+var EQTBd = 1;
+var EQTBrho = 0;
+
 
 // This from https://github.com/josdejong/Mathjs/blob/develop/lib/utils/bignumber/nearlyEqual.js
 function nearlyEqual(x, y, epsilon) {
@@ -107,9 +114,9 @@ function H_bc_eqt_lambda(n,c,lambda) {
     // Now we must compute r and h....
     // "0" is the equitetrabeam
     // "1" is the BC helix
-    var r0 =  (2/3)*Math.sqrt(2/3);
-    var d0 = 1;
-    var rho0 = 0;
+    var r0 = EQTBr;
+    var d0 = EQTBd;
+    var rho0 = EQTBrho;
     
     var r1 = BCr;
     var d1 = BCd;
@@ -120,10 +127,12 @@ function H_bc_eqt_lambda(n,c,lambda) {
 
 // Interpolate between (rho0,d0,r0,l0) and (rho1,d1,r1,l1)
 function H_interp_lambda(lambda,n,c,rho0,d0,r0,rho1,d1,r1) {
-    
-    var di = (d1 - d0)*lambda + d0;
-    var rhoi = (rho1 - rho0)*lambda + rho0;
-    var ri = (r1 - r0)*lambda + r0;
+    var alambda = Math.abs(lambda);
+    var di = (d1 - d0)*alambda + d0;
+    var rhoi = (lambda > 0) ? (rho1 - rho0)*alambda + rho0 : -((rho1 - rho0)*alambda + rho0);
+    var ri = (r1 - r0)*alambda + r0;
+
+    console.log("key:",lambda,di,rhoi,ri)
     
     return H_general(n,c,rhoi,di,ri);
 }

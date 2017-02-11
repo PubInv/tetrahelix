@@ -223,7 +223,7 @@ function addShadowedLight(scene, x, y, z, color, intensity ) {
 }
 function createParalellepiped( sx, sy, sz, pos, quat, material ) {
     var pp = new THREE.Mesh( new THREE.BoxGeometry( sx, sy, sz, 1, 1, 1 ), material );
-    pp.castShadow = true;
+    pp.castShadow = false;;
     pp.receiveShadow = true;
     pp.position.set(pos.x,pos.y,pos.z);
     return pp;
@@ -233,7 +233,7 @@ function createParalellepiped( sx, sy, sz, pos, quat, material ) {
 function createSphere(r,pos,material) {
     var ball = new THREE.Mesh( new THREE.SphereGeometry( r, 18, 16 ), material );
     ball.position.set(pos.x,pos.y,pos.z);
-    ball.castShadow = true;
+    ball.castShadow = false;;
     ball.receiveShadow = true;
 
     return ball;
@@ -272,7 +272,7 @@ function create_actuator(d,b_a,b_z,pos,color) {
     
     mesh.lookAt(b_z);
     
-    mesh.castShadow = true;
+    mesh.castShadow = false;;
     mesh.receiveShadow = true;
     am.scene.add(mesh);
     mesh.structureKind = "member";
@@ -300,6 +300,13 @@ function alphabetic_name(n) {
     }
 }
 
+var scolors = [ d3.rgb("red"), d3.rgb("yellow"), d3.rgb("blue") ];
+var smats = [new THREE.MeshPhongMaterial({ color: new THREE.Color(scolors[0].r,scolors[0].g,scolors[0].b),
+					    reflectivity: 1.0} ),
+	     new THREE.MeshPhongMaterial({ color: new THREE.Color(scolors[1].r,scolors[1].g,scolors[1].b),
+					   reflectivity: 1.0} ),
+	     new THREE.MeshPhongMaterial({ color: new THREE.Color(scolors[2].r/4,scolors[2].g/4,scolors[2].b/4),
+					   reflectivity: 1.0} )];
 function load_NTetHelix(am,helix,tets,pvec,hparams) {
 
     // Okay, so here we need to create the geometry of the tetrahelix.
@@ -318,9 +325,9 @@ function load_NTetHelix(am,helix,tets,pvec,hparams) {
     var lambda = hparams.lambda;
     var n = tets+3;    
 
-    var colors = [ d3.rgb("red"), d3.rgb("yellow"), d3.rgb("blue") ];
+    var colors = [ d3.rgb("red"), d3.rgb("gold"), d3.rgb("blue") ];
+    var scolors = [ d3.rgb("firebrick"), d3.rgb("goldenrod"), d3.rgb("indigo") ];    
     var dcolor = [null,d3.rgb("green"),d3.rgb("purple")];
-    console.log("rho",rho);
     for(var i = 0; i < n; i++) {
 
 	var myRho = rho;
@@ -337,13 +344,25 @@ function load_NTetHelix(am,helix,tets,pvec,hparams) {
 	var v = new THREE.Vector3(q[0]*len, q[1]*len, q[2]*len);
 	v = v.add(pvec);
 
-	var material = new THREE.MeshPhongMaterial( { color: colors[i % 3] } );    
 
+	// I can't understand why I can't make this color happen.
+	var scolor;
+	if (rail == 0) {
+	    scolor =  new THREE.Color(0,0,0);
+	} else if (rail == 1) {
+	    scolor =  new THREE.Color(50,100,100);	    
+	} else {
+	    scolor =  new THREE.Color(0,0,0);	    
+	}
+	scolor.setRGB(100,100,50);
+	var smaterial = new THREE.MeshPhongMaterial({ color: scolor, reflectivity: 1.0} );    
+//	var scolor =  new THREE.Color(scolors[i % 3].r,scolors[i % 3].g,);
+
+//	var scolor = new THREE.Color(scolors[i % 3].r,scolors[i % 3].g,scolors[i % 3].b);
 	var pos = new THREE.Vector3();
 	pos.set( v.x, v.y, v.z);
-	var mesh = createSphere(am.JOINT_RADIUS,pos,material);
-
-	mesh.castShadow = true;
+	var mesh = createSphere(am.JOINT_RADIUS,pos,smats[rail]);
+	mesh.castShadow = false;;
 	mesh.receiveShadow = true;
 	am.scene.add(mesh);
 	
@@ -490,7 +509,7 @@ var AM = function() {
     //       this.NUMBER_OF_TETRAHEDRA = 5;
 
 
-    this.JOINT_RADIUS = 0.03*this.INITIAL_EDGE_LENGTH; // This is the current turret joint ball.
+    this.JOINT_RADIUS = 0.09*this.INITIAL_EDGE_LENGTH; // This is the current turret joint ball.
 
     this.LENGTH_FACTOR = 20;
 
@@ -646,11 +665,11 @@ function initGraphics() {
     
     bulbLight.add( new THREE.Mesh( bulbGeometry, bulbMat ) );
     bulbLight.position.set( 0, 20, 20 );
-    bulbLight.castShadow = true;
+    bulbLight.castShadow = false;;
     //  am.scene.add( bulbLight );
 
     var light = new THREE.PointLight( 0xffcccc, 100, 100 );
-    light.castShadow = true;
+    light.castShadow = false;;
     light.position.set( 0, 5, 0 );
     am.scene.add( light );
     
@@ -698,7 +717,7 @@ function initGraphics() {
 
     light.position.set( -d, d, -d );
 
-    light.castShadow = true;
+    light.castShadow = false;;
     //light.shadow.CameraVisible = true;
 
     light.shadow.MapWidth = 1024;
@@ -746,7 +765,7 @@ function initGraphics() {
     dirLight.position.multiplyScalar( 50 );
     am.scene.add( dirLight );
 
-    dirLight.castShadow = true;
+    dirLight.castShadow = false;;
 
     dirLight.shadow.mapSize.width = 2048;
     dirLight.shadow.mapSize.height = 2048;
@@ -1054,7 +1073,6 @@ initiation_stuff();
 
 init();
 animate();
-//add_helices(am,1);
 
 var len = am.INITIAL_EDGE_LENGTH;
 
@@ -1066,15 +1084,18 @@ var r0 = (2/3)*Math.sqrt(2/3);
 
 var num = 10;
 for (var i = 0; i < num+1; i++ ) {
-    var pvec0 = new THREE.Vector3((i - 5)*2*am.INITIAL_EDGE_LENGTH,am.INITIAL_HEIGHT,-3);    
+    var pvec0 = new THREE.Vector3((i - 5)*2*am.INITIAL_EDGE_LENGTH,am.INITIAL_HEIGHT,-3);
+    // Note: It is interesting to place very high lambda values in here --- it produces
+    // an assymmetry which I have not yet explained.
     add_equitetrabeam_helix_lambda(am,2 * (i - 5) / (num) ,pvec0,len);
 }
-
+/*
  for(var i = 0; i < am.helices.length; i++) {
     console.log(am.helix_params[i]);
     compute_helix_minimax(am.helices[i]);
     console.log(am.helix_params[i]);    
  }
+*/
     </script>
 
   
