@@ -565,9 +565,9 @@ axial growth can all be linearly interpolated with a parameter $\lambda$ between
 and low values (for the equitetrabeam):
 
 \begin{align*}
-r_{\lambda}  &=  \lvert \lambda \rvert (\frac{3 \sqrt{3}}{10}  - \sqrt{\frac{8}{27}}) + \sqrt{\frac{8}{27}}  \\
-d_{\lambda} &=   \lvert \lambda \rvert (3 \sqrt{10} - 1) + 1 \\
-\phi_{\lambda} &=  \lambda \rho_{bc}  + 0
+r_{\lambda}  &=  \lvert \lambda \rvert \cdot (\frac{3 \sqrt{3}}{10}  - \sqrt{\frac{8}{27}}) + \sqrt{\frac{8}{27}}  \\
+d_{\lambda} &=   \lvert \lambda \rvert \cdot (3 \sqrt{10} - 1) + 1 \\
+\phi_{\lambda} &=  \lambda \cdot \rho_{bc}  + 0
 \end{align*}
 to create a formula that generates a continuum of tetrahedral structures:
 
@@ -591,7 +591,9 @@ H_{continuum}(n,c,\lambda) =
 A value of $\lambda = 0$ generates the equitetrabeam, and $\lambda = 1$ generates the Boerdijk--Coxeter helix, and every
 value $\lambda \in [-1,1]$ generates an attractive structure which if physically realized is an inherently rigid structure
 with member lengths of no greater disparity than $16\%$.
-In the sense of structural engineering, it would be a relatively strong space frame.
+In the sense of structural engineering, it would be a relatively strong space frame. When $\lvert \lambda \rvert > 1$, tetrahelices
+are still produced, but as $\lvert \lambda \rvert >> 2$ these tetrahelices probably cease to be interesting to mechanical engineers,
+because their ability to withstand axial forces seem to diminish significantly.
 
  \begin{figure}[H]
      \centering
@@ -607,6 +609,8 @@ where $\lambda \neq 0$:
 \[
 p(\lambda) = 2 \pi  \cdot \frac{(\frac{8}{27} -1) \lambda +1)}{ \lambda  \rho_{bc} }
 \]
+
+Note: Need to understand how pitch is computed from negative lambda values.
 
 We can then create a continuum of radius, length, rho to place into our general equation
 to create continuum of helices between the BC and equitetrabeam. This continuum is 

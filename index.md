@@ -230,8 +230,14 @@ function createParalellepiped( sx, sy, sz, pos, quat, material ) {
 
 }
 // Not sure how to use the quaternion here,
-function createSphere(r,pos,material) {
-    var ball = new THREE.Mesh( new THREE.SphereGeometry( r, 18, 16 ), material );
+function createSphere(r,pos,color) {
+    //    var cmat = memo_color_mat(tcolor);
+    var tcolor = new THREE.Color(color);
+    console.log(color);
+    console.log(tcolor);
+        var cmat = new THREE.MeshPhongMaterial( { color: tcolor } );
+    var ball = new THREE.Mesh( new THREE.SphereGeometry( r, 18, 16 ), cmat );
+    console.log(ball.material.color);
     ball.position.set(pos.x,pos.y,pos.z);
     ball.castShadow = false;;
     ball.receiveShadow = true;
@@ -241,9 +247,9 @@ function createSphere(r,pos,material) {
 
 function get_member_color(gui,len) {
     if (len < am.MIN_EDGE_LENGTH)
-	return d3.rgb("black");
+	return d3.color("black");
     else if (len > am.MAX_EDGE_LENGTH)
-	return d3.rgb("black");
+	return d3.color("black");
     else {
 	var p = (len - am.MIN_EDGE_LENGTH) / (am.MAX_EDGE_LENGTH - am.MIN_EDGE_LENGTH);
 	return d3.rgb(gui.color_scale(len));
@@ -300,13 +306,10 @@ function alphabetic_name(n) {
     }
 }
 
-var scolors = [ d3.rgb("red"), d3.rgb("yellow"), d3.rgb("blue") ];
-var smats = [new THREE.MeshPhongMaterial({ color: new THREE.Color(scolors[0].r,scolors[0].g,scolors[0].b),
-					    reflectivity: 1.0} ),
-	     new THREE.MeshPhongMaterial({ color: new THREE.Color(scolors[1].r,scolors[1].g,scolors[1].b),
-					   reflectivity: 1.0} ),
-	     new THREE.MeshPhongMaterial({ color: new THREE.Color(scolors[2].r/4,scolors[2].g/4,scolors[2].b/4),
-					   reflectivity: 1.0} )];
+var scolors = [ d3.color("DarkRed"), d3.color("DarkOrange"), d3.color("Indigo") ];
+var smats = [ new THREE.Color(0x8B0000),
+	      new THREE.Color(0xFF8C00),
+	      new THREE.Color(0x4B0082)];
 function load_NTetHelix(am,helix,tets,pvec,hparams) {
 
     // Okay, so here we need to create the geometry of the tetrahelix.
@@ -325,9 +328,9 @@ function load_NTetHelix(am,helix,tets,pvec,hparams) {
     var lambda = hparams.lambda;
     var n = tets+3;    
 
-    var colors = [ d3.rgb("red"), d3.rgb("gold"), d3.rgb("blue") ];
-    var scolors = [ d3.rgb("firebrick"), d3.rgb("goldenrod"), d3.rgb("indigo") ];    
-    var dcolor = [null,d3.rgb("green"),d3.rgb("purple")];
+    var colors = [ d3.color("red"), d3.color("yellow"), d3.color("blue") ];
+//    var scolors = [ d3.rgb("firebrick"), d3.rgb("goldenrod"), d3.rgb("indigo") ];    
+    var dcolor = [null,d3.color("Green"),d3.color("purple")];
     for(var i = 0; i < n; i++) {
 
 	var myRho = rho;
@@ -339,31 +342,15 @@ function load_NTetHelix(am,helix,tets,pvec,hparams) {
 	} else {
 	    q = H_bc_eqt_lambda(num,rail,lambda);	    
 	}
-
 	
 	var v = new THREE.Vector3(q[0]*len, q[1]*len, q[2]*len);
 	v = v.add(pvec);
 
-
-	// I can't understand why I can't make this color happen.
-	var scolor;
-	if (rail == 0) {
-	    scolor =  new THREE.Color(0,0,0);
-	} else if (rail == 1) {
-	    scolor =  new THREE.Color(50,100,100);	    
-	} else {
-	    scolor =  new THREE.Color(0,0,0);	    
-	}
-	scolor.setRGB(100,100,50);
-	var smaterial = new THREE.MeshPhongMaterial({ color: scolor, reflectivity: 1.0} );    
-//	var scolor =  new THREE.Color(scolors[i % 3].r,scolors[i % 3].g,);
-
-//	var scolor = new THREE.Color(scolors[i % 3].r,scolors[i % 3].g,scolors[i % 3].b);
 	var pos = new THREE.Vector3();
 	pos.set( v.x, v.y, v.z);
 	var mesh = createSphere(am.JOINT_RADIUS,pos,smats[rail]);
-	mesh.castShadow = false;;
-	mesh.receiveShadow = true;
+	mesh.castShadow = false;
+	mesh.receiveShadow = false;
 	am.scene.add(mesh);
 	
 	var body = {};
@@ -618,8 +605,6 @@ function initGraphics() {
     am.camera.lookAt(origin);
     
     //    am.camera.quaternion.setFromAxisAngle(new THREE.Vector3(0,1,0), (Math.PI/2));
-
-
     
     am.scene = new THREE.Scene();
     am.scene.fog = new THREE.Fog( 0x000000, 500, 10000 );    
@@ -632,7 +617,8 @@ function initGraphics() {
     am.controls.target.set(0,0,0);
 
     am.renderer = new THREE.WebGLRenderer( { antialias: true } );
-    am.renderer.setClearColor( am.scene.fog.color );
+    am.renderer.setClearColor( 0xffffff );
+    am.renderer.autoClearColor = true;
     
     am.renderer.setPixelRatio( window.devicePixelRatio );
     am.renderer.setSize( window.innerWidth, window.innerHeight*am.window_height_factor );
@@ -643,147 +629,29 @@ function initGraphics() {
 
     am.cameraOrtho = new THREE.OrthographicCamera( 0, am.SCREEN_WIDTH, am.SCREEN_HEIGHT, 0, - 10, 10 );
     
-    am.renderer.shadowMap.enabled = true;
-    am.renderer.physicallyCorrectLights = true;
-    am.renderer.gammaInput = true;
-    am.renderer.gammaOutput = true;
+  //  am.renderer.shadowMap.enabled = true;
+//    am.renderer.physicallyCorrectLights = true;
+//    am.renderer.gammaInput = true;
+//    am.renderer.gammaOutput = true;
 
 //    am.textureLoader = new THREE.TextureLoader();
 
-    
-    var bulbGeometry = new THREE.SphereGeometry( 0.02, 16, 8 );
-    bulbLight = new THREE.PointLight( 0xffee88, 6 , 1000, 2 );
-    bulbMat = new THREE.MeshStandardMaterial( {
-	emissive: 0xffffee,
-	emissiveIntensity: 1,
-	color: 0xFF0000
-    });
-
-    bulbLight.power = bulbLuminousPowers[ 3];
-    bulbMat.emissiveIntensity = bulbLight.intensity / Math.pow( 0.02, 2.0 ); // convert from intensity to irradiance at bulb surface
-
-    
-    bulbLight.add( new THREE.Mesh( bulbGeometry, bulbMat ) );
-    bulbLight.position.set( 0, 20, 20 );
-    bulbLight.castShadow = false;;
-    //  am.scene.add( bulbLight );
-
-    var light = new THREE.PointLight( 0xffcccc, 100, 100 );
-    light.castShadow = false;;
-    light.position.set( 0, 5, 0 );
-    am.scene.add( light );
-    
-    hemiLight = new THREE.HemisphereLight( 0xddeeff, 0xffffff, 1 );
+      hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 1 );
     am.scene.add( hemiLight );
-/*    floorMat = new THREE.MeshStandardMaterial( {
-	roughness: 0.8,
-	color: 0xffffff,
-	metalness: 0.2,
-	bumpScale: 0.0005
-    });
-    ballMat = new THREE.MeshStandardMaterial( {
-	color: 0xffffff,
-	roughness: 0.5,
-	metalness: 1.0
-    });
-    
-    var floorGeometry = new THREE.PlaneBufferGeometry( 20, 20 );
-    var floorMesh = new THREE.Mesh( floorGeometry, floorMat );
-    floorMesh.receiveShadow = true;
-    floorMesh.rotation.x = -Math.PI / 2.0;
 
-    am.scene.add( floorMesh );
-*/
-    /*
+    var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.8 );
+    directionalLight.position = new THREE.Vector3(100,5,0);
+    am.scene.add( directionalLight );
+    
     var ambientLight = new THREE.AmbientLight( 0x404040 );
 
-
-    // lights
-    var light, materials;
-    am.scene.add( new THREE.AmbientLight( 0x666666 ) );
-    am.scene.add( new THREE.HemisphereLight( 0x443333, 0x111122 ) );
-
-    addShadowedLight(am.scene, 1, 1, 1, 0xffffff, 1.35 );
-    addShadowedLight(am.scene, 0.5, 1, -1, 0xffaa00, 1 );
-
-*/
     am.grid_scene = new THREE.Scene();
     am.grid_scene.fog = new THREE.Fog( 0x000000, 500, 10000 );    
-    
-    am.grid_scene.add( new THREE.AmbientLight( 0x666666 ) );
-/*    
-    light = new THREE.DirectionalLight( 0xffffff, 10 );
-    var d = 20;
-
-    light.position.set( -d, d, -d );
-
-    light.castShadow = false;;
-    //light.shadow.CameraVisible = true;
-
-    light.shadow.MapWidth = 1024;
-    light.shadow.MapHeight = 1024;
-
-    light.shadow.CameraLeft = -d;
-    light.shadow.CameraRight = d;
-    light.shadow.CameraTop = d;
-    light.shadow.CameraBottom = -d;
-
-    light.shadow.CameraFar = 3*d;
-    light.shadow.CameraNear = d;
-    light.shadow.Darkness = 0.5;
-    
-    am.grid_scene.add(light);
-    am.scene.add(light);    
-
-*/
-    //    grid_scene.fog = new THREE.Fog( 0x000000, 500, 10000 );
-//    am.grid_scene.add( new THREE.AmbientLight( 0x666666 ) );    
-
-//    addShadowedLight(am.grid_scene, 1, 1, 1, 0xffffff, 1.35 );
-    //    addShadowedLight(am.grid_scene, 0.5, 1, -1, 0xffaa00, 1 );
-
-
-
-    
-    am.scene.fog = new THREE.Fog( 0xffffff, 1, 5000 );
-    am.scene.fog.color.setHSL( 0.6, 0, 1 );
-
-    // LIGHTS
-    var hemiLight,dirLight;
-    
-    hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
-    hemiLight.color.setHSL( 0.6, 1, 0.6 );
-    hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
-    hemiLight.position.set( 0, 500, 0 );
-    am.scene.add( hemiLight );
-
-    //
-
-    dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
-    dirLight.color.setHSL( 0.1, 1, 0.95 );
-    dirLight.position.set( -1, 1.75, 1 );
-    dirLight.position.multiplyScalar( 50 );
-    am.scene.add( dirLight );
-
-    dirLight.castShadow = false;;
-
-    dirLight.shadow.mapSize.width = 2048;
-    dirLight.shadow.mapSize.height = 2048;
-
-    var d = 50;
-
-    dirLight.shadow.camera.left = -d;
-    dirLight.shadow.camera.right = d;
-    dirLight.shadow.camera.top = d;
-    dirLight.shadow.camera.bottom = -d;
-
-    dirLight.shadow.camera.far = 3500;
-    dirLight.shadow.bias = -0.0001;
 
     // GROUND
     var groundGeo = new THREE.PlaneBufferGeometry( 10000, 10000 );
-    var groundMat = new THREE.MeshPhongMaterial( { color: 0xffffff, specular: 0x050505 } );
-    groundMat.color.setHSL( 0.095, 1, 0.75 );
+    var groundMat = new THREE.MeshPhongMaterial( { color: 0x777777, specular: 0x050505 } );
+//    groundMat.color.setHSL( 0.095, 1, 0.75 );
 
     var ground = new THREE.Mesh( groundGeo, groundMat );
     ground.rotation.x = -Math.PI/2;
@@ -791,25 +659,6 @@ function initGraphics() {
     am.scene.add( ground );
 
     ground.receiveShadow = true;
-    // SKYDOME
-
-    var vertexShader = document.getElementById( 'vertexShader' ).textContent;
-    var fragmentShader = document.getElementById( 'fragmentShader' ).textContent;
-    var uniforms = {
-	topColor:    { value: new THREE.Color( 0x000000 ) },
-	bottomColor: { value: new THREE.Color( 0xffffff ) },
-	offset:      { value: 33 },
-	exponent:    { value: 0.6 }
-    };
-    uniforms.topColor.value.copy( hemiLight.color );
-
-    am.scene.fog.color.copy( uniforms.bottomColor.value );
-
-    var skyGeo = new THREE.SphereGeometry( 4000, 32, 15 );
-    var skyMat = new THREE.ShaderMaterial( { vertexShader: vertexShader, fragmentShader: fragmentShader, uniforms: uniforms, side: THREE.BackSide } );
-
-    var sky = new THREE.Mesh( skyGeo, skyMat );
-    am.scene.add( sky );
 
     
     // HACK:  These diemensions are probably not right here!
@@ -1087,7 +936,7 @@ for (var i = 0; i < num+1; i++ ) {
     var pvec0 = new THREE.Vector3((i - 5)*2*am.INITIAL_EDGE_LENGTH,am.INITIAL_HEIGHT,-3);
     // Note: It is interesting to place very high lambda values in here --- it produces
     // an assymmetry which I have not yet explained.
-    add_equitetrabeam_helix_lambda(am,2 * (i - 5) / (num) ,pvec0,len);
+    add_equitetrabeam_helix_lambda(am,4 * (i - 5) / (num) ,pvec0,len);
 }
 /*
  for(var i = 0; i < am.helices.length; i++) {
