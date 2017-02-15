@@ -120,7 +120,7 @@ From Robert Gray's site, repeating formula by H.S.M. Coxeter:
 V(n) =
 \left [
   \begin{tabular}{c}
-   $ r_{bc} \cos(n \theta $\\
+   $ r_{bc} \cos(n \theta) $\\
    $ r_{bc} \sin(n \theta) $\\
    $ n h_{bc}  $
   \end{tabular}
@@ -201,16 +201,41 @@ comprises are not perfectly regular, then we can twist and curve the tetrahelix 
 the mechanical engineer or robotocist because the structure remains an inherently rigid, omni-triangulated space frame, which
 may be expected to be at least somewhat mechanically strong.
 
+\section{Optimal Tetrahelices Have Evenly Spaced Vertices}
+
+We use the term \emph{tetrahelix} to mean any structure made of vertices and edges which is isomorphic to the BC helix,
+in which the vertices lie on three helices, 
+no matter what lengths the edges take on. One could consider various definitions of optimality for a tetrahelix,
+but the must useful to an enginner is to minimize the maximum difference between any two edges. We call a
+tetrahelix \emph{member-length minimax optimal} if there is not tetrahelix of the same radius and pitch with a smaller
+maximum edge length difference.
+
+Consider a tetrahelix isomporphic to an BC helix of unbounded extent. If all three rails do not have same pitch, there
+is an edge of unbounded length. So we are justified in talking about the pitch of the tetrahelix, even though we think
+of it as three helices. Similarly, if the axes are not parallel, there is an edge of unbounded length in the structure,
+so it is not optimal.
+
+Consider any tetrahelix in which the axes of the helices are parallel to $z$ but not coincident, but in which all three helices have the same
+radius. Consider the projection along the $z$ axis, which will be a figure of dots and connecting segments in the $xy$ plane. The convex
+hull for any one helix projection will be a circle (if its pitch is irrational) or an polygon if rational. So long as its rail angle is
+not $0$, it will have at least two points in the plane. One of these will be longer and will be made shorter by moving that helix closer
+to the midpoint of the other two in the $xy$ plane. Even if the rail angle is $\pi$, there will be two vertices for each rail, each of
+which is connected to both vertices of the other two rails. At lesast one of these lines is a longest line which will be made shorter by moving
+that helix in the $xy$ plane closer to the midpoint of the other two.
+
+So any any optimal tetrahelix with a rail-angle of greater than $0$, that is, with any curvature, will have conincident axes.
+
+We call a tetrahelix with $0$ curvature a \emph{tetrabeam}, and consider it as an important special case and an endpoint of a continuum
+of tetrahelices of decreasing curvature.
+
+
+ Now now that we have coincident axes, the same pitch, we can go on to the hard proof about where they occur.
+
  \begin{figure}[H]
      \centering
      \includegraphics[width=0.9\textwidth]{figures/TetrahelixColoringDiagram.png}
      \caption{Coloring of an (untwisted) Tetrabeam}
  \end{figure}
-
- \subsection{Recent Notes}
-
- Any minimax length optimal tetrahelix must have the same pitch on each helix, the length of one set of members grows unboundedly with
- each revolution. So in seeking a minimax optimal tetrahelix we only consider those with the same torsion.
 
  We show that in fact the nodes must be distributed in even thirds along the $z$-axis.
 
@@ -219,133 +244,33 @@ may be expected to be at least somewhat mechanically strong.
  comparing lengths of edges relative to the tetrahedron, because a change in position along the edge
  changes the length of a line, but in a complicated way depending on where it is relative to the ellipse.
 
- \subsection{Very bad attempts to prove things}
-
- First prove that any structure isomorphic to the BC-Helix of unbounded extent in which each rail lies on a helix has certain
- properties if it it member length minimax optimal.
-
- The pitches must be equal, or some member grows without bound.
-
- If the axes are not parallel, some member grows without bound.
-
- We can therefore think in terms of O,G, P displacement.
-
- We need to prove that the three axes are coincident.
-
- Suppose there is one helix that is not conicident with the other two.  So long as $\rho \neq 0$, there is some value of $\kappa$
- makes the lenth to any node longer and shorter. Then the distance between nodes depends on $\kappa$, unless $\rho = 0$ or $\rho = \pi$.
- One of these makes the longest distance longer and the shortest distance shorter, so a superior solution occurs when the a
- axes conincide.  This is actually correct but poorly written.
-
- Now now that we have coincident axes, the same pitch, we can go on to the hard proof about where they occur.
-
-  Note: This is a new, simpler proof attempt.
-  \begin{theorem}
-    Suppose that all edge vertices are on one of three helices of the same positive pitch and the same radius with the
-    same shared axes about the $z$ axis differing by $120\degree$ about $z$.
-    However, we do not assume that the three helices are equidistant.
-    Without loss of generality, consider $A$ and $B$ to be to be on the same axis, $C$ to be on a second axis, and $D$ to be on the final.
-    Without loss of generality assume: $A.z \leq C.z \leq D.z \leq B.z$.
-    Then the minimum maximum difference between any two nodes is acheived when
-    $ \overline{\rm AD} =  \overline{\rm BC} $ and $ \overline{\rm AC} =  \overline{\rm CD}, \overline{\rm DB} $.
+ \begin{theorem}
+   \label{eventhirds}
+   A tetrahelix of a given radius and height $h$ in which all nodes are evenly spaced at $h/3$ intervals on the $z$ axis is optimal.
+     Any one tetrahedron in a tetrahelix has $1$ rail edge, $2$ one-hop edges connected to the rail and $2$ two-hop edges connected to the rail.
+  The edge opposite of the rail edge is a one-hop edge.
   \end{theorem}
-Note: Change this to PQR. Also, may be better to use $\alpha$ instead of $\rho$ in this proof.
-  \begin{proof}
-\begin{align*}
-  O  &= C.z - A.z \\
-  G &= D.z - C.z \\
-  P &=  B.z - D.z
-\end{align*}
 
-Using the cartesian distance formula:
-\begin{align*}
-  \overline{\rm CD}  &= \sqrt{G^2 + (r\sin{0 \rho} -  r\sin{G \rho})^2 + (r\cos{0 \rho} - r\cos{G \rho})^2} \\
-    \overline{\rm CD}  &= \sqrt{G^2 + (0 -  r\sin{G \rho})^2 + (r - r\cos{G \rho})^2} \\
-    \overline{\rm CD}  &= \sqrt{G^2 + r^2(\sin{G \rho})^2 + r^2(1 - \cos{G \rho})^2} \\
-    \overline{\rm CD}  &= \sqrt{G^2 + r^2(1 + \sin^2{G \rho}  - \cos^2{G \rho})} \\    
-\end{align*}
+ \begin{proof}
 
-Note: According to Wolfram Alpha, $\sin^2{G \rho}  - \cos^2{G \rho} = -\cos{2 G \rho}$
-
-So, for all O,G,P,
-\begin{align*}
-  \overline{\rm AB}  &= 1 \\        
-  \overline{\rm CD}  &= \sqrt{G^2 + r^2(1 + \sin^2{G \rho}  - \cos^2{G \rho})} \\
-  \overline{\rm AC}  &= \sqrt{O^2 + r^2(1 + \sin^2{O \rho}  - \cos^2{O \rho})} \\
-  \overline{\rm BD}  &= \sqrt{P^2 + r^2(1 + \sin^2{P \rho}  - \cos^2{P \rho})} \\
-  \overline{\rm AD}  &= \sqrt{(O+G)^2 + r^2(1 + \sin^2{(O +G) \rho}  - \cos^2{(O+G) \rho})} \\
-  \overline{\rm BC}  &= \sqrt{(P+G)^2 + r^2(1 + \sin^2{(P +G) \rho}  - \cos^2{(P+G) \rho})} \\      
-\end{align*}
-
-
-
-We show that the maximum difference between these variables for a given $r$ is minimized when $O=G=P=1/3$.
-First we show any configuration in which $O \neq P$ implies a solution at least as good in terms of minimax difference in which $O = P$.
-Let 
-\begin{align*}
-  \frac{O' + P'}{2} &= \frac{1}{2} + \delta
-\end{align*}
-Then any configuration $O' - \delta/2, P' - \delta/2$ has a minimax at least as good as $O',P'$, because, if $\delta > 0$, then
-$\overline{\rm A'C'}$ is the longest segment of the four $\overline{\rm A'C'}, \overline{\rm A'D'}, \overline{\rm B'C'} =  \overline{\rm B'D'} $.
-$\overline{\rm B'D'}$ is the shortest of this set.
-\begin{align*}
-  \overline{\rm A'D'} &> \overline{\rm B'C'}  \\
-   \overline{\rm B'D'} &< \overline{\rm A'C'}  \\  
-   \overline{\rm AB} &=   \overline{\rm A'B'}   \\
-   \overline{\rm CD} &=   \overline{\rm C'D'}   \\
-  \\
-    \overline{\rm AC}&=   \overline{\rm BD}   \\
-   \overline{\rm AD} &=   \overline{\rm BC}   \\
-  \\  
-   \overline{\rm AC} &<  \overline{\rm A'C'} \\
-   \overline{\rm AD} &< \overline{\rm A'D'}   \\
-   \overline{\rm BC} &>  \overline{\rm B'C'} \\
-   \overline{\rm BD} &> \overline{\rm B'D'}   \\
-\end{align*}
-So the maximum $\overline{\rm AD}$ is at most the old maximum. The minimum $\overline{\rm AC}$ is at least the old minimum of our set of four.
-If the maximum or minimum of a subset is not worsened, the maximum or minimum of the total set cannot be worsened. Therefore $O' - \delta/2, P' - \delta/2$
-is no worse than $O', P'$. So any mimimax solution is no better than one in which $(O + P)/2 = 1/2$, or $O = P$.
-
-Suppose $\overline{\rm C'D'}$ is the shortest edge. Increasing $G$ thereby improves our mimimum, up until the next shortest edge length, $\overline{\rm AC}$.
-This may increase $\overline{\rm BC}$ and $\overline{\rm AD}$, but more slowly (???) than $\overline{\rm C'D'}$ is being increased, until  $\overline{\rm C'D'} =
-\overline{\rm AC}$.
-Note: This is sketchy, can we show that the derivative of our formula for CD  with respect to $G$ is really higher than $AD$? These derivatives will depend on $\rho$ slightly, which is exactly right!
-
-  Any tetrahelix $ABCD$ of edge lengths $AD = u, AB = BC = CD = v , AC = BD = w$, where $1 \leq u \leq v$ is mimimax optimal.
-  Any one tetrahedron in a tetrahelix has $1$ rail edge, $2$ mid-length edges connected to the rail and $2$ long edges connected to the rail.
-  The edge opposite of the rail edge is a mid-length edge.
-    \end{proof}
-
+   In principle in any tetrahelix where the three helices have any displacement along the $z$ axis there are 9 distinct edge classes:
+   3 rail edges, a one-hop length between eachof 3 rails, and two hop length between each of three rails, where the two-hop length is a maximum
+   length between rails (which could equal the one-hop length.) However, we have already shown the pitches and the rail lengths are equal
+   in any optimal tetrahelix.
+   
+    Consider the tetrahelix in which the vertices  are evenly spaced at $h/3$ intervals on the $z$ axis. Every edge is either a rail edge, or it makes one
+    hop, or it makes two hops. All of the one-hop edges are equal length.  All of the two-hop edges are equal length.
+    
+    Any displacemnt along the $z$ axis of any rail increases the length of one or two two-hop edges and shortens the length of one or two one-hop edges.
+    This increases the minimax distance no matter what the rail edge length is, since all rail edges are the same length. Therefore, an evenly spaced
+    tetrahelix is the unique optimal for any given radius and height.
+  \end{proof}
   
-\begin{theorem}
-  \label{tetrahelixoptimality}
-  Any one tetrahedron in a minimax-optimal tetrahelix $ABCD$ of edge lengths $\overline{\rm AD} = 1, \overline{\rm AB} = \overline{\rm BC} = \overline{\rm CD} = u , \overline{\rm AC} = \overline{\rm BD} = v$, where $1 \leq u \leq v$.
-  Any one tetrahedron in a tetrahelix has $1$ rail edge, $2$ mid-length edges connected to the rail and $2$ long edges connected to the rail.
-  The edge opposite of the rail edge is a mid-length edge.
-\end{theorem}
 
-\begin{proof}
-The edge opposite of the rail edge is a mid-length edge because between any two rails the edges alteranate mid-length and long.
-\end{proof}
-
-\begin{corollary}
-  \label{eventhirds}
-  Any minimax optimal tetrahelix has its colored edges spaced at 1/3 the height of
-  a tetrahedra along the z-axis, where the height is the z-distance of the rail edge.
-  \end{corollary}
-
-\begin{proof}
-  Let the variables $O,G,P$ represent the z-axis distance from the
-  $R_0$ to $Y_0$, $Y_0$ to $B_0$, and
-  $B_0$ to $R_0$ respectively. Then $O+G+P = h$. But $O=G=P$, since each edge between
-  their nodes spans two rails of the same distance with an edge of the same length,
-  so that the $z$-distance between each node is the same. So $O=G=P=h/3$.
-\end{proof}
-
-Note that based on Theorems \ref{tetrahelixoptimality} and \ref{eventhirds}, we are justified in classifying edge lengths as \emph{rail},\emph{one-hop}, or
+Note that based on \ref{eventhirds}, we are justified in classifying edge lengths as \emph{rail},\emph{one-hop}, or
 \emph{two-hops}. The one-hop edges are the edges between closest on the $z$-axis, and the two-hop edges are those that hop over a vertex.
 
-Every optimal tetrahelix has vertices lying on helices expressible in the form:
+By \ref{eventhirds} every optimal tetrahelix has vertices lying on helices expressible in the form:
 \[
 V_{optimal}(n,c) =
 \left [
@@ -354,7 +279,11 @@ V_{optimal}(n,c) =
    $ r \sin(n \alpha +  c 2 \pi /3) $\\
    $ \frac{d(n +c / 3)}{3}   $
   \end{tabular}
-\right ]
+  \right ],
+\text{where:}
+\begin{tabular}{c}
+  $c \in \{0,1,2\}$
+  \end{tabular}      
 \]
 where we have not yet investigated in the general case the relationships beteween $\alpha$, $r$, and $d$ in this formulation.
 However, we understand that when $\alpha = 0$, the helices are degenerate, having curvature of $0$, and
@@ -397,7 +326,6 @@ H_{BCsymmmetric}(n,c) =
   \end{tabular}      
 \]
 
-
 \section{Parametrizing Tetrahelices via Rail Angle}
 
 Although the $\lambda$ parametrization presented above is a sensible one
@@ -418,7 +346,6 @@ controls how far a rail edge of a tetrahelix deviates from being
 parallel with the axis, or the ``twistiness'' of tetrahelix. Ideally
 we will treat a positive angle as creating a clockwise tetrahelix and
 a negative as creating a counter-clockwise helices.
-
 
 Please refer back to Figure \ref{railanglefig}.
 
@@ -483,8 +410,17 @@ tetrahelix by (where $dist$ is the cartesian distance function):
   \text{one-hop} &= dist(H_{general}(n,c,\rho,h_{\rho}),H_{general}(n,c+1,\rho,d_{\rho}))  \\
   \text{two-hops} &= dist(H_{general}(n,c,\rho,h_{\rho}),H_{general}(n,c+2,\rho,d_{\rho}))  \\  
 \end{align*}
-Where are invarinat for all $n$ and $c$.
+Which are invarinat for all $n$ and $c$.
 
+\begin{align*}
+  \text{one-hop} &= dist(H_{general}(n,c,\rho,h_{\rho}),H_{general}(n,c+1,\rho,d_{\rho}))  \\
+  \text{one-hop} &= dist(H_{general}(0,0,\rho,h_{\rho}),H_{general}(0,1,\rho,d_{\rho}))  \\  
+  \text{one-hop}  &= \sqrt{d_{\rho}^2/9 + (r\sin{\frac{\rho(3\cdot 0 + 0)}{2\pi}} - r\sin{\frac{\rho(3\cdot 0 + 0+1)}{2\pi}})^2  +
+    (r\cos{\frac{\rho(3\cdot0+0)}{2\pi}} - r\cos{\frac{\rho(3\cdot + 0+1)}{2\pi}})^2
+  \text{one-hop}  &= \sqrt{d_{\rho}^2/9 + (r\sin{\frac{\rho(0)}{2\pi}} - r\sin{\frac{\rho(1)}{2\pi}})^2  +
+    (r\cos{\frac{\rho(0)}{2\pi}} - r\cos{\frac{\rho(1)}{2\pi}})^2
+  } \\  
+\end{align*}
 
 \section{The Equitetrabeam}
 
@@ -721,5 +657,65 @@ On Rail diagram, add a second tetrahedron, and a second rho.
 Make YouTube video.
 
 
+    \section{Old Proofs}
+    
+We can create the distance between representative nodes as:
+\begin{align*}
+  \overline{\rm AB}  &= 1 \\        
+  \overline{\rm CD}  &= \sqrt{G^2 + r^2(1 + -\cos{2 G \rho})} \\
+  \overline{\rm AC}  &= \sqrt{O^2 + r^2(1 + \sin^2{O \rho}  - \cos^2{O \rho})} \\  
+  \overline{\rm AC}  &= \sqrt{O^2 + r^2(1 + -\cos{2 O  \rho})} \\
+  \overline{\rm BD}  &= \sqrt{P^2 + r^2(1 + -\cos{2 P \rho}))} \\
+  \overline{\rm AD}  &= \sqrt{(O+G)^2 + r^2(1 + -\cos{2 (O + G)  \rho})} \\
+  \overline{\rm BC}  &= \sqrt{(P+G)^2 + r^2(1 + -\cos{2 (P + G) \rho})} \\      
+\end{align*}
+
+
+Using the cartesian distance formula:
+\begin{align*}
+  \overline{\rm CD}  &= \sqrt{G^2 + (r\sin{0 \rho} -  r\sin{G \rho})^2 + (r\cos{0 \rho} - r\cos{G \rho})^2} \\
+    \overline{\rm CD}  &= \sqrt{G^2 + (0 -  r\sin{G \rho})^2 + (r - r\cos{G \rho})^2} \\
+    \overline{\rm CD}  &= \sqrt{G^2 + r^2(\sin{G \rho})^2 + r^2(1 - \cos{G \rho})^2} \\
+    \overline{\rm CD}  &= \sqrt{G^2 + r^2(1 + \sin^2{G \rho}  - \cos^2{G \rho})} \\
+    \overline{\rm CD}  &= \sqrt{G^2 + r^2(1 + -\cos{2 G \rho})} \\        
+\end{align*}
+Note: $\sin^2{x \rho}  - \cos^2{x \rho} = -\cos{2 x \rho}$
+
+So, for all O,G,P,
+\begin{align*}
+  \overline{\rm AB}  &= 1 \\        
+  \overline{\rm CD}  &= \sqrt{G^2 + r^2(1 + -\cos{2 G \rho})} \\
+  \overline{\rm AC}  &= \sqrt{O^2 + r^2(1 + \sin^2{O \rho}  - \cos^2{O \rho})} \\  
+  \overline{\rm AC}  &= \sqrt{O^2 + r^2(1 + -\cos{2 O  \rho})} \\
+  \overline{\rm BD}  &= \sqrt{P^2 + r^2(1 + -\cos{2 P \rho}))} \\
+  \overline{\rm AD}  &= \sqrt{(O+G)^2 + r^2(1 + -\cos{2 (O + G)  \rho})} \\
+  \overline{\rm BC}  &= \sqrt{(P+G)^2 + r^2(1 + -\cos{2 (P + G) \rho})} \\      
+\end{align*}
+
+
+
+
+Then we can simplify our distance equations:
+\begin{align*}
+  \overline{\rm AB}  &= 1 \\        
+  \overline{\rm CD}  &= \sqrt{G^2 + r^2(1 + -\cos{2 G \rho})} \\
+  \overline{\rm AC} &=   \overline{\rm BD} &= \sqrt{P^2 + r^2(1 + -\cos{2 P \rho}))} \\
+  \overline{\rm AC} &=   \overline{\rm BD} &= \sqrt{((1-G)/2)^2 + r^2(1 + -\cos{ \rho (1-G) }))} \\  
+  \overline{\rm AD} &=  \overline{\rm BC} &=  \sqrt{((P+G)^2 + r^2(1 + -\cos{2 (P + G) \rho})} \\
+  \overline{\rm AD} &=  \overline{\rm BC} &=  \sqrt{((1+ G)/2 )^2 + r^2(1 + -\cos{\rho (1 + G)})} \\        
+\end{align*}
+
+When $G = 0$, $\overline{\rm CD} = 0$. Our solution is improved as we increase $G$ until either $ \overline{\rm CD} = \overline{\rm AC}$, or the
+quantity $ \overline{\rm BC} - \overline{\rm CD} $ starts increasing rather than decreasing (that is, when the derivative is positive.)
+
+
+
+Suppose $\overline{\rm C'D'}$ is the shortest edge. Increasing $G$ thereby improves our mimimum, up until the next shortest edge length, $\overline{\rm AC}$.
+This may increase $\overline{\rm BC}$ and $\overline{\rm AD}$, but more slowly (???) than $\overline{\rm C'D'}$ is being increased, until  $\overline{\rm C'D'} =
+\overline{\rm AC}$.
+Note: This is sketchy, can we show that the derivative of our formula for CD  with respect to $G$ is really higher than $AD$? These derivatives will depend on $\rho$ slightly, which is exactly right!
+
+
+  
 
   
