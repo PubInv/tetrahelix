@@ -356,7 +356,8 @@ Please refer back to Figure \ref{railanglefig}.
 
 \begin{align*}
   1^2 &= d^2 + (2 r \sin{ \rho / 2})^2 \\
-  1 &= d^2 + 4 r^2 (\sin{ \rho / 2})^2 
+  1 &= d^2 + 4 r^2 (\sin{ \rho / 2})^2 \\
+  d^2 &= 1 - 4 r^2 (\sin{ \rho / 2})^2   
 \end{align*}
 
 Checking the important special case of the BC helix, we find that this equation
@@ -412,49 +413,51 @@ tetrahelix by (where $dist$ is the cartesian distance function):
 Which are invarinat for all $n$ and $c$.
 
 \begin{align*}
-  \text{one-hop} &= dist(H_{general}(n,c,\rho,h_{\rho}),H_{general}(n,c+1,\rho,d_{\rho}),r_{\rho})  \\
-  \text{one-hop} &= dist(H_{general}(0,0,\rho,h_{\rho}),H_{general}(0,1,\rho,d_{\rho},r_{\rho}))  \\  
-  \text{one-hop}  &= \sqrt{\frac{d_{\rho}^2}{9} + (,r_{\rho}\sin(\rho(3\cdot 0 + 0)) - r_{\rho}\sin(\rho(3\cdot 0 + 1)+\frac{2\pi}{3}))^2  +
-    (r_{\rho}\cos(\rho(3\cdot0+0)) - r_{\rho}\cos(\rho(3\cdot 0+1) + \frac{2\pi}{3})))^2} \\
-  \text{one-hop}  &= \sqrt{\frac{d_{\rho}^2}{9} + (0  - r_{\rho}\sin(\rho + \frac{2\pi}{3}))^2  +
-    (r_{\rho} - r_{\rho}\cos(\rho + \frac{2\pi}{3}))^2} \\
-  \text{one-hop}  &= \sqrt{\frac{d_{\rho}^2}{9} + r_{\rho}^2\sin^2(\rho + \frac{2\pi}{3})  +
-    r_{\rho}^2(1 - \cos(\rho + \frac{2\pi}{3}))^2} \\
-  \text{one-hop}  &= \sqrt{\frac{d_{\rho}^2}{9} + r_{\rho}^2(\sin^2(\rho + \frac{2\pi}{3})  + (1 - \cos(\rho + \frac{2\pi}{3}))^2)} \\
+  \text{one-hop} &= dist(H_{general}(n,c,\rho,d_{\rho}),H_{general}(n,c+1,\rho,d_{\rho}),r_{\rho})  \\
+  \text{one-hop} &= dist(H_{general}(0,0,\rho,d_{\rho}),H_{general}(0,1,\rho,d_{\rho},r_{\rho}))  \\  
+  \text{one-hop}  &= \sqrt{\frac{d_{\rho}^2}{9} + (r_{\rho}\sin(\rho((1/3)\cdot 0 + 0)) - r_{\rho}\sin(\rho((1/3)\cdot 0 + 1)+\frac{2\pi}{3}))^2  +
+    (r_{\rho}\cos(\rho((1/3)\cdot0+0)) - r_{\rho}\cos(\rho((1/3)\cdot 0+1) + \frac{2\pi}{3})))^2} \\
+  \text{one-hop}  &= \sqrt{\frac{d_{\rho}^2}{9} + (0  - r_{\rho}\sin(\rho/3 + \frac{2\pi}{3}))^2  +
+    (r_{\rho} - r_{\rho}\cos(\rho/3 + \frac{2\pi}{3}))^2} \\
+  \text{one-hop}  &= \sqrt{\frac{d_{\rho}^2}{9} + r_{\rho}^2\sin^2(\rho/3 + \frac{2\pi}{3})  +
+    r_{\rho}^2(1 - \cos(\rho/3 + \frac{2\pi}{3}))^2} \\
+  \text{one-hop}  &= \sqrt{\frac{d_{\rho}^2}{9} + r_{\rho}^2(\sin^2(\rho/3 + \frac{2\pi}{3})  + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2)} \\
+  \text{but... } & d_{\rho}^2 &= 1 - 4 r_{\rho}^2 (\sin{ \rho / 2})^2 \\
+  \text{one-hop}  &= \sqrt{\frac{1 - 4 r_{\rho}^2 (\sin{ \rho / 2})^2}{9} + r_{\rho}^2(\sin^2(\rho + \frac{2\pi}{3})  + (1 - \cos(\rho + \frac{2\pi}{3}))^2)} \\  
 \end{align*}
+
+To Be Done: I need to see if the one-hop formulat can be simplified.
+Compute the two-hop formula and test that it gives length 1 when the BC constants. -- YES!
 
 By similar algebra and trigonometry:
 \begin{align*}
-  \text{two-hops}  &= \sqrt{\frac{4d_{\rho}^2}{9} + r_{\rho}^2(\sin^2(\rho + \frac{2\pi}{3})  + (1 - \cos(\rho + \frac{2\pi}{3}))^2)} \\
+  \text{two-hops}  &= \sqrt{4\frac{1 - 4 r_{\rho}^2 (\sin{ \rho / 2})^2}{9} + r_{\rho}^2(\sin^2(2\rho/3 + \frac{4\pi}{3})  + (1 - \cos(2\rho/3 + \frac{4\pi}{3}))^2)} \\
 \end{align*}
 
-Let $f_{\rho} = \sin^2(\rho + \frac{2\pi}{3})  + (1 - \cos(\rho + \frac{2\pi}{3})^2$.
+Note: it is not clear I am allowed to do this, because the two-hop function is different!
+
+Let $f_{\rho} = \sin^2(\rho/3 + \frac{2\pi}{3})  + (1 - \cos(\rho/3 + \frac{2\pi}{3})^2$.
+Let $g_{\rho} = \sin^2(2\rho/3 + \frac{4\pi}{3})  + (1 - \cos(2\rho/3 + \frac{4\pi}{3})^2$.
 
 The expression $f_{\rho}$ is maximized when $\rho = 2\pi/6 = 60\degree$, so that
 is in some sense the ``wildest'' rail angle which maximizes the lengths. Since this expression is increasing up until this angle,
 we conclude that:
 \begin{align*}
-  \text{two-hops} - \text{one-hop}  &= \sqrt{\frac{4d_{\rho}^2}{9} + r_{\rho}^2f_{\rho}} - \sqrt{\frac{d_{\rho}^2}{9} + r_{\rho}^2f_{\rho}} 
+  \text{two-hops} - \text{one-hop}  &= \sqrt{\frac{4d_{\rho}^2}{9} + r_{\rho}^2g_{\rho}} - \sqrt{\frac{d_{\rho}^2}{9} + r_{\rho}^2f_{\rho}} 
 \end{align*}
 
-The analysis below here is incorrect because it doesn't take into account the change in $d_{\rho}$ with $\rho$. In the special case that
-$\rho = 0$, the analysis is correct. Possibly I need to change to use two equations to try to find the optimal $\rho$ here.
-In any case it must unify with the BC math!
-
-Tomorrow try combining with our equation for $d_{\rho}$ to see if I can make it come out.
+To Be Done: I need to plot this expression, see if it has a maximum, and see if it always decreasing in this range, to see if we can prove optimality.
 
 Since $d_{\rho}$ and $r_{\rho}$ are positive, this difference decreases as $f_{\rho}$ increases. Therefore we decrease the minimax length
 of the whole system as we increase $\rho$ up to $\pi/3$ up unto the point that the shorter, one-hop distance is equal to the rail-length ($1$).
 Therefore, to optimize the whole system so long as $\rho < \pi/3$, we equate one-hop to $1$ to find the optimum radius:
 
 
-
-
 \begin{align*}
-  1 &= \sqrt{\frac{d_{\rho}^2}{9} + r_{\rho}^2(\sin^2(\rho + \frac{2\pi}{3})  + (1 - \cos(\rho + \frac{2\pi}{3}))^2)} \\
-  r_{\rho} &= \frac{\sqrt{9-d^2}  }{3\sqrt{\sqrt{3}\sin(\rho) +\cos(\rho) + 2}}
+  1 &= \sqrt{\frac{d_{\rho}^2}{9} + r_{\rho}^2(\sin^2(\rho/3 + \frac{2\pi}{3})  + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2)} \\
+  r_{\rho} &= \frac{2 \sqrt{2} }{\sqrt{9 \sqrt{3} sin(\rho/3) + 9 \cos(\rho/3) + 2 cos(\rho)+ 16 }}
 \end{align*}
-(where $\sqrt{3}\sin(\rho) +\cos{\rho} + 2 \neq 0$), which does not occur when $\rho \leq \pi/3$).
+(where $9 \cos(\rho/3) + 2 cos(\rho)+ 16  \neq 0$), which does not occur when $\rho \leq \pi/3$).
 
 Therefore, by computing $r_{\rho}$ from this equation, we can construct minimax optimal tetrahelix for an $\rho < \pi/3$.
 
