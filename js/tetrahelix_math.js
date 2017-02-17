@@ -33,6 +33,8 @@ var EQTBr =  (2/3)*Math.sqrt(2/3);
 var EQTBd = 1;
 var EQTBrho = 0;
 
+var USE_OPTIMAL_RADIUS = true;
+
 
 // This from https://github.com/josdejong/Mathjs/blob/develop/lib/utils/bignumber/nearlyEqual.js
 function nearlyEqual(x, y, epsilon) {
@@ -85,12 +87,54 @@ function find_rrho_from_d(rho,d) {
     return find_rrho_from_d_el(rho,d,1);
 }
 
+function optimal_radius(rho,el) {
+    var numer = 2*el;
+    var t1 = Math.sqrt(3) * Math.sin(rho/3);
+    var t2 = Math.cos(rho/3);
+    var t3 = Math.cos(rho);
+    var t4 = 8;
+    var denom = Math.sqrt(9*(t1 + t2)/2 + t3 + t4);
+    return numer/denom;
+}
 
-function H_general(n,c,rho,d,r) {
+function one_hop(r,rho,el) {
+    var t1 = 1/9;
+    var t2 = -4*Math.sin(rho/2)*Math.sin(rho/2)/9;
+    var t3 = Math.sin(rho/3 + 2*Math.PI/3);
+    var t4 = (1 - Math.cos(rho/3 + 2*Math.PI/3));
+    return Math.sqrt(t1 + r*r*(t2 + t3*t3 + t4*t4));
+}
+
+function two_hop(r,rho,el) {
+    var t1 = 4/9;
+    var t2 = -16*Math.sin(rho/2)*Math.sin(rho/2)/9;
+    var t3 = Math.sin(2*rho/3 + 4*Math.PI/3);
+    var t4 = (1 - Math.cos(2*rho/3 + 4*Math.PI/3));
+    return Math.sqrt(t1 + r*r*(t2 + t3*t3 + t4*t4));
+}
+
+function test_optimal_radius() {
+    var MAX_DEGREES = 45;
+    for(var i = 0; i < 100;i++) {
+	var rho = Math.PI*(i*MAX_DEGREES/100)/180;
+	var r = optimal_radius(rho,1.0);
+	for(var j = 0; j < 10; j++) {
+	    // iterate rj centered around the optimal distance.
+	    var rj = r/2 + (j/10)*r;
+	    var h1 = one_hop(rj,rho,1.0);
+	    var h2 = two_hop(rj,rho,1.0);
+	    console.log(180*rho/Math.PI,rj,h2-h1);
+	}
+    }
+}
+function H_general(n,c,rho,d,r,s) {
+    return H_general_s(n,c,rho,d,r,1);
+}
+function H_general_s(n,c,rho,d,r,s) {
     var pnt = [];
     var kappa = n+ c/3.0;
     var rk = rho*kappa;
-    var angle = rk + c*2*Math.PI/3;
+    var angle = rk + s*c*2*Math.PI/3;
     pnt[0] = r*Math.cos(angle);
     pnt[1] = r*Math.sin(angle);
     pnt[2] = d*kappa;
@@ -130,11 +174,14 @@ function H_interp_lambda(lambda,n,c,rho0,d0,r0,rho1,d1,r1) {
     var alambda = Math.abs(lambda);
     var di = (d1 - d0)*alambda + d0;
     var rhoi = (lambda > 0) ? (rho1 - rho0)*alambda + rho0 : -((rho1 - rho0)*alambda + rho0);
-    var ri = (r1 - r0)*alambda + r0;
-
-    console.log("key:",lambda,di,rhoi,ri)
-    
-    return H_general(n,c,rhoi,di,ri);
+    var rinterp = (r1 - r0)*alambda + r0;	
+    var ropt = optimal_radius(rhoi,1);
+    console.log(lambda,di,rinterp,ropt);    
+    if (USE_OPTIMAL_RADIUS) {
+	return H_general_s(n,c,rhoi,di,ropt,Math.sign(lambda) == -1 ? -1 : 1);	
+    } else {
+	return H_general_s(n,c,rhoi,di,rinterp,Math.sign(lambda) == -1 ? -1 : 1);	
+    }
 }
 
 function test_rail_angle_formula_against_BC() {

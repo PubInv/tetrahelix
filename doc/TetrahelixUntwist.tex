@@ -15,7 +15,12 @@
 \newtheorem{corollary}{Corollary}
 \newtheorem{conjecture}{Conjecture}
 \newtheorem{proofsketch}{Proof Sketech}
+
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+
 \usepackage{draftwatermark}
+
 
 \SetWatermarkText{DRAFT}
 \SetWatermarkScale{6}
@@ -26,7 +31,7 @@
 
 % See the ``Article customise'' template for come common customisations
 
-\title{Untwisting the Tetrahelix (v0.4)}
+\title{Untwisting the Tetrahelix (v0.5)}
 \author{Robert L. Read \texttt{read.robert@gmail.com} \and
   Robert Gatliff \texttt{robert@toubat.org}
 }
@@ -421,9 +426,12 @@ Which are invarinat for all $n$ and $c$.
     (r_{\rho} - r_{\rho}\cos(\rho/3 + \frac{2\pi}{3}))^2} \\
   \text{one-hop}  &= \sqrt{\frac{d_{\rho}^2}{9} + r_{\rho}^2\sin^2(\rho/3 + \frac{2\pi}{3})  +
     r_{\rho}^2(1 - \cos(\rho/3 + \frac{2\pi}{3}))^2} \\
+  %% Formula above checks at sqrt(8/27), 1, 0, and rho_bc, h_bc, r_bc.
   \text{one-hop}  &= \sqrt{\frac{d_{\rho}^2}{9} + r_{\rho}^2(\sin^2(\rho/3 + \frac{2\pi}{3})  + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2)} \\
-  \text{but... } & d_{\rho}^2 &= 1 - 4 r_{\rho}^2 (\sin{ \rho / 2})^2 \\
-  \text{one-hop}  &= \sqrt{\frac{1 - 4 r_{\rho}^2 (\sin{ \rho / 2})^2}{9} + r_{\rho}^2(\sin^2(\rho + \frac{2\pi}{3})  + (1 - \cos(\rho + \frac{2\pi}{3}))^2)} \\  
+  d_{\rho}^2 &= 1 - 4 r_{\rho}^2 (\sin( \rho / 2)^2 \\
+  %% Formula above checks at sqrt(8/27), 1, 0, and rho_bc, h_bc, r_bc.  
+  \text{one-hop}  &= \sqrt{\frac{1}{9}  + r_{\rho}^2(-\frac{4 (\sin^2( \rho / 2))}{9} + \sin^2(\rho/3+ \frac{2\pi}{3})  + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2)} \\
+  %% Formula above checks at sqrt(8/27), 1, 0, and rho_bc, h_bc, r_bc.    
 \end{align*}
 
 To Be Done: I need to see if the one-hop formulat can be simplified.
@@ -431,50 +439,68 @@ Compute the two-hop formula and test that it gives length 1 when the BC constant
 
 By similar algebra and trigonometry:
 \begin{align*}
-  \text{two-hops}  &= \sqrt{4\frac{1 - 4 r_{\rho}^2 (\sin{ \rho / 2})^2}{9} + r_{\rho}^2(\sin^2(2\rho/3 + \frac{4\pi}{3})  + (1 - \cos(2\rho/3 + \frac{4\pi}{3}))^2)} \\
+  \text{two-hops}  &= \sqrt{\frac{4}{9} + r_{\rho}^2 (-\frac{16 (\sin^2( \rho / 2))}{9} + (\sin^2(2\rho/3 + \frac{4\pi}{3})  + (1 - \cos(2\rho/3 + \frac{4\pi}{3}))^2)} \\
 \end{align*}
 
 Note: it is not clear I am allowed to do this, because the two-hop function is different!
 
-Let $f_{\rho} = \sin^2(\rho/3 + \frac{2\pi}{3})  + (1 - \cos(\rho/3 + \frac{2\pi}{3})^2$.
-Let $g_{\rho} = \sin^2(2\rho/3 + \frac{4\pi}{3})  + (1 - \cos(2\rho/3 + \frac{4\pi}{3})^2$.
-
-The expression $f_{\rho}$ is maximized when $\rho = 2\pi/6 = 60\degree$, so that
-is in some sense the ``wildest'' rail angle which maximizes the lengths. Since this expression is increasing up until this angle,
-we conclude that:
-\begin{align*}
-  \text{two-hops} - \text{one-hop}  &= \sqrt{\frac{4d_{\rho}^2}{9} + r_{\rho}^2g_{\rho}} - \sqrt{\frac{d_{\rho}^2}{9} + r_{\rho}^2f_{\rho}} 
-\end{align*}
-
-To Be Done: I need to plot this expression, see if it has a maximum, and see if it always decreasing in this range, to see if we can prove optimality.
-
-Since $d_{\rho}$ and $r_{\rho}$ are positive, this difference decreases as $f_{\rho}$ increases. Therefore we decrease the minimax length
-of the whole system as we increase $\rho$ up to $\pi/3$ up unto the point that the shorter, one-hop distance is equal to the rail-length ($1$).
-Therefore, to optimize the whole system so long as $\rho < \pi/3$, we equate one-hop to $1$ to find the optimum radius:
-
+Let $f_{\rho} = -\frac{4 (\sin^2( \rho / 2))}{9} + \sin^2(\rho/3+ \frac{2\pi}{3})  + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2)$.
+Let $g_{\rho} = -\frac{16 (\sin^2( \rho / 2))}{9} + (\sin^2(2\rho/3 + \frac{4\pi}{3})  + (1 - \cos(2\rho/3 + \frac{4\pi}{3}))^2)$.
 
 \begin{align*}
-  1 &= \sqrt{\frac{d_{\rho}^2}{9} + r_{\rho}^2(\sin^2(\rho/3 + \frac{2\pi}{3})  + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2)} \\
-  r_{\rho} &= \frac{2 \sqrt{2} }{\sqrt{9 \sqrt{3} sin(\rho/3) + 9 \cos(\rho/3) + 2 cos(\rho)+ 16 }}
+  \text{two-hops} - \text{one-hop}  &= \sqrt{\frac{4}{9} + r_{\rho}^2g_{\rho}} - \sqrt{\frac{1}{9} + r_{\rho}^2f_{\rho}} 
 \end{align*}
-(where $9 \cos(\rho/3) + 2 cos(\rho)+ 16  \neq 0$), which does not occur when $\rho \leq \pi/3$).
 
-Therefore, by computing $r_{\rho}$ from this equation, we can construct minimax optimal tetrahelix for an $\rho < \pi/3$.
+If the partial derivative of $\text{two-hops} - \text{one-hop}$ with respect to the
+radius is negative up until $\rho$ up until $\rho_{bc}$ when it is $0$, then
+we will opitmize the overall minimax distance by choosing the largest radius
+up until one-hop $= 1$, the rail-edge length. Numerical test suggests that this is true.
+
+
+Therefore we decrease the minimax length
+of the whole system as we increase the radius
+up unto the point that the shorter, one-hop distance is equal to the rail-length ($1$).
+Therefore, to optimize the whole system so long as $\rho < \rho_{bc}$,
+we equate one-hop to $1$ to find the optimum radius:
+
+
+\begin{align*}
+  1 &=  \sqrt{\frac{1}{9}  + r_{\rho}^2(-\frac{4 (\sin^2( \rho / 2))}{9} + \sin^2(\rho/3+ \frac{2\pi}{3})  + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2)} \\
+  r_{opt} &= \frac{2}{\sqrt{\frac{9}{2} \cdot ( \sqrt{3} sin(\rho/3) + \cos(\rho/3)) + cos(\rho)+ 8 }} \numberthis  \label{eqrhoopt} \\
+\end{align*}
+(where denominator $  \neq 0$).
+
+Note: $ d_{opt} $ is computed by $\rho, r_{opt}$ via the rail equation \eqref{eqrhoopt}.
+
+Therefore, by computing $r_{opt}$ as a function of $\rho$ from this equation, we can construct minimax optimal tetrahelix for an $\rho < \rho_{bc}$.
+
+\begin{theorem}
+  \label{optimality}
+  For any rail angle $\rho$ where $\rho \leq \rho_{bc}$, a tetrahelix of minimum maximum edge length
+  difference is generated by $H_{general}(n,c,\rho,d_{\rho},r_{opt})$, where $r_{opt}$ and $d_{opt}$ are
+  computed from $\rho$. 
+\end{theorem}
+
+\begin{proof}
+  TBD: The Even thirds theorem tells us an optimal will have even thirds.  We have shown
+  that $r_{opt}$ minimizes the maximum length.
+  \end{proof}
 
 (Note: This fails the check of computing the BC radius for the BC rail angle.)
 
-
-
 \section{The Equitetrabeam}
 
-Just as $H_{general}$ constructs the BC helix (with careful and non-obvious choices of parameters) which is an important
-special case due to its regularity, it constructs an additional special (degenerate) case when the rail angle $\rho = 0$
-and $d = 1$ (the edgelength), where the cross sectional area is an equilateral triangle of unchanging orientation.
+Just as $H_{general}$ constructs the BC helix (with careful and non-obvious choices of parameters)
+which is an important
+special case due to its regularity, it constructs an additional special
+(degenerate) case when the rail angle $\rho = 0$
+and $d = 1$ (the edgelength), where the cross sectional area is
+an equilateral triangle of unchanging orientation.
 We call this the \emph{equitetrabeam}.
 
-However, choosing $d = 1$ and $\rho = 0$ does not fix the radius. We would like to choose the radius so that the
+However, choosing $d = 1$ and $\rho = 0$ does not fix the radius.
+We would like to choose the radius so that the
 minimax difference between the lengths is as small as possible.
-
 
  \begin{figure}[H]
      \centering
@@ -483,9 +509,10 @@ minimax difference between the lengths is as small as possible.
  \end{figure}
 
 
-\begin{theorem}
-The equitetrabeam with minimal maximal edge difference is produced by $H_{general}$ when $ r = \sqrt{\frac{8}{27}} $.
-  \end{theorem}
+\begin{corollary}
+  The equitetrabeam with minimal maximal edge difference is produced
+  by $H_{general}$ when $ r = \sqrt{\frac{8}{27}} $.
+  \end{corollary}
 
 When $\rho = 0$, our formulae for distances are particular simple. Let $a$ be the length of the equilateral triangle
 forming the beam cross section. Then by geometry $r = a \sqrt{3}$.
@@ -524,7 +551,8 @@ which produces three length classes of $11/12, 12/12, 13/12$.
 
 \section{Adding an Untwisting Parameter}
 
-We observe that it by thinking of the straight lines of the Equitetrabeam as a degenerate helix of zero curvature,
+We observe that by thinking of the straight lines of the
+Equitetrabeam as a degenerate helix of zero curvature,
 it should be possible to define a smoothly varying continuum between the Boerdijk--Coxeter helix and the Equitetrabeam and every
 curvature and torsion between the two.
 
@@ -570,6 +598,7 @@ H_{continuum}(n,c,\lambda) =
 \text{where:}
   \begin{tabular}{c}
     $\kappa = n + c/3$ \\
+    $ r_{opt} =  \text{is used : \eqref{eqrhoopt}} $ \\    
     $ \phi_{\lambda} =  \lambda \rho_{bc}  + 0 $\\
     $\rho_{bc} = (3 \theta - 2 \pi)$ \\
    $ \theta = \arccos(-2/3) $
@@ -652,6 +681,11 @@ To assist, contact \href{mailto:read.robert@gmail.com}{$<$read.robert@gmail.com$
 \end{document}
 
 TODO:
+
+Check every step of my derivation at rho = 0 and the BC values.
+
+Found something.  So now the computation of the optimal radii seems slightly better than what we had before.
+We have not, however, proven it to be optimal in the ranges involved, but at least we seem to be computing it correctly.
 
 See if we can accurately compute the derivative of two-hop - one-hop and if it is always negative, meaning that
 it is always optimal to set one-hop = 1.  The we have a way to compute one-hope.

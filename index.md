@@ -233,11 +233,8 @@ function createParalellepiped( sx, sy, sz, pos, quat, material ) {
 function createSphere(r,pos,color) {
     //    var cmat = memo_color_mat(tcolor);
     var tcolor = new THREE.Color(color);
-    console.log(color);
-    console.log(tcolor);
         var cmat = new THREE.MeshPhongMaterial( { color: tcolor } );
     var ball = new THREE.Mesh( new THREE.SphereGeometry( r, 18, 16 ), cmat );
-    console.log(ball.material.color);
     ball.position.set(pos.x,pos.y,pos.z);
     ball.castShadow = false;;
     ball.receiveShadow = true;
@@ -416,29 +413,6 @@ function load_NTetHelix(am,helix,tets,pvec,hparams) {
     }
 }
 
-function compute_helix_minimax(helix) {
-    var min = 100000000;
-    var max = 0.0;
-    for(var i = 0; i < helix.helix_members.length; i++) {
-	var member = helix.helix_members[i];
-	var a = member.a.mesh.position;
-	var b = member.b.mesh.position;
-	var d = a.distanceTo(b);
-	if (i < 10) {
-	console.log("member:",i);
-	console.log("a:",member.a);
-	console.log("b:",member.b);
-
-	    console.log("distance:",d);
-	}
-	
-	if (min > d) min = d;
-	if (max < d) max = d;
-    }
-    console.log("min, max", min, max);
-    console.log("score: ", (100*max/min -100) + "%");
-    return [min,max];
-}
 
 
 var AM = function() {
@@ -926,6 +900,30 @@ animate();
 var len = am.INITIAL_EDGE_LENGTH;
 
 
+function compute_helix_minimax(helix) {
+    var min = 100000000;
+    var max = 0.0;
+    for(var i = 0; i < helix.helix_members.length; i++) {
+	var member = helix.helix_members[i];
+	var a = member.a.mesh.position;
+	var b = member.b.mesh.position;
+	var d = a.distanceTo(b);
+	// if (i < 10) {
+	//     console.log("member:",i);
+	//     console.log("a:",member.a.mesh.position);
+	//     console.log("b:",member.b.mesh.position);
+	//     console.log("distance:",d);
+	// }
+	
+	if (min > d) min = d;
+	if (max < d) max = d;
+    }
+    console.log("min, max", min, max);
+    console.log("score: ", (100*max/min -100) + "%");
+    return [min,max];
+}
+
+
 //  var r0 = (2/3)*Math.sqrt(2/3);
 var r0 = (2/3)*Math.sqrt(2/3);
 // This is the splitting difference.
@@ -933,18 +931,17 @@ var r0 = (2/3)*Math.sqrt(2/3);
 
 var num = 10;
 for (var i = 0; i < num+1; i++ ) {
-    var pvec0 = new THREE.Vector3((i - 5)*2*am.INITIAL_EDGE_LENGTH,am.INITIAL_HEIGHT,-3);
+    var pvec0 = new THREE.Vector3((i - 1)*2*am.INITIAL_EDGE_LENGTH,am.INITIAL_HEIGHT,-3);
     // Note: It is interesting to place very high lambda values in here --- it produces
     // an assymmetry which I have not yet explained.
-    add_equitetrabeam_helix_lambda(am,4 * (i - 5) / (num) ,pvec0,len);
+    add_equitetrabeam_helix_lambda(am,i / (num) ,pvec0,len);
 }
-/*
+
  for(var i = 0; i < am.helices.length; i++) {
     console.log(am.helix_params[i]);
     compute_helix_minimax(am.helices[i]);
     console.log(am.helix_params[i]);    
  }
-*/
     </script>
 
   
