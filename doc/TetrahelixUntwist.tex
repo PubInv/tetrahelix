@@ -87,14 +87,16 @@ a term now commonly used. In this paper we reserve BC helix to mean the purely r
 to any structure isomophic to a the BC helix, whether regular or not.
 
 \begin{figure}[H] %float with two figures
+  \label{series}
   \centering
-     \includegraphics[width=0.4\textwidth]{figures/Tetrahelix0.png}
-     \caption{Regular Tetrahelix}
+     \includegraphics[width=0.95\textwidth]{figures/TetrahelixSeries.png}
+     \caption{A Series of Tetrahelices, BC Helix in Foreground.}
 \end{figure}
 
 BC helix does not rest on a plane in a simple way. It is convenient to be able to ``untwist'' it and form a tetrahelix space frame that
 has a flat planar surface. By making length changes in a certain way, we can untwist a tetrahelix to form a \emph{tetrabeam} which
 has planar faces and has, for example, an equilateral triangular profile.
+In Figure \ref{series}, the closest helix is the BC helix.
 
 \section{A User's Formulation of the BC Helix}
 
@@ -123,7 +125,7 @@ That is, a yellow tetrahedron is rotated slightly more than a $1/3$ of a revolut
 $3 \theta - 2\pi$ is the apparent rotation of $V_3$ relative to $V_0$.
 
 From Robert Gray's site, repeating formula by H.S.M. Coxeter:
-\[
+\begin{equation}
 V(n) =
 \left [
   \begin{tabular}{c}
@@ -138,7 +140,7 @@ V(n) =
  $ h_{bc} = 1/\sqrt{10} $ \\
  $ \theta = \arccos(-2/3) $ \\
   \end{tabular}      
-\]
+\end{equation}
 where $n$ represents each integer numbered node in succession.
 
 This formula defines a helix, but it is not any of the helices of the BC helix, but rather one that winds three times
@@ -153,7 +155,7 @@ H_{BCcolored}(n,c) = V(3n +c)
 where $c \in \{0,1,2\}$ specifies which of the rails is being computed.
 
 Such a helix can be written:
-\[
+\begin{equation}
 H_{BCcolored}(n,c) =
 \left [
   \begin{tabular}{c}
@@ -168,7 +170,7 @@ H_{BCcolored}(n,c) =
  $ h_{bc} = 1/\sqrt{10} $ \\
  $ \theta = \arccos(-2/3) $ \\
   \end{tabular}      
-  \]
+\end{equation}
 
 In this formula, integral values of $n$ may be taken as a node number for one rail and used to compute its Cartesian
 coordinates. Allowing $n$ to take non-integer values defines a continuous
@@ -222,13 +224,20 @@ is an edge of unbounded length. So we are justified in talking about the pitch o
 of it as three helices. Similarly, if the axes are not parallel, there is an edge of unbounded length in the structure,
 so it is not optimal.
 
-Consider any tetrahelix in which the axes of the helices are parallel to $z$ but not coincident, but in which all three helices have the same
-radius. Consider the projection along the $z$ axis, which will be a figure of dots and connecting segments in the $xy$ plane. The convex
-hull for any one helix projection will be a circle (if its pitch is irrational) or an polygon if rational. So long as its rail angle is
-not $0$, it will have at least two points in the plane. One of these will be longer and will be made shorter by moving that helix closer
-to the midpoint of the other two in the $xy$ plane. Even if the rail angle is $\pi$, there will be two vertices for each rail, each of
-which is connected to both vertices of the other two rails. At lesast one of these lines is a longest line which will be made shorter by moving
-that helix in the $xy$ plane closer to the midpoint of the other two.
+Consider any tetrahelix in which the axes of the helices are parallel
+to $z$ but not coincident, but in which all three helices have the
+same radius. Consider the projection along the $z$ axis, which will be
+a figure of dots and connecting segments in the $xy$ plane. The convex
+hull for any one helix projection will be a circle (if its pitch is
+irrational) or an polygon if rational. So long as its rail angle is
+not $0$, it will have at least two points in the plane. One of these
+will be longer and will be made shorter by moving that helix closer to
+the midpoint of the other two in the $xy$ plane. Even if the rail
+angle is $\pi$, there will be two vertices for each rail, each of
+which is connected to both vertices of the other two rails. At lesast
+one of these lines is a longest line which will be made shorter by
+moving that helix in the $xy$ plane closer to the midpoint of the
+other two.
 
 So any any optimal tetrahelix with a rail-angle of greater than $0$, that is, with any curvature, will have conincident axes.
 
@@ -237,12 +246,6 @@ of tetrahelices of decreasing curvature.
 
 
  Now now that we have coincident axes, the same pitch, we can go on to the hard proof about where they occur.
-
- \begin{figure}[H]
-     \centering
-     \includegraphics[width=0.9\textwidth]{figures/TetrahelixColoringDiagram.png}
-     \caption{Coloring of an (untwisted) Tetrabeam}
- \end{figure}
 
  We show that in fact the nodes must be distributed in even thirds along the $z$-axis.
 
@@ -316,7 +319,7 @@ a new formulation $H_{BCsymmetric}(n,c) = H_{colored}(n,c)$
 The expression $n+c/3$ will now occur so often that we call it the ``c($\kappa$)olored number'' and we use the variable $\kappa$ to represent it: $\kappa = n+c/3$.
 Recall that $c \in \{0,1,2\}$, but $n$ and $\kappa$ are are continuous (rational or real-valued.)
 
-\[
+\begin{equation}
 H_{BCsymmmetric}(n,c) =
 \left [
   \begin{tabular}{c}
@@ -329,10 +332,10 @@ H_{BCsymmmetric}(n,c) =
   \begin{tabular}{c}
  $\kappa = n + c/3$ \\
     $\rho_{bc} = (3 \theta - 2 \pi)$ \\
-    $ \theta = \arccos(-2/3) $
+    $ \theta = \arccos(-2/3) $ \\
     $ h_{bc} = 1/\sqrt{10} $ \\    
   \end{tabular}      
-\]
+\end{equation}
 
 \section{Parametrizing Tetrahelices via Rail Angle}
 
@@ -362,7 +365,7 @@ Please refer back to Figure \ref{railanglefig}.
 \begin{align*}
   1^2 &= d^2 + (2 r \sin{ \rho / 2})^2 \\
   1 &= d^2 + 4 r^2 (\sin{ \rho / 2})^2 \\
-  d^2 &= 1 - 4 r^2 (\sin{ \rho / 2})^2   
+  d^2 &= 1 - 4 r^2 (\sin{ \rho / 2})^2    \numberthis  \label{railangle} \\
 \end{align*}
 
 Checking the important special case of the BC helix, we find that this equation
@@ -377,7 +380,7 @@ In choosing $\rho$, one greatly constrains $r$ and $h$, but does not completely
 determine both of them together, so we treat both as parameters.
 
 Rewriting our formulation in terms of $\rho$:
-\[
+\begin{equation}
 H_{general}(n,c,\rho,d_{\rho},r_{\rho}) =
 \left [
   \begin{tabular}{c}
@@ -391,7 +394,7 @@ H_{general}(n,c,\rho,d_{\rho},r_{\rho}) =
   $   1 = d_{\rho}^2 + 4 r_{\rho}^2 (\sin{ \rho / 2})^2 $ \\
     $\kappa = n + c/3$ \\
   \end{tabular}      
-\]
+\end{equation}
 
 $H_{general}$ generalizes $H_{continuum}$, but forces the user to select an $d_{\rho}$
 which has a sensible radius, so it may be less convenient.
@@ -460,7 +463,7 @@ up until one-hop $= 1$, the rail-edge length. Numerical test suggests that this 
 Therefore we decrease the minimax length
 of the whole system as we increase the radius
 up unto the point that the shorter, one-hop distance is equal to the rail-length ($1$).
-Therefore, to optimize the whole system so long as $\rho < \rho_{bc}$,
+Therefore, to optimize the whole system so long as $\rho \leq \rho_{bc}$,
 we equate one-hop to $1$ to find the optimum radius:
 
 
@@ -470,8 +473,15 @@ we equate one-hop to $1$ to find the optimum radius:
 \end{align*}
 (where denominator $  \neq 0$).
 
-Note: $ d_{opt} $ is computed by $\rho, r_{opt}$ via the rail equation \eqref{eqrhoopt}.
+Note: $ d_{opt} $ is computed by $\rho, r_{opt}$ via the rail angle equation \eqref{railangle}.
 
+\begin{align*}
+  d_{opt}^2 &= 1 - 4 \frac{2}{\sqrt{\frac{9}{2} \cdot ( \sqrt{3} sin(\rho/3) + \cos(\rho/3)) + cos(\rho)+ 8 }}^2 (\sin{ \rho / 2})^2   \\
+  d_{opt}^2 &= 1 - 4 \frac{4}{\frac{9}{2} \cdot ( \sqrt{3} sin(\rho/3) + \cos(\rho/3)) + cos(\rho)+ 8 } (\sin{ \rho / 2})^2   \\
+  d_{opt}^2 &= 1 - \frac{32}{9 ( \sqrt{3} sin(\rho/3) + \cos(\rho/3)) + cos(\rho)+ 8 } (\sin{ \rho / 2})^2   \\
+  d_{opt}^2 &= 1 - \frac{8 sin^2(\rho) }{ cos(r) + 9( \sqrt{3} sin(\rho/3) + \cos(\rho/3)) + 8 }   \\
+    d_{opt} &= \sqrt{1 - \frac{8 sin^2(\rho) }{ cos(r) + 9( \sqrt{3} sin(\rho/3) + \cos(\rho/3)) + 8 }}    \numberthis  \label{dopt}  \\      
+\end{align*}
 Therefore, by computing $r_{opt}$ as a function of $\rho$ from this equation, we can construct minimax optimal tetrahelix for an $\rho < \rho_{bc}$.
 
 \begin{theorem}
@@ -498,24 +508,14 @@ and $d = 1$ (the edgelength), where the cross sectional area is
 an equilateral triangle of unchanging orientation.
 We call this the \emph{equitetrabeam}.
 
-However, choosing $d = 1$ and $\rho = 0$ does not fix the radius.
-We would like to choose the radius so that the
-minimax difference between the lengths is as small as possible.
-
- \begin{figure}[H]
-     \centering
-     \includegraphics[width=0.9\textwidth]{figures/EquilateralDiagram.png}
-     \caption{Coloring of an (untwisted) Tetrabeam}
- \end{figure}
-
+However, choosing $d = 1$ and $\rho = 0$ we use Equation \eqref{eqrhoopt} to find the radius of 
+optimal minimax difference.
 
 \begin{corollary}
   The equitetrabeam with minimal maximal edge difference is produced
   by $H_{general}$ when $ r = \sqrt{\frac{8}{27}} $.
   \end{corollary}
 
-When $\rho = 0$, our formulae for distances are particular simple. Let $a$ be the length of the equilateral triangle
-forming the beam cross section. Then by geometry $r = a \sqrt{3}$.
 \begin{align*}
   \text{rail} &=  1 \\
   \text{one-hop} &= \sqrt{\frac{1}{9} + 3r^2}\\
@@ -547,46 +547,28 @@ and $1$ of $\approx 15.47\% $.
 Note: Another interesting solution is derived by setting (one-hop + two-hop)/2 = 1,  occurs at $r = \sqrt{35}/4$,
 which produces three length classes of $11/12, 12/12, 13/12$.
 
-
+In Figure \ref{series}, the furthest tetrahelix is the optimal equitetrabeam.
 
 \section{Adding an Untwisting Parameter}
 
 We observe that by thinking of the straight lines of the
 Equitetrabeam as a degenerate helix of zero curvature,
 it should be possible to define a smoothly varying continuum between the Boerdijk--Coxeter helix and the Equitetrabeam and every
-curvature and torsion between the two.
-
-We seek to unify this with degenerate helix formula for the equitetrabeam:
-\[
-H_{etb}(n,c) =
-\left [
-  \begin{tabular}{c}
-   $ r_{etb}  \cos( 0 \cdot \kappa  + c 2 \pi /3) $\\
-   $ r_{etb}  \sin( 0 \cdot \kappa  + c 2 \pi /3) $\\
-   $ \kappa d_{etb} $
-  \end{tabular}
-\right ],
-\text{where:}
-  \begin{tabular}{c}
- $\kappa = n + c/3$ \\
-    $\rho_{bc} = (3 \theta - 2 \pi)$ \\
-   $ \theta = \arccos(-2/3) $
-  \end{tabular}      
-\]
-where $ r_{etb} = \sqrt{\frac{8}{27}}$, $d_{etb} = 1$,
+curvature and torsion between the two. It seems most convenient to define this continuum in terms
+of the rail angle $\rho$, where $0 \leq \rho \leq \rho_{bc}$.
 
 Now basic components of the helix, which are the radius $r$, the rate of rotation, and the rate of
 axial growth can all be linearly interpolated with a parameter $\lambda$ between their high values (for the BC helix)
-and low values (for the equitetrabeam):
+and low values (for the equitetrabeam).
 
 \begin{align*}
-r_{\lambda}  &=  \lvert \lambda \rvert \cdot (\frac{3 \sqrt{3}}{10}  - \sqrt{\frac{8}{27}}) + \sqrt{\frac{8}{27}}  \\
-d_{\lambda} &=   \lvert \lambda \rvert \cdot (3 \sqrt{10} - 1) + 1 \\
-\phi_{\lambda} &=  \lambda \cdot \rho_{bc}  + 0
+\phi_{\lambda} &=  \lambda \cdot \rho_{bc}   \\
+r_{\lambda}  &=  r_{opt}(\phi) \\
+d_{\lambda} &=   d_{opt}(\phi) \\
 \end{align*}
 to create a formula that generates a continuum of tetrahedral structures:
 
-\[
+\begin{equation}
 H_{continuum}(n,c,\lambda) =
 \left [
   \begin{tabular}{c}
@@ -598,12 +580,12 @@ H_{continuum}(n,c,\lambda) =
 \text{where:}
   \begin{tabular}{c}
     $\kappa = n + c/3$ \\
-    $ r_{opt} =  \text{is used : \eqref{eqrhoopt}} $ \\    
-    $ \phi_{\lambda} =  \lambda \rho_{bc}  + 0 $\\
+    $ \phi_{\lambda} =  \lambda \rho_{bc}  $\\
     $\rho_{bc} = (3 \theta - 2 \pi)$ \\
    $ \theta = \arccos(-2/3) $
   \end{tabular}      
-\]
+\end{equation}
+
 A value of $\lambda = 0$ generates the equitetrabeam, and $\lambda = 1$ generates the Boerdijk--Coxeter helix, and every
 value $\lambda \in [-1,1]$ generates an attractive structure which if physically realized is an inherently rigid structure
 with member lengths of no greater disparity than $16\%$.
@@ -617,19 +599,18 @@ because their ability to withstand axial forces seem to diminish significantly.
      \caption{A Continuum of Tetrahelices}
  \end{figure}
 
-
-Negative values of $\lambda$ generate clockwise tetrahelices; positive generate counter-clockwise helices.
+ Negative values of $\lambda$ generate clockwise tetrahelices; positive generate counter-clockwise helices.
+ (Note: In fact there is something wrong with my math, negative lambda values do produces opposit chirality
+ but the lengths are not the same as the positive values.  I need to track this down.)
 
 Furthermore, this formula allows one to design the pitch (in edge length units) as a function of $\lambda$ of the helix (along one rail)
 where $\lambda \neq 0$:
 \[
-p(\lambda) = 2 \pi  \cdot \frac{(\frac{8}{27} -1) \lambda +1)}{ \lambda  \rho_{bc} }
+p(\lambda) = 2 \pi  \cdot d_{opt}
 \]
 
-We can then create a continuum of radius, length, rho to place into our general equation
-to create continuum of helices between the BC and equitetrabeam. This continuum is 
-minimax-length optimal at its endpoints, and may be optimal throughout. This untwisting is accomplished
-only by changing the length of the two-hop member.
+There is thus an optimal continuum of tetrahelices untwisting between BC and equitetrabeam.
+Perhaps surprisingly, this untwisting is accomplished only by changing the length of the two-hop member.
 
 \section{Utility for Robotics}
 
@@ -667,6 +648,10 @@ fact the motivation for creating the equitetrabream.
      \includegraphics[width=0.4\textwidth]{figures/Tetrahelix3.png}
      \caption{The Equitetrabream: Fully Untwisted Tetrahelix}
 \end{figure}
+
+\section{Conclusion}
+
+
 
 \section{Contact and Getting Involved}
 
@@ -795,5 +780,34 @@ Computing the derivative of two-hops - one-hop:
 \end{align*}
 
   
+Now basic components of the helix, which are the radius $r$, the rate of rotation, and the rate of
+axial growth can all be linearly interpolated with a parameter $\lambda$ between their high values (for the BC helix)
+and low values (for the equitetrabeam):
+
+\begin{align*}
+r_{\lambda}  &=  \lvert \lambda \rvert \cdot (\frac{3 \sqrt{3}}{10}  - \sqrt{\frac{8}{27}}) + \sqrt{\frac{8}{27}}  \\
+d_{\lambda} &=   \lvert \lambda \rvert \cdot (3 \sqrt{10} - 1) + 1 \\
+\phi_{\lambda} &=  \lambda \cdot \rho_{bc}  + 0
+\end{align*}
+to create a formula that generates a continuum of tetrahedral structures:
+
+\[
+H_{continuum}(n,c,\lambda) =
+\left [
+  \begin{tabular}{c}
+   $ r_{\lambda} \cos(\phi_{\lambda} \kappa + c 2 \pi /3) $\\
+   $ r_{\lambda}  \sin(\phi_{\lambda} \kappa + c 2 \pi /3) $\\
+   $ d_{\lambda} \kappa $
+  \end{tabular}
+  \right ],
+\text{where:}
+  \begin{tabular}{c}
+    $\kappa = n + c/3$ \\
+    $ r_{opt} =  \text{is used : \eqref{eqrhoopt}} $ \\    
+    $ \phi_{\lambda} =  \lambda \rho_{bc}  + 0 $\\
+    $\rho_{bc} = (3 \theta - 2 \pi)$ \\
+   $ \theta = \arccos(-2/3) $
+  \end{tabular}      
+\]
 
   
