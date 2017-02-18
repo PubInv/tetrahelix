@@ -89,9 +89,11 @@ to any structure isomophic to a the BC helix, whether regular or not.
 \begin{figure}[H] %float with two figures
   \label{series}
   \centering
-     \includegraphics[width=0.95\textwidth]{figures/TetrahelixSeries.png}
-     \caption{A Series of Tetrahelices, BC Helix in Foreground.}
+     \includegraphics[width=0.95\textwidth]{figures/BCHelixCloseUp.png}
+     \caption{BC Helix Close-up}
 \end{figure}
+
+
 
 BC helix does not rest on a plane in a simple way. It is convenient to be able to ``untwist'' it and form a tetrahelix space frame that
 has a flat planar surface. By making length changes in a certain way, we can untwist a tetrahelix to form a \emph{tetrabeam} which
@@ -437,24 +439,62 @@ Which are invarinat for all $n$ and $c$.
   %% Formula above checks at sqrt(8/27), 1, 0, and rho_bc, h_bc, r_bc.    
 \end{align*}
 
-To Be Done: I need to see if the one-hop formulat can be simplified.
-Compute the two-hop formula and test that it gives length 1 when the BC constants. -- YES!
-
 By similar algebra and trigonometry:
 \begin{align*}
-  \text{two-hops}  &= \sqrt{\frac{4}{9} + r_{\rho}^2 (-\frac{16 (\sin^2( \rho / 2))}{9} + (\sin^2(2\rho/3 + \frac{4\pi}{3})  + (1 - \cos(2\rho/3 + \frac{4\pi}{3}))^2)} \\
+  \text{two-hops}  &= \sqrt{\frac{4}{9} + r_{\rho}^2 (-\frac{16 (\sin^2( \rho / 2))}{9} + \sin^2(2\rho/3 + \frac{4\pi}{3})  + (1 - \cos(2\rho/3 + \frac{4\pi}{3}))^2)} \\
 \end{align*}
 
-Note: it is not clear I am allowed to do this, because the two-hop function is different!
+We would really like to know the partial derivative of the two-hops - one-hop with respect
+to the radius to be able to understand how to choose the radius to form the minimimax optimum.
 
-Let $f_{\rho} = -\frac{4 (\sin^2( \rho / 2))}{9} + \sin^2(\rho/3+ \frac{2\pi}{3})  + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2)$.
-Let $g_{\rho} = -\frac{16 (\sin^2( \rho / 2))}{9} + (\sin^2(2\rho/3 + \frac{4\pi}{3})  + (1 - \cos(2\rho/3 + \frac{4\pi}{3}))^2)$.
+Let:
+\begin{equation}
+  f_{\rho} = -\frac{4 (\sin^2( \rho / 2))}{9}
+  \end{equation}
+\begin{equation}
+  g_{\rho} = -\frac{16 (\sin^2( \rho / 2))}{9} 
+\end{equation}
 
+\begin{equation}
+  j_{\rho} = \sin^2(\rho/3+ \frac{2\pi}{3})  + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2)
+\end{equation}
+\begin{equation}
+  k_{\rho} = (\sin^2(2\rho/3 + \frac{4\pi}{3})  + (1 - \cos(2\rho/3 + \frac{4\pi}{3}))^2)
+\end{equation}
+
+Then:
 \begin{align*}
-  \text{two-hops} - \text{one-hop}  &= \sqrt{\frac{4}{9} + r_{\rho}^2g_{\rho}} - \sqrt{\frac{1}{9} + r_{\rho}^2f_{\rho}} 
+  \text{two-hops} - \text{one-hop}  &= \sqrt{\frac{4}{9}  + r_{\rho}^2(g_{\rho}+ j_{\rho})}
+  - \sqrt{\frac{1}{9} +r_{\rho}^2(f_{\rho}+k_{\rho}) }
 \end{align*}
 
-If the partial derivative of $\text{two-hops} - \text{one-hop}$ with respect to the
+
+
+% Using wolfram alph we se this derivate remains negative in this range....
+% plot d/dr sin(2r/3 + 4pi/3)^2 - sin(r/3 + 2pi/3)^2 + (1 - cos(2r/3 + 4pi/3))^2 -(1-cos(r/3 + 2pi/3))^2 from 0 to 35.44 degrees
+% in other words
+
+% This part is also negative withing this range...
+%  d/dr -(16/9)sin(r/2)^2 - -(4/9)sin(r/2)^2 from 0 to 35.44 degrees
+
+%% Using Mathematica, I get:
+%% f[x_, r_] := 
+%%  Sqrt[4/9 + 
+%%     x^2 (-16 Sin[r/2]^2/9 + 
+%%        Sin[2 r/3 + 4 Pi /3]^2 + (1 - Cos[2 r/3 + 4 Pi/3])^2)] - 
+%%   Sqrt[1/9 + 
+%%     x^2*(-4*Sin[r/2]^2/9 + 
+%%        Sin[r/3 + 2 Pi/3]^2 + (1 - Cos[r/3 + 2 Pi/3])^2) ]
+%% N[N[f[1, 1]]]
+
+%% Plot3D[D[f[x, r]], {x, 0, 2}, {r, 0, Pi}]
+
+%% This grahp demonstrates the derivative is always negative.
+
+
+By graph inspection using Mathematica, we see the partial derivative of this with respect to
+radius $r_{\rho}$ is always negative.
+Since the partial derivative of $\text{two-hops} - \text{one-hop}$ with respect to the
 radius is negative up until $\rho$ up until $\rho_{bc}$ when it is $0$, then
 we will opitmize the overall minimax distance by choosing the largest radius
 up until one-hop $= 1$, the rail-edge length. Numerical test suggests that this is true.
@@ -529,6 +569,9 @@ Computing the derivative of two-hops - one-hop:
 which is negative for all $r> 0$. Thererfore two-hop - one-hop
 is minimized when we maximize $r$, up until one-hop = rail.
 
+
+
+
 Note that two-hops increases more and more slowly as $r$ increases. Therefore the minimum maximum will
 be obtained with the value of $r$ that when $one-hop = 1$. This can be observed from the
 plot of two-hops - one-hops as a function of $r$, or by observing that the derivate of two-hops - one-hop
@@ -546,6 +589,8 @@ and $1$ of $\approx 15.47\% $.
 
 Note: Another interesting solution is derived by setting (one-hop + two-hop)/2 = 1,  occurs at $r = \sqrt{35}/4$,
 which produces three length classes of $11/12, 12/12, 13/12$.
+
+
 
 In Figure \ref{series}, the furthest tetrahelix is the optimal equitetrabeam.
 
@@ -592,6 +637,13 @@ with member lengths of no greater disparity than $16\%$.
 In the sense of structural engineering, it would be a relatively strong space frame. When $\lvert \lambda \rvert > 1$, tetrahelices
 are still produced, but as $\lvert \lambda \rvert >> 2$ these tetrahelices probably cease to be interesting to mechanical engineers,
 because their ability to withstand axial forces seem to diminish significantly.
+
+\begin{figure}[H] %float with two figures
+  \label{series}
+  \centering
+     \includegraphics[width=0.95\textwidth]{figures/TetrahelixSeries.png}
+     \caption{A Series of Tetrahelices, BC Helix in Foreground.}
+\end{figure}
 
  \begin{figure}[H]
      \centering
