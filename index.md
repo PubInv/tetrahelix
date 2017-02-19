@@ -931,11 +931,14 @@ var r0 = (2/3)*Math.sqrt(2/3);
 
 var num = 10;
 for (var i = 0; i < num+1; i++ ) {
-    var pvec0 = new THREE.Vector3((i - 1)*2*am.INITIAL_EDGE_LENGTH,am.INITIAL_HEIGHT,-3);
+    var pvec0 = new THREE.Vector3((i - 5)*2*am.INITIAL_EDGE_LENGTH,am.INITIAL_HEIGHT,-3);
     // Note: It is interesting to place very high lambda values in here --- it produces
     // an assymmetry which I have not yet explained.
-    add_equitetrabeam_helix_lambda(am,i / (num) ,pvec0,len);
+    add_equitetrabeam_helix_lambda(am,(i - 5)*0.5 / (num) ,pvec0,len);
 }
+
+// var pvec0 = new THREE.Vector3((i - 1)*2*am.INITIAL_EDGE_LENGTH,am.INITIAL_HEIGHT,-3);
+//add_equitetrabeam_helix_lambda(am, 1.0, pvec0, len);
 
  for(var i = 0; i < am.helices.length; i++) {
     console.log(am.helix_params[i]);

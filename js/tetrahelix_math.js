@@ -88,10 +88,11 @@ function find_rrho_from_d(rho,d) {
 }
 
 function optimal_radius(rho,el) {
+    var rho_abs = Math.abs(rho);
     var numer = 2*el;
-    var t1 = Math.sqrt(3) * Math.sin(rho/3);
-    var t2 = Math.cos(rho/3);
-    var t3 = Math.cos(rho);
+    var t1 = Math.sqrt(3) * Math.sin(rho_abs/3);
+    var t2 = Math.cos(rho_abs/3);
+    var t3 = Math.cos(rho_abs);
     var t4 = 8;
     var denom = Math.sqrt(9*(t1 + t2)/2 + t3 + t4);
     return numer/denom;
@@ -127,14 +128,23 @@ function test_optimal_radius() {
 	}
     }
 }
-function H_general(n,c,rho,d,r,s) {
-    return H_general_s(n,c,rho,d,r,1);
+
+function test_assert_optimal_radius_even() {
+    var MAX_DEGREES = 45;
+    for(var i = 0; i < 100;i++) {
+	var rho = Math.PI*(i*MAX_DEGREES/100)/180;
+	var rp = optimal_radius(rho,1.0);
+	var rn = optimal_radius(-rho,1.0);
+//	assert(rp == rn,'evenness of optimal_radius failed','spud');
+	console.log(rho,rp,rn);
+    }
 }
-function H_general_s(n,c,rho,d,r,s) {
+
+function H_general(n,c,rho,d,r) {
     var pnt = [];
     var kappa = n+ c/3.0;
     var rk = rho*kappa;
-    var angle = rk + s*c*2*Math.PI/3;
+    var angle = rk + c*2*Math.PI/3;    
     pnt[0] = r*Math.cos(angle);
     pnt[1] = r*Math.sin(angle);
     pnt[2] = d*kappa;
@@ -173,14 +183,28 @@ function H_bc_eqt_lambda(n,c,lambda) {
 function H_interp_lambda(lambda,n,c,rho0,d0,r0,rho1,d1,r1) {
     var alambda = Math.abs(lambda);
     var di = (d1 - d0)*alambda + d0;
-    var rhoi = (lambda > 0) ? (rho1 - rho0)*alambda + rho0 : -((rho1 - rho0)*alambda + rho0);
+    var rhoi = (lambda > 0) ? (rho1 - rho0)*alambda + rho0 : -((rho1 - rho0)*alambda + rho0);    
     var rinterp = (r1 - r0)*alambda + r0;	
     var ropt = optimal_radius(rhoi,1);
     console.log(lambda,di,rinterp,ropt);    
     if (USE_OPTIMAL_RADIUS) {
-	return H_general_s(n,c,rhoi,di,ropt,Math.sign(lambda) == -1 ? -1 : 1);	
+	return H_general(n,c,rhoi,di,ropt);	
     } else {
-	return H_general_s(n,c,rhoi,di,rinterp,Math.sign(lambda) == -1 ? -1 : 1);	
+	return H_general(n,c,rhoi,di,rinterp);	
+    }
+}
+
+function test_negative_lambda()
+{
+    var lambda = 1.0;
+    for(var i = 0; i < 4; i++ ) {
+	for(var c = 0; c < 3; c++) {
+	    console.log("XXXX");
+	    var p0 = H_bc_eqt_lambda(i*3,c,lambda);
+	    var p1 = H_bc_eqt_lambda(i*3,c,-lambda);
+	    console.log("ZZZZ",i,c,p0,p1);	    
+	}
+
     }
 }
 
