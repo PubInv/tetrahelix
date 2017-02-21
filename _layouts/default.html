@@ -1,3 +1,22 @@
+/*
+
+    Copyright 2017, Robert L. Read
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+*/
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -48,6 +67,26 @@
 
     <script src="./jquery-ui-1.11.4.custom/jquery-ui.js"></script>
 
+    <script src="./js/tetrahelix_math.js"></script>    
+    
+    <script src="./js/axes.js"></script>
+    <script src="./js/three.js"></script>
+    <script src="./js/OrbitControls.js"></script>
+    <script src="./js/Detector.js"></script>    
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>    
+   <script src="./js/d3-scale.min.js"></script>
+   <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
+
+<script src="https://d3js.org/d3-array.v1.min.js"></script>
+<script src="https://d3js.org/d3-collection.v1.min.js"></script>
+<script src="https://d3js.org/d3-color.v1.min.js"></script>
+<script src="https://d3js.org/d3-format.v1.min.js"></script>
+<script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
+<script src="https://d3js.org/d3-time.v1.min.js"></script>
+<script src="https://d3js.org/d3-time-format.v2.min.js"></script>
+<script src="https://d3js.org/d3-scale.v1.min.js"></script>
+
+    
     
   </head>
 
@@ -87,6 +126,9 @@
   <body>
 
     {% include header.html %}
+        <div id="threecontainer" class="img">
+    </div>
+    
     <div id="content-wrapper">
       <div class="inner clearfix">
         <section id="main-content">

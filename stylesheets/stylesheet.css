@@ -456,7 +456,7 @@ header {
   background: #70B878 url(../images/header-bg-greenish2.png) 0 0 repeat-x;
   border-bottom: solid 1px #275da1;
   color: white;
-/*  opacity: 0.2; */
+  /*  opacity: 0.2; */
 }
 header ul li a {
     color: white;
@@ -470,7 +470,8 @@ header ul li a {
   background: #70B878 url(../images/header-bg-greenish2.png) 0 0 repeat-x;
 /*  border-bottom: solid 1px #275da1; */
   color: white;
-/*  opacity: 0.2; */
+  /*  opacity: 0.2; */
+  max-height: 100px;
 }
 nav ul li a {
     color: white;
