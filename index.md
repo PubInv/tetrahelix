@@ -101,7 +101,7 @@ var RAIL_ANGLE_RHO = 0;
 var LAMBDA = 0;
 var TET_DISTANCE = 1;
 
-function register_trials(trial,angle,radius,len,one_hop,two_hop) {
+function register_trials(trial,angle,radius,d,len,one_hop,two_hop) {
     var table = document.getElementById("trialrecords");
 
     var row = table.insertRow(1);
@@ -111,12 +111,14 @@ function register_trials(trial,angle,radius,len,one_hop,two_hop) {
     var cell4 = row.insertCell(3);
     var cell5 = row.insertCell(4);
     var cell6 = row.insertCell(5);
+    var cell7 = row.insertCell(6);    
     cell1.innerHTML = ""+trial;
     cell2.innerHTML = ""+angle.toFixed(4);    
     cell3.innerHTML = ""+radius.toFixed(2) ;
-    cell4.innerHTML = ""+len.toFixed(2) ;
-    cell5.innerHTML = ""+one_hop.toFixed(2) ;
-    cell6.innerHTML = ""+two_hop.toFixed(2) ;    
+    cell4.innerHTML = ""+d.toFixed(2) ;    
+    cell5.innerHTML = ""+len.toFixed(2) ;
+    cell6.innerHTML = ""+one_hop.toFixed(2) ;
+    cell7.innerHTML = ""+two_hop.toFixed(2) ;    
 
 }
 
@@ -954,7 +956,7 @@ function draw_central() {
     
     draw_new(pvec0);
     var hp = am.helix_params.slice(-1)[0];
-    register_trials(trial++,RAIL_ANGLE_RHO,HELIX_RADIUS,TET_DISTANCE,
+    register_trials(trial++,RAIL_ANGLE_RHO,HELIX_RADIUS,hp.d,TET_DISTANCE,
 		    hp.onehop,
 		   hp.twohop);
     
