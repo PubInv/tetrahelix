@@ -12,11 +12,6 @@ title: Untwisting the Tetrahelix
     <section id="visualsection" style="{border: red;}">
     </section>
 
-    <p>
-    <label for="lambda_val">Lambda (BC helix-Equitetrabeam) (100ths)</label>
-  <input type="text" id="lambda_val" readonly style="border:0; color:#f6931f; font-weight:bold;">
-    <div id="lambda_slider"></div>
-    </p>
 
 <p>
     <label for="tet_distance_val">Distance (1 Tet)</label>
@@ -36,7 +31,16 @@ title: Untwisting the Tetrahelix
     <div id="trial_length_max"></div>
 </p>
     
-    <section id="stats" style="{border: red;}">
+    <p>
+    Chirality (handedness)
+  <fieldset>
+    <legend>Select: </legend>
+    <label for="counterclockwise">Counter-Clockwise</label>
+    <input type="radio" name="counterclockwise" id="counterclockwise">
+    <label for="clockwise">Clockwise</label>
+    <input type="radio" name="counterclockwise" id="clockwise">
+  </fieldset>    
+    </p>
     
 <div id="table-wrapper">
   <div id="table-scroll">
@@ -94,7 +98,23 @@ title: Untwisting the Tetrahelix
 			}
 
 		</script>	
-        <script>
+    <script>
+
+$( function() {
+    $( "counterclockwise" ).checkboxradio();
+    $( "clockwise" ).checkboxradio();    
+    $( "fieldset" ).controlgroup();
+  } );
+
+var CHIRALITY_CCW = 1;
+function handleChiralityChange(e) {
+    var target = $( e.target );
+    CHIRALITY_CCW = (target[0].id == "counterclockwise") ? 1 : -1;
+    draw_central();
+}
+
+$( "[name='counterclockwise']").on( "change", handleChiralityChange );
+$( "[name='clockwise']").on( "change", handleChiralityChange );
 
 var HELIX_RADIUS = 1;
 var RAIL_ANGLE_RHO = 0;
@@ -170,7 +190,7 @@ $(function() {
 $(function() {
     $( "#trial_length_max" ).slider({
 	range: "max",
-	min: -35.45,
+	min: 0,
 	max: 35.45,
 	value: 0,
 	step: 0.01,	
@@ -183,20 +203,6 @@ $(function() {
     $( "#rail_angle_rho" ).val( $( "#trial_length_max" ).slider( "value" ) );
 });
 
-
-$(function() {
-    $( "#lambda_slider" ).slider({
-	range: "max",
-	min: 0,
-	max: 100,
-	value: 100,
-	slide: function( event, ui ) {
-	    $( "#lambda_val" ).val( ui.value );
-	    LAMBDA = ui.value/ 100;
-	}
-    });
-    $( "#lambda_val" ).val( $( "#lambda_slider" ).slider( "value" ) );
-});
 
 // Detects webgl
 if ( ! Detector.webgl ) {
@@ -322,6 +328,7 @@ function load_NTetHelix(am,helix,tets,pvec,hparams) {
     var d = hparams.d;
     var radius = hparams.radius;
     var lambda = hparams.lambda;
+    var chi = hparams.chirality;
     var n = tets+3;    
 
     var colors = [ d3.color("red"), d3.color("yellow"), d3.color("blue") ];
@@ -334,7 +341,7 @@ function load_NTetHelix(am,helix,tets,pvec,hparams) {
 	var num = Math.floor(i/3);
 	var q;
 	if ((typeof lambda === 'undefined') || lambda === null) {
-	    q = H_general(num,rail,myRho,d,radius);
+	    q = H_general(chi,num,rail,myRho,d,radius);
 	} else {
 	    q = H_bc_eqt_lambda(num,rail,lambda);	    
 	}
@@ -767,7 +774,7 @@ function init() {
 //    createGround(am);
 }
 
-function add_equitetrabeam_helix(am,lambda,rho,radius,pvec,len) {
+function add_equitetrabeam_helix(am,chi,lambda,rho,radius,pvec,len) {
     am.helices.push(
 	{
 	    helix_joints: [],
@@ -777,6 +784,7 @@ function add_equitetrabeam_helix(am,lambda,rho,radius,pvec,len) {
     var twohop = two_hop(radius,rho,len);    
     am.helix_params.push ({ rho: rho,
 			    len: len,
+			    chirality: chi,
 			    radius: radius,
 			    onehop: onehop,
 			    twohop: twohop,
@@ -790,7 +798,7 @@ function add_equitetrabeam_helix(am,lambda,rho,radius,pvec,len) {
 		   pvec,hp);
 }
 
-function add_equitetrabeam_helix_lambda(am,lambda,pvec,len) {
+function add_equitetrabeam_helix_lambda(am,chi,lambda,pvec,len) {
 
     am.helices.push(
 	{
@@ -801,10 +809,10 @@ function add_equitetrabeam_helix_lambda(am,lambda,pvec,len) {
     var radius = optimal_radius(rho,len);
     var onehop = one_hop(radius,rho,len);
     var twohop = two_hop(radius,rho,len);
-    console.log("AAAA",lambda,rho,radius,len,onehop,twohop);
     am.helix_params.push ({ 
 	len: len,
 	radius: radius,
+	chirality: chi,
 	rho: rho,
 	onehop: onehop,
 	twohop: twohop,
@@ -860,7 +868,7 @@ for (var i = 0; i < num+1; i++ ) {
     var pvec0 = new THREE.Vector3((i - 5)*2*am.INITIAL_EDGE_LENGTH,am.INITIAL_HEIGHT,-3);
     // Note: It is interesting to place very high lambda values in here --- it produces
     // an assymmetry which I have not yet explained.
-    add_equitetrabeam_helix_lambda(am,num*(i-2) / (2*num) ,pvec0,len);
+    add_equitetrabeam_helix_lambda(am,1,(i) / num,pvec0,len);
     var hp = am.helix_params.slice(-1)[0];    
     register_trials(trial++,RAIL_ANGLE_RHO,HELIX_RADIUS,hp.d,TET_DISTANCE,
 		    hp.onehop,
@@ -898,7 +906,7 @@ function draw_central() {
 }
 
 function draw_new(pvec) {
-    add_equitetrabeam_helix(am,null,RAIL_ANGLE_RHO*Math.PI/180,HELIX_RADIUS,pvec,TET_DISTANCE);
+    add_equitetrabeam_helix(am,CHIRALITY_CCW,null,RAIL_ANGLE_RHO*Math.PI/180,HELIX_RADIUS,pvec,TET_DISTANCE);
 }
     </script>
 

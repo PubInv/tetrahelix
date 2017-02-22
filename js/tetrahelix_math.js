@@ -191,14 +191,19 @@ function test_assert_optimal_radius_even() {
     }
 }
 
-function H_general(n,c,rho,d,r) {
+function H_general(chi,n,c,rho,d,r) {
+    if (chi != 1 && chi != -1) {
+	console.log("chirality must be 1 or -1!");
+	return null;
+    }
+    if (rho < 0) {
+	console.log("rho must be non-negative!");
+	return null;
+    }
     var pnt = [];
-    var arho = Math.abs(rho);
-    var as = Math.sign(rho);
-    if (as == 0) as = 1;
     var kappa = n+ c/3.0;
-    var rk = arho*kappa;
-    var angle = as*rk + as*c*2*Math.PI/3;
+    var rk = rho*kappa;
+    var angle = chi*(rk + c*2*Math.PI/3);
 //    console.log("rk",rk*180/Math.PI);
 //    console.log("angle",angle*180/Math.PI);
     
@@ -210,18 +215,17 @@ function H_general(n,c,rho,d,r) {
 
 function test_evenness_H_general() {
     var rho = BCrho;
-    rho = -BCrho/2;
     var len = 1.0;
     var r_opt = optimal_radius(rho,len);
     var d_opt = optimal_distance(rho,len);
     console.log(rho,len,r_opt,d_opt);    
-    var p1 = H_general(0,0,BCrho,d_opt,r_opt);
-    var p2 = H_general(0,1,BCrho,d_opt,r_opt);
+    var p1 = H_general(1,0,0,BCrho,d_opt,r_opt);
+    var p2 = H_general(1,0,1,BCrho,d_opt,r_opt);
     var distance1 = Math.distance3(p1,p2);
     console.log(p1,p2,distance1);
 
-    var p3 = H_general(0,0,-BCrho,d_opt,r_opt);
-    var p4 = H_general(0,1,-BCrho,d_opt,r_opt);
+    var p3 = H_general(-1,0,BCrho,d_opt,r_opt);
+    var p4 = H_general(-1,1,BCrho,d_opt,r_opt);
     var distance2 = Math.distance3(p3,p4);
     console.log(p3,p4,distance2);
 
@@ -229,13 +233,13 @@ function test_evenness_H_general() {
 }
 function H_bc(n,c) {
     var BCr = find_rrho_from_d(BCrho,BCd);
-    return H_general(n,c,BCrho,BCd,BCr);
+    return H_general(1,n,c,BCrho,BCd,BCr);
 }
 
 function H_bc_el(n,c,el) {
     var BCdl = BCd*el;
     var BCrl = el * find_rrho_from_d(BCrho,BCd);
-    return H_general(n,c,BCrho,BCdl,BCrl);
+    return H_general(1,n,c,BCrho,BCdl,BCrl);
 }
 
 
@@ -272,28 +276,14 @@ function H_interp_lambda(lambda,n,c,rho0,d0,r0,rho1,d1,r1) {
 	var ropt = optimal_radius(rhoi,1);
 	var dopt = optimal_distance(rhoi,1)
 	console.log(lambda,rhoi,dopt,ropt);    	
-	return H_general(n,c,rhoi,dopt,ropt);	
+	return H_general(1,n,c,rhoi,dopt,ropt);	
     } else {
 	var rhoi = (lambda > 0) ? (rho1 - rho0)*alambda + rho0 : -((rho1 - rho0)*alambda + rho0);    
 	var ropt = optimal_radius(rhoi,1);
 	var dopt = optimal_distance(rhoi,1)
 	var di = (d1 - d0)*alambda + d0;	
 	var rinterp = (r1 - r0)*alambda + r0;		
-	return H_general(n,c,rhoi,di,rinterp);	
-    }
-}
-
-function test_negative_lambda()
-{
-    var lambda = 1.0;
-    for(var i = 0; i < 4; i++ ) {
-	for(var c = 0; c < 3; c++) {
-	    console.log("XXXX");
-	    var p0 = H_bc_eqt_lambda(i*3,c,lambda);
-	    var p1 = H_bc_eqt_lambda(i*3,c,-lambda);
-	    console.log("ZZZZ",i,c,p0,p1);	    
-	}
-
+	return H_general(1,n,c,rhoi,di,rinterp);	
     }
 }
 
