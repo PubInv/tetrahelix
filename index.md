@@ -767,84 +767,7 @@ function init() {
 //    createGround(am);
 }
 
-var reds = [];
-var blues = [];
-var yells = [];
-
-function test_ccw_tetrahelix_formula() {
-    for(var i = 0; i < 6; i = i+3) {
-	var red = ccw_tetrahelix_vertex(i,1.0);
-	reds[i / 3] = red;
-	var yell = ccw_tetrahelix_vertex(i+1,1.0);	
-	yells[i / 3] = yell;
-	var blue = ccw_tetrahelix_vertex(i+2,1.0);	
-	blues[i /3] = blue;
-    }
-    
-    for(var i = 0; i < 1; i++) {
-//	var v = ccw_tetrahelix_vertex(i,1.0);
-	console.log("red");
-	console.log(reds[i].distanceTo(reds[i+1]));
-	console.log("blue");
-	console.log(blues[i].distanceTo(blues[i+1]));	
-	console.log("yellow");
-	console.log(yells[i].distanceTo(yells[i+1]));		
-
-    
-	console.log("orangeeven");
-//	console.log(Math.distanceTo(reds[i],yells[i]));
-	console.log(reds[i].distanceTo(yells[i]));	
-	console.log("orangeodd");
-//	console.log(Math.distanceTo(yells[i],reds[i+1]));
-	console.log(yells[i].distanceTo(reds[i+1]));		
-
-	console.log("purpleeven");
-//	console.log(Math.distanceTo(reds[i],blues[i]));
-	console.log(reds[i].distanceTo(blues[i]));			
-	console.log("purpleodd");
-//	console.log(Math.distanceTo(blues[i],reds[i+1]));
-	console.log(blues[i].distanceTo(reds[i+1]));				
-
-	console.log("greeneven");
-//	console.log(Math.distanceTo(yells[i],blues[i]));
-	console.log(yells[i].distanceTo(blues[i]));					
-	console.log("greenodd");
-	console.log(blues[i].distanceTo(yells[i+1]));						
-//	console.log(Math.distanceTo(blues[i],yells[i+1]));
-
-    }
-}
-var radius0;
-var radius1;
-
-function add_helices(am,num) {
-    for(var i = 0; i < num; i++) {
-	
-    var pvec = new THREE.Vector3(-4 + i*2,am.INITIAL_HEIGHT,-3);
-    var len = am.INITIAL_EDGE_LENGTH/2;
-    am.helices.push(
-	{
-	    helix_joints: [],
-	    helix_members: []
-	});
-	am.helix_params.push ({ rho: BCrho/(i+1),
-			 d: len*BCd,
-			     len: len,
-			     lambda: (i) / (num - 1)});
-	var hp = am.helix_params[i];
-	
-	radius = find_rrho_from_d_el(hp.rho,hp.d,hp.len);
-	
-    am.helix_params[i].radius = radius;
-
-    load_NTetHelix(am,am.helices[i],
-		   am.NUMBER_OF_TETRAHEDRA,
-		   pvec,hp);
-    }
-}
-
 function add_equitetrabeam_helix(am,lambda,rho,radius,pvec,len) {
-
     am.helices.push(
 	{
 	    helix_joints: [],
@@ -874,9 +797,18 @@ function add_equitetrabeam_helix_lambda(am,lambda,pvec,len) {
 	    helix_joints: [],
 	    helix_members: []
 	});
+    var rho = rho_opt_interp(lambda);
+    var radius = optimal_radius(rho,len);
+    var onehop = one_hop(radius,rho,len);
+    var twohop = two_hop(radius,rho,len);
+    console.log("AAAA",lambda,rho,radius,len,onehop,twohop);
     am.helix_params.push ({ 
-			    len: len,
-			    lambda: lambda});
+	len: len,
+	radius: radius,
+	rho: rho,
+	onehop: onehop,
+	twohop: twohop,
+	lambda: lambda});
     
     var hp = am.helix_params.slice(-1)[0];
     hp.d = len;
@@ -928,7 +860,11 @@ for (var i = 0; i < num+1; i++ ) {
     var pvec0 = new THREE.Vector3((i - 5)*2*am.INITIAL_EDGE_LENGTH,am.INITIAL_HEIGHT,-3);
     // Note: It is interesting to place very high lambda values in here --- it produces
     // an assymmetry which I have not yet explained.
-    add_equitetrabeam_helix_lambda(am,(i - 5)*0.5 / (num) ,pvec0,len);
+    add_equitetrabeam_helix_lambda(am,(i) / (num) ,pvec0,len);
+    var hp = am.helix_params.slice(-1)[0];    
+    register_trials(trial++,RAIL_ANGLE_RHO,HELIX_RADIUS,hp.d,TET_DISTANCE,
+		    hp.onehop,
+		   hp.twohop);
 }
 
 // var pvec0 = new THREE.Vector3((i - 1)*2*am.INITIAL_EDGE_LENGTH,am.INITIAL_HEIGHT,-3);
@@ -952,7 +888,6 @@ function draw_central() {
     am.helix_params = [];
     var pvec0 = new THREE.Vector3(0,am.INITIAL_HEIGHT,-3);
     
-
     
     draw_new(pvec0);
     var hp = am.helix_params.slice(-1)[0];

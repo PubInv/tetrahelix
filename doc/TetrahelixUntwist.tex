@@ -423,15 +423,16 @@ Rewriting our formulation in terms of $\rho$:
 H_{general}(n,c,\rho,d_{\rho},r_{\rho}) =
 \left [
   \begin{tabular}{c}
-   $ r_{\rho} \cos(\rho \kappa + c 2 \pi /3) $\\
-   $ r_{\rho}  \sin(\rho \kappa + c 2 \pi /3) $\\
+   $ r_{\rho} \cos(\rho \kappa + s\cdot c 2 \pi /3) $\\
+   $ r_{\rho}  \sin(\rho \kappa + s\cdot c 2 \pi /3) $\\
    $ d_{\rho} \kappa $
   \end{tabular}
   \right ],
 \text{where:}
 \begin{tabular}{c}
   $   1 = d_{\rho}^2 + 4 r_{\rho}^2 (\sin{ \rho / 2})^2 $ \\
-    $\kappa = n + c/3$ \\
+  $\kappa = n + c/3$ \\
+    $s = \text{sign}{(\rho)}$ \\  
   \end{tabular}      
 \end{equation}
 
@@ -463,8 +464,8 @@ Which are invarinat for all $n$ and $c$.
 \begin{align*}
   \text{one-hop} &= dist(H_{general}(n,c,\rho,d_{\rho}),H_{general}(n,c+1,\rho,d_{\rho}),r_{\rho})  \\
   \text{one-hop} &= dist(H_{general}(0,0,\rho,d_{\rho}),H_{general}(0,1,\rho,d_{\rho},r_{\rho}))  \\  
-  \text{one-hop}  &= \sqrt{\frac{d_{\rho}^2}{9} + r_{\rho}\sin(0) - r_{\rho}\sin(rho/3)+\frac{2\pi}{3}))^2  +
-    (r_{\rho}\cos(0) - r_{\rho}\cos(\rho/3 + \frac{2\pi}{3}))^2} \\
+  \text{one-hop}  &= \sqrt{\frac{d_{\rho}^2}{9} + (r_{\rho}\sin(0) - r_{\rho}\sin(\rho/3+1\cdot\frac{2\pi}{3}))^2  +
+    (r_{\rho}\cos(0) - r_{\rho}\cos(\rho/3 + 1\cdot\frac{2\pi}{3}))^2} \\
   \text{one-hop}  &= \sqrt{\frac{d_{\rho}^2}{9} + (0  - r_{\rho}\sin(\rho/3 + \frac{2\pi}{3}))^2  +
     (r_{\rho} - r_{\rho}\cos(\rho/3 + \frac{2\pi}{3}))^2} \\
   \text{one-hop}  &= \sqrt{\frac{d_{\rho}^2}{9} + r_{\rho}^2\sin^2(\rho/3 + \frac{2\pi}{3})  +
@@ -527,7 +528,7 @@ Then:
 
 %% Plot3D[D[f[x, r]], {x, 0, 2}, {r, 0, Pi}]
 
-%% This grahp demonstrates the derivative is always negative.
+%% This graph demonstrates the derivative is always negative.
 
 
 By graph inspection using Mathematica, we see the partial derivative of this with respect to
@@ -561,9 +562,7 @@ We can now give a formula for $ d_{opt} $ computed from $\rho, r_{opt}$ via the 
   d_{opt}^2 &= 1 - \frac{16 sin^2(\rho / 2) }{ cos(\rho) + 9( \sqrt{3} sin(\rho/3) + \cos(\rho/3)) + 8 }   \\
     d_{opt} &= \sqrt{1 - \frac{16 sin^2(\rho / 2) }{ cos(\rho) + 9( \sqrt{3} sin(\rho/3) + \cos(\rho/3)) + 8 }}    \numberthis  \label{dopt}  \\      
 \end{align*}
-NOTE: I may have made a terrible mistake here, I'm unsure if the numerator should have $sin^2(\rho)$ or $sin^2(\rho/2)$.
-
-Therefore, by computing $r_{opt}$ as a function of $\rho$ from this equation, we can construct minimax optimal tetrahelix for an $\rho < \rho_{bc}$.
+Therefore, by computing $r_{opt}$ as a function of $\rho$ from this equation, we can construct minimax optimal tetrahelix for an $-\rho_{bc} \leq \rho \leq \rho_{bc}$.
 
 \begin{theorem}
   \label{optimality}

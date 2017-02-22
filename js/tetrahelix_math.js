@@ -87,6 +87,7 @@ function find_rrho_from_d(rho,d) {
     return find_rrho_from_d_el(rho,d,1);
 }
 
+// Tha abs should not be needed here, as thise functions are even..
 function optimal_radius(rho,el) {
     var rho_abs = Math.abs(rho);
     var numer = 2*el;
@@ -99,7 +100,9 @@ function optimal_radius(rho,el) {
 }
 
 function one_hop(r,rho,el) {
-    var t1 = 1/9;
+    var arho = Math.abs(rho);
+    var as = Math.sign(rho);
+    var t1 = el*el/9;
     var t2 = -4*Math.sin(rho/2)*Math.sin(rho/2)/9;
     var t3 = Math.sin(rho/3 + 2*Math.PI/3);
     var t4 = (1 - Math.cos(rho/3 + 2*Math.PI/3));
@@ -107,32 +110,35 @@ function one_hop(r,rho,el) {
 }
 
 function two_hop(r,rho,el) {
-    var t1 = 4/9;
+    var arho = Math.abs(rho);
+    var as = Math.sign(rho);    
+    var t1 = el*el*4/9;
     var t2 = -16*Math.sin(rho/2)*Math.sin(rho/2)/9;
     var t3 = Math.sin(2*rho/3 + 4*Math.PI/3);
     var t4 = (1 - Math.cos(2*rho/3 + 4*Math.PI/3));
     return Math.sqrt(t1 + r*r*(t2 + t3*t3 + t4*t4));
 }
-
+Math.distance3 = function(p0,p1) {
+    x = p0[0] - p1[0];
+    y = p0[1] - p1[1];
+    z = p0[2] - p1[2];        
+    return Math.sqrt(x*x + y*y + z*z);
+}
+// I have forgotten what this is supposed to test.
 function test_optimal_radius() {
     var MAX_DEGREES = 45;
     for(var i = 0; i < 100;i++) {
 	var rho = Math.PI*(i*MAX_DEGREES/100)/180;
 	var r = optimal_radius(rho,1.0);
-	for(var j = 0; j < 10; j++) {
-	    // iterate rj centered around the optimal distance.
-	    var rj = r/2 + (j/10)*r;
-	    var h1 = one_hop(rj,rho,1.0);
-	    var h2 = two_hop(rj,rho,1.0);
-	    // What we really want to assert here is that one_hop should be close to 1.
-	    console.log(180*rho/Math.PI,rj,h2-h1);
-	}
+	var h1 = one_hop(r,rho,1.0);
+	var h2 = two_hop(r,rho,1.0);
+	console.log(180*rho/Math.PI,r,h1,h2-h1);
     }
 }
 
 // Copute the optimal distance as a function of rho
 // (not using optimal_radius, because we want an independent check).
-function d_opt(rho,el) {
+function optimal_distance(rho,el) {
     var num = 16*Math.sin(rho/2)*Math.sin(rho/2);
     var t1 = Math.cos(rho);
     var t2 = 9*(Math.sqrt(3)*Math.sin(rho/3)+Math.cos(rho/3))/2;
@@ -140,10 +146,25 @@ function d_opt(rho,el) {
     var den = t1+t2+t3;
     return el*Math.sqrt(1 - num/den);
 }
+function test_one_hop() {
+    var rho = BCrho;
+    rho = BCrho/2;
+    var len = 0.5;
+    var r_opt = optimal_radius(rho,len);
+    var d_opt = optimal_distance(rho,len);
+    console.log(rho,len,r_opt,d_opt);
+    var onehop = one_hop(r_opt,rho,len);
+    var p1 = H_general(0,0,BCrho,d_opt,r_opt);
+    var p2 = H_general(0,1,BCrho,d_opt,r_opt);
+    var distance = Math.distance3(p1,p2);
+    console.log(p1,p2);
+    console.log(onehop,distance,onehop-distance);
+    
+}
 
 function test_optimal_d() {
     	var r = optimal_radius(BCrho,1.0);
-    	var dbc = d_opt(BCrho,1.0);
+    	var dbc = optimal_distance(BCrho,1.0);
 	// Now check that d_opt matches...
 	var dp = find_drho_from_r_el(BCrho,r,1);
     console.log(180*BCrho/Math.PI,r,dbc,dp);
@@ -152,7 +173,7 @@ function test_optimal_d() {
     for(var i = 0; i < 100;i++) {
 	var rho = Math.PI*(i*MAX_DEGREES/100)/180;
 	var r = optimal_radius(rho,1.0);
-	var d = d_opt(rho,1.0);
+	var d = optimal_distance(rho,1.0);
 	// Now check that d_opt matches...
 	var dp = find_drho_from_r_el(rho,r,1);
 	console.log(180*rho/Math.PI,r,d,dp-d);
@@ -172,6 +193,7 @@ function test_assert_optimal_radius_even() {
 
 function H_general(n,c,rho,d,r) {
     var pnt = [];
+    var as = Math.sign(rho);
     var kappa = n+ c/3.0;
     var rk = rho*kappa;
     var angle = rk + c*2*Math.PI/3;    
@@ -209,17 +231,30 @@ function H_bc_eqt_lambda(n,c,lambda) {
     return H_interp_lambda(lambda,n,c,rho0,d0,r0,rho1,d1,r1);
 }
 
+function rho_opt_interp(lambda) {
+   var alambda = Math.abs(lambda);
+    var rho0 = EQTBrho;
+    var rho1 = BCrho;
+    var rhoi = (lambda > 0) ? (rho1 - rho0)*alambda + rho0 : -((rho1 - rho0)*alambda + rho0);    
+    return rhoi;
+}
 // Interpolate between (rho0,d0,r0,l0) and (rho1,d1,r1,l1)
 function H_interp_lambda(lambda,n,c,rho0,d0,r0,rho1,d1,r1) {
     var alambda = Math.abs(lambda);
-    var di = (d1 - d0)*alambda + d0;
-    var rhoi = (lambda > 0) ? (rho1 - rho0)*alambda + rho0 : -((rho1 - rho0)*alambda + rho0);    
-    var rinterp = (r1 - r0)*alambda + r0;	
-    var ropt = optimal_radius(rhoi,1);
-    console.log(lambda,di,rinterp,ropt);    
+
+
     if (USE_OPTIMAL_RADIUS) {
-	return H_general(n,c,rhoi,di,ropt);	
+	var rhoi = rho_opt_interp(lambda);
+	var ropt = optimal_radius(rhoi,1);
+	var dopt = optimal_distance(rhoi,1)
+	console.log(lambda,rhoi,dopt,ropt);    	
+	return H_general(n,c,rhoi,dopt,ropt);	
     } else {
+	var rhoi = (lambda > 0) ? (rho1 - rho0)*alambda + rho0 : -((rho1 - rho0)*alambda + rho0);    
+	var ropt = optimal_radius(rhoi,1);
+	var dopt = optimal_distance(rhoi,1)
+	var di = (d1 - d0)*alambda + d0;	
+	var rinterp = (r1 - r0)*alambda + r0;		
 	return H_general(n,c,rhoi,di,rinterp);	
     }
 }
