@@ -11,13 +11,6 @@ title: Untwisting the Tetrahelix
         <section id="main-content">
     <section id="visualsection" style="{border: red;}">
     </section>
-    <section id="textsection" style="{border: red;}">
-      <h1 id="message_banner">
-    Untwisting the Tetrahelix </h1>
-
-    A mathematical investigation of the Tetrahelix and Boerdijk-Coxeter helix, which provides a new
-    formulaic way of producing a continuum of untwisted tetrahelices.
-
 
     <p>
     <label for="lambda_val">Lambda (BC helix-Equitetrabeam) (100ths)</label>
@@ -43,14 +36,6 @@ title: Untwisting the Tetrahelix
     <div id="trial_length_max"></div>
 </p>
     
-
-    <button onclick="start_trial()">Start New Trial!</button>
-    <button onclick="pause()">Pause</button>
-    <button onclick="my_clear()">Clear Traces</button>
-    <button onclick="toggle_sound()">Toggle Sound</button>
-    <button onclick="toggle_bracelet()">Toggle Bracelet Debug Lines</button>
-    <button onclick="toggle_single()">Toggle Single Pendulum</button>
-
     <section id="stats" style="{border: red;}">
     
 <div id="table-wrapper">
@@ -66,7 +51,14 @@ title: Untwisting the Tetrahelix
   </div>
 </div>    
     
-    </section>
+        <section id="textsection" style="{border: red;}">
+      <h1 id="message_banner">
+    Untwisting the Tetrahelix </h1>
+
+    A mathematical investigation of the Tetrahelix and Boerdijk-Coxeter helix, which provides a new
+    formulaic way of producing a continuum of untwisted tetrahelices.
+</section>
+
 	<script type="x-shader/x-vertex" id="vertexShader">
 
 			varying vec3 vWorldPosition;
@@ -101,17 +93,10 @@ title: Untwisting the Tetrahelix
 		</script>	
         <script>
 
-var HELIX_RADIUS = 34;
-var RAIL_ANGLE_RHO = 34;
-
-var MAX_NUM_TICKS = 34;
-var DEGREES_OF_VARIATION_A_S = 34;
-
-var LAMBDA = 34;
-
-var TET_DISTANCE = 34;
-
-
+var HELIX_RADIUS = 1;
+var RAIL_ANGLE_RHO = 0;
+var LAMBDA = 0;
+var TET_DISTANCE = 1;
 
 function register_trials(trial,angle,time,divergence_length) {
     var table = document.getElementById("trialrecords");
@@ -143,11 +128,13 @@ $(function() {
     $( "#tet_distance" ).slider({
 	range: "max",
 	min: 0,
-	max: 100,
-	value: 70,
+	max: 3,
+	value: 1,
+	step: 0.01,
 	slide: function( event, ui ) {
 	    $( "#tet_distance_val" ).val( ui.value );
 	    TET_DISTANCE = ui.value;
+	    draw_central();
 	}
     });
     $( "#tet_distance_val" ).val( $( "#tet_distance" ).slider( "value" ) );
@@ -159,11 +146,13 @@ $(function() {
     $( "#helix_radius" ).slider({
 	range: "max",
 	min: 0.0,
-	max: 100.0,
-	value: HELIX_RADIUS * 100,
+	max: 3,
+	value: 1,
+	step: 0.01,	
 	slide: function( event, ui ) {
 	    $( "#helix_radius_val" ).val( ui.value );
-	    HELIX_RADIUS = ui.value / 100.0;
+	    HELIX_RADIUS = ui.value ;
+	    draw_central();	    
 	}
     });
     $( "#helix_radius_val" ).val( $( "#helix_radius" ).slider( "value" ) );
@@ -173,12 +162,14 @@ $(function() {
 $(function() {
     $( "#trial_length_max" ).slider({
 	range: "max",
-	min: 2,
-	max: 100,
-	value: 20,
+	min: -35.45,
+	max: 35.45,
+	value: 0,
+	step: 0.01,	
 	slide: function( event, ui ) {
 	    $( "#rail_angle_rho" ).val( ui.value );
 	    RAIL_ANGLE_RHO = ui.value;
+	    draw_central();
 	}
     });
     $( "#rail_angle_rho" ).val( $( "#trial_length_max" ).slider( "value" ) );
@@ -518,7 +509,6 @@ AM.prototype.remove_body_mesh_pair = function(body,mesh) {
 	    this.bodies.splice(i, 1);
 	}
     }
-    delete mesh["ammo_obj"];
 }
 
 AM.prototype.clear_non_floor_body_mesh_pairs = function() {
@@ -628,6 +618,7 @@ function initGraphics() {
 //    groundMat.color.setHSL( 0.095, 1, 0.75 );
 
     var ground = new THREE.Mesh( groundGeo, groundMat );
+    ground.name = "GROUND";
     ground.rotation.x = -Math.PI/2;
     ground.position.y = 0;
     am.scene.add( ground );
@@ -641,11 +632,6 @@ function initGraphics() {
     am.container.innerHTML = "";
 
     am.container.appendChild( am.renderer.domElement );
-
-    //    stats = new Stats();
-    //    stats.domElement.style.position = 'absolute';
-    //    stats.domElement.style.top = '0px';
-    //    container.appendChild( stats.domElement );
 
     am.sceneOrtho = new THREE.Scene();
 
@@ -945,6 +931,23 @@ for (var i = 0; i < num+1; i++ ) {
     compute_helix_minimax(am.helices[i]);
     console.log(am.helix_params[i]);    
  }
+function draw_central() {
+    am.clear_non_floor_body_mesh_pairs();
+    for( var i = am.scene.children.length - 1; i >= 0; i--) {
+	var obj = am.scene.children[i];
+	if (obj.type == "Mesh" && obj.name != "GROUND") {
+	    am.scene.remove(obj);
+	}
+    }
+    am.helices = [];
+    am.helix_params = [];
+    var pvec0 = new THREE.Vector3(0,am.INITIAL_HEIGHT,-3);
+    draw_new(pvec0);
+}
+
+function draw_new(pvec) {
+    add_equitetrabeam_helix(am,null,RAIL_ANGLE_RHO*Math.PI/180,HELIX_RADIUS,pvec,TET_DISTANCE);
+}
     </script>
 
   
