@@ -124,8 +124,38 @@ function test_optimal_radius() {
 	    var rj = r/2 + (j/10)*r;
 	    var h1 = one_hop(rj,rho,1.0);
 	    var h2 = two_hop(rj,rho,1.0);
+	    // What we really want to assert here is that one_hop should be close to 1.
 	    console.log(180*rho/Math.PI,rj,h2-h1);
 	}
+    }
+}
+
+// Copute the optimal distance as a function of rho
+// (not using optimal_radius, because we want an independent check).
+function d_opt(rho,el) {
+    var num = 16*Math.sin(rho/2)*Math.sin(rho/2);
+    var t1 = Math.cos(rho);
+    var t2 = 9*(Math.sqrt(3)*Math.sin(rho/3)+Math.cos(rho/3))/2;
+    var t3 = 8;
+    var den = t1+t2+t3;
+    return el*Math.sqrt(1 - num/den);
+}
+
+function test_optimal_d() {
+    	var r = optimal_radius(BCrho,1.0);
+    	var dbc = d_opt(BCrho,1.0);
+	// Now check that d_opt matches...
+	var dp = find_drho_from_r_el(BCrho,r,1);
+    console.log(180*BCrho/Math.PI,r,dbc,dp);
+    
+   var MAX_DEGREES = 45;
+    for(var i = 0; i < 100;i++) {
+	var rho = Math.PI*(i*MAX_DEGREES/100)/180;
+	var r = optimal_radius(rho,1.0);
+	var d = d_opt(rho,1.0);
+	// Now check that d_opt matches...
+	var dp = find_drho_from_r_el(rho,r,1);
+	console.log(180*rho/Math.PI,r,d,dp-d);
     }
 }
 

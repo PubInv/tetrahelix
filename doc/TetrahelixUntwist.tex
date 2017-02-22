@@ -170,10 +170,10 @@ BC helix, but rather one that winds three times as rapidly through all
 nodes. To a designer of tetrahelices, it is more natural to think of
 the three helices which are visually apparent, that is, those three
 which are closely approximated by the by the outer edges or rails of
-the BC helix.
+the BC helix. We think of each of these three rails as being a different color, red, blue, or yellow.
 
 It is convenient to have a formula that gives us the nodes of just
-one rail helix, denoted by $c$:
+one rail helix, denoted by color $c$:
 \[
 (\forall n \in \mathbb{Z}, \forall c \in \{0,1,2\} : H_{BCcolored}(n,c) = V(3n +c))
 \]
@@ -200,10 +200,10 @@ In this formula, integral values of $n$ may be taken as a node number for one ra
 coordinates. Allowing $n$ to take non-integer values defines a continuous
 helix in space which is close to the segmented polyline of the outer tetrahedra edges, and coincides with them at integer
 values.
-The parameter $c \in \{0,1,2\}$ specifies which of the rails is being computed.
 
-The quantity $ (3 \theta - 2 \pi) \approx 35.43 \degree $, and is the angular shift between $V(n,color)$ and
-$V(n+1,color)$. This quantity appears so often below that we call it the ``rail angle rho''. For the BC helix, $\rho_{bc} = (3 \theta - 2 \pi)$.
+The quantity $ (3 \theta - 2 \pi) \approx 35.43 \degree $, and is the angular shift between $V(n*3+c)=H_{BCcolored}(n,c)$ and
+$V((n+1)*3+c)=H_{BCcolored}(n+1,c)x$.
+This quantity appears so often that we call it the ``rail angle rho''. For the BC helix, $\rho_{bc} = (3 \theta - 2 \pi)$.
 
 \begin{figure}[H]
   \label{railanglefig}
@@ -551,16 +551,15 @@ we equate one-hop to $1$ to find the optimum radius:
 \end{align*}
 (where denominator $  \neq 0$).
 
-Note: $r_{opt} $ is not an even function. I think it is only valid for non-negative values of $\rho$, an issue
-we must face when we build our continuum.
-Note: $ d_{opt} $ is computed by $\rho, r_{opt}$ via the rail angle equation \eqref{railangle}.
+
+We can now give a formula for $ d_{opt} $ computed from $\rho, r_{opt}$ via the rail angle equation \eqref{railangle}:
 
 \begin{align*}
   d_{opt}^2 &= 1 - 4 \frac{2}{\sqrt{\frac{9}{2} \cdot ( \sqrt{3} sin(\rho/3) + \cos(\rho/3)) + cos(\rho)+ 8 }}^2 (\sin{ \rho / 2})^2   \\
   d_{opt}^2 &= 1 - 4 \frac{4(\sin{ \rho / 2})^2}{\frac{9}{2} \cdot ( \sqrt{3} sin(\rho/3) + \cos(\rho/3)) + cos(\rho)+ 8 }    \\
-  d_{opt}^2 &= 1 - \frac{32(\sin{ \rho / 2})^2}{9 ( \sqrt{3} sin(\rho/3) + \cos(\rho/3)) + cos(\rho)+ 8 }    \\
-  d_{opt}^2 &= 1 - \frac{8 sin^2(\rho / 2) }{ cos(r) + 9( \sqrt{3} sin(\rho/3) + \cos(\rho/3)) + 8 }   \\
-    d_{opt} &= \sqrt{1 - \frac{8 sin^2(\rho / 2) }{ cos(r) + 9( \sqrt{3} sin(\rho/3) + \cos(\rho/3)) + 8 }}    \numberthis  \label{dopt}  \\      
+  d_{opt}^2 &= 1 - \frac{16(\sin{ \rho / 2})^2}{9 ( \sqrt{3} sin(\rho/3) + \cos(\rho/3)) + cos(\rho)+ 8 }    \\
+  d_{opt}^2 &= 1 - \frac{16 sin^2(\rho / 2) }{ cos(\rho) + 9( \sqrt{3} sin(\rho/3) + \cos(\rho/3)) + 8 }   \\
+    d_{opt} &= \sqrt{1 - \frac{16 sin^2(\rho / 2) }{ cos(\rho) + 9( \sqrt{3} sin(\rho/3) + \cos(\rho/3)) + 8 }}    \numberthis  \label{dopt}  \\      
 \end{align*}
 NOTE: I may have made a terrible mistake here, I'm unsure if the numerator should have $sin^2(\rho)$ or $sin^2(\rho/2)$.
 
@@ -643,10 +642,10 @@ $\rho_{bc} \approx 35.43 \degree$, which gives the BC Helix.
  (Note: In fact there is something wrong with my math, negative rho values do produces opposit chirality
  but the lengths are not the same as the positive values.  I need to track this down.)
 
-The pitch of the resulting tetrahix 
+The pitch of any tetrahelix 
 where $\rho \neq 0$ is:
 \[
-p(\rho) = \frac{2 \pi  \cdot d_{opt}}{\rho}
+p(\rho) = \frac{2 \pi  \cdot d}{\rho}
 \]
 
 As pitch increases smoothly with decreasing rail angle, it is easy to solve for rail angle

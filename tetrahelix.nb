@@ -1,0 +1,120 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      3165,        110]
+NotebookOptionsPosition[      2760,         91]
+NotebookOutlinePosition[      3120,        107]
+CellTagsIndexPosition[      3077,        104]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"function", " ", 
+   RowBox[{"dopt", "[", "r", "]"}]}], " ", "=", " ", 
+  RowBox[{"1", " ", "-", " ", 
+   RowBox[{"4", "*", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"2", "/", 
+       RowBox[{"(", 
+        RowBox[{"Sqrt", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"9", "/", "2"}], ")"}], "*", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"Sqrt", "[", "3", "]"}], "*", 
+              RowBox[{"Sin", "[", 
+               RowBox[{"r", "/", "3"}], "]"}]}], " ", "+", " ", 
+             RowBox[{"Cos", "[", 
+              RowBox[{"r", "/", "3"}], "]"}]}], ")"}]}], " ", "+", " ", 
+          RowBox[{"Cos", "[", "r", "]"}], "+", "8"}], "]"}], ")"}]}], ")"}], 
+     "^", "2"}], "*", 
+    RowBox[{
+     RowBox[{"Sin", "[", 
+      RowBox[{"r", "/", "2"}], "]"}], "^", "2"}]}]}]}], "\[IndentingNewLine]", 
+ RowBox[{"dopt", 
+  RowBox[{"(", "1", ")"}]}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{{3.696718326133861*^9, 3.696718367250586*^9}, {
+  3.6967184136916857`*^9, 3.696718428960709*^9}, {3.696718469945834*^9, 
+  3.69671860718764*^9}}],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Set","write",
+   "\"Tag \\!\\(\\*RowBox[{\\\"Times\\\"}]\\) in \
+\\!\\(\\*RowBox[{\\\"function\\\", \\\" \\\", RowBox[{\\\"dopt\\\", \
+\\\"[\\\", \\\"r\\\", \\\"]\\\"}]}]\\) is Protected.\"",2,3,10,
+   17141901467817017823,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.696718611607291*^9}],
+
+Cell[BoxData[
+ RowBox[{"1", "-", 
+  FractionBox[
+   RowBox[{"16", " ", 
+    SuperscriptBox[
+     RowBox[{"Sin", "[", 
+      FractionBox["r", "2"], "]"}], "2"]}], 
+   RowBox[{"8", "+", 
+    RowBox[{"Cos", "[", "r", "]"}], "+", 
+    RowBox[{
+     FractionBox["9", "2"], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"Cos", "[", 
+        FractionBox["r", "3"], "]"}], "+", 
+       RowBox[{
+        SqrtBox["3"], " ", 
+        RowBox[{"Sin", "[", 
+         FractionBox["r", "3"], "]"}]}]}], ")"}]}]}]]}]], "Output",
+ CellChangeTimes->{3.696718611608972*^9}],
+
+Cell[BoxData["dopt"], "Output",
+ CellChangeTimes->{3.696718611611418*^9}]
+}, Open  ]]
+},
+WindowSize->{808, 911},
+WindowMargins->{{Automatic, 489}, {Automatic, 49}},
+FrontEndVersion->"11.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (September \
+21, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 1173, 32, 96, "Input"],
+Cell[1756, 56, 347, 8, 24, "Message"],
+Cell[2106, 66, 562, 19, 59, "Output"],
+Cell[2671, 87, 73, 1, 66, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+
