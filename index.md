@@ -834,12 +834,12 @@ function compute_helix_minimax(helix) {
 	var a = member.a.mesh.position;
 	var b = member.b.mesh.position;
 	var d = a.distanceTo(b);
-	// if (i < 10) {
-	//     console.log("member:",i);
-	//     console.log("a:",member.a.mesh.position);
-	//     console.log("b:",member.b.mesh.position);
-	//     console.log("distance:",d);
-	// }
+	if (i < 10) {
+	     console.log("member:",i);
+	     console.log("a:",member.a.mesh.position);
+	     console.log("b:",member.b.mesh.position);
+	     console.log("distance:",d);
+	 }
 	
 	if (min > d) min = d;
 	if (max < d) max = d;
@@ -855,12 +855,12 @@ var r0 = (2/3)*Math.sqrt(2/3);
 // This is the splitting difference.
 // var r0 = Math.sqrt(35/9)/4;
 
-var num = 10;
+var num = 4;
 for (var i = 0; i < num+1; i++ ) {
     var pvec0 = new THREE.Vector3((i - 5)*2*am.INITIAL_EDGE_LENGTH,am.INITIAL_HEIGHT,-3);
     // Note: It is interesting to place very high lambda values in here --- it produces
     // an assymmetry which I have not yet explained.
-    add_equitetrabeam_helix_lambda(am,(i) / (num) ,pvec0,len);
+    add_equitetrabeam_helix_lambda(am,num*(i-2) / (2*num) ,pvec0,len);
     var hp = am.helix_params.slice(-1)[0];    
     register_trials(trial++,RAIL_ANGLE_RHO,HELIX_RADIUS,hp.d,TET_DISTANCE,
 		    hp.onehop,

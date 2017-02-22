@@ -142,7 +142,7 @@ The angle $\theta$ is the rotation of a \emph{each} tetrahedra, not the tetrahed
 each tetrahedra has either a yellow, blue, or red outer edge or rail.
 That is, a blue-rail tetrahedron is rotated slightly more than a $1/3$ of a revolution to match the face of the yellow tetrahedra.
 
-From Robert Gray's site, repeating formula by H.S.M. Coxeter:
+From Robert Gray's site, repeating formula by H.S.M. Coxeter, for a counter-clockwise BC Helix:
 \begin{equation}
   \label{graycoxeter}
 V(n) =
@@ -393,9 +393,9 @@ input the ``rail angle'' $\rho$. We define $\rho$ to be the angle
 formed in the X,Y plane $\angle R_i O R_{i+1}$ projecting out the $z$
 axis and sighting along the positive $z$ axis. In other words, $\rho$
 controls how far a rail edge of a tetrahelix deviates from being
-parallel with the axis, or the ``twistiness'' of tetrahelix. Ideally
-we will treat a positive angle as creating a clockwise tetrahelix and
-a negative as creating a counter-clockwise helices.
+parallel with the axis, or the ``twistiness'' of tetrahelix. We use
+the parameter $\chi = 1$ to indicate a chirality or counter-clockwise,
+and $\chi = -1$ for clockwise.
 
 Please refer back to Figure \ref{railanglefig}.
 
@@ -420,11 +420,11 @@ determine both of them together, so we treat both as parameters.
 
 Rewriting our formulation in terms of $\rho$:
 \begin{equation}
-H_{general}(n,c,\rho,d_{\rho},r_{\rho}) =
+H_{general}(\chi,n,c,\rho,d_{\rho},r_{\rho}) =
 \left [
   \begin{tabular}{c}
-   $ r_{\rho} \cos(\rho \kappa + s\cdot c 2 \pi /3) $\\
-   $ r_{\rho}  \sin(\rho \kappa + s\cdot c 2 \pi /3) $\\
+   $ r_{\rho} \cos(\chi \cdot (\rho \kappa + s\cdot c 2 \pi /3)) $\\
+   $ r_{\rho}  \sin(\chi \cdot (\rho \kappa + s\cdot c 2 \pi /3)) $\\
    $ d_{\rho} \kappa $
   \end{tabular}
   \right ],
@@ -432,9 +432,10 @@ H_{general}(n,c,\rho,d_{\rho},r_{\rho}) =
 \begin{tabular}{c}
   $   1 = d_{\rho}^2 + 4 r_{\rho}^2 (\sin{ \rho / 2})^2 $ \\
   $\kappa = n + c/3$ \\
-    $s = \text{sign}{(\rho)}$ \\  
+    $\chi \in \{-1,1\}$ \\  
   \end{tabular}      
 \end{equation}
+
 
 $H_{general}$ forces the user to select an $d_{\rho}$
 which has a sensible radius.
@@ -562,7 +563,7 @@ We can now give a formula for $ d_{opt} $ computed from $\rho, r_{opt}$ via the 
   d_{opt}^2 &= 1 - \frac{16 sin^2(\rho / 2) }{ cos(\rho) + 9( \sqrt{3} sin(\rho/3) + \cos(\rho/3)) + 8 }   \\
     d_{opt} &= \sqrt{1 - \frac{16 sin^2(\rho / 2) }{ cos(\rho) + 9( \sqrt{3} sin(\rho/3) + \cos(\rho/3)) + 8 }}    \numberthis  \label{dopt}  \\      
 \end{align*}
-Therefore, by computing $r_{opt}$ as a function of $\rho$ from this equation, we can construct minimax optimal tetrahelix for an $-\rho_{bc} \leq \rho \leq \rho_{bc}$.
+Therefore, by computing $r_{opt}$ as a function of $\rho$ from this equation, we can construct minimax optimal tetrahelix for an $0 \leq \rho \leq \rho_{bc}$.
 
 \begin{theorem}
   \label{optimality}
@@ -624,6 +625,9 @@ formulation could ever give rise to a continuum producing the tetrabeam,
 since setting the angle in that equation to zero can produce only points on a single
 line.
 
+Note that the equitetrabeam has chirality, which becomes important in our attempt to build a
+continuum of tetrahelices.
+
 \section{An Untwisted Continuum}
 
 We observe that Equations \eqref{eqrhoopt} and \eqref{dopt} compute $r_{opt}$ and $d_{opt}$ which
@@ -637,9 +641,15 @@ $\rho_{bc} \approx 35.43 \degree$, which gives the BC Helix.
      \caption{A Continuum of Tetrahelices}
  \end{figure}
 
- Negative values of $\rho$ generate clockwise tetrahelices; positive generate counter-clockwise helices.
- (Note: In fact there is something wrong with my math, negative rho values do produces opposit chirality
- but the lengths are not the same as the positive values.  I need to track this down.)
+ Because the equitetrabeam which as a rail angle of $0$ still has chirality, that is,
+ one still must decide to connect with one-hop to the clockwise or counter-clockwise node,
+ it is not poosible to build a smooth continuum where $\rho$ transitions from positive to
+ negative which remains optimal. One can use a negative $\rho$ in $H_{general}$ but it does
+ not produce minimax optimal tetrahelices. In other words, untwisting a conter-clockwise
+ tetrahelix to $0$ and then going further does produce a clockwise tetrahelix, but one in which
+ the one-hop and two-hop lengths in the wrong places (that is, two-hop becomes shorter than one-hop.)
+ 
+
 
 The pitch of any tetrahelix 
 where $\rho \neq 0$ is:
@@ -882,3 +892,4 @@ H_{continuum}(n,c,\lambda) =
 \]
 
   
+http://bit-player.org/2013/tetrahedra-with-a-twist

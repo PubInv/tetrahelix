@@ -193,16 +193,40 @@ function test_assert_optimal_radius_even() {
 
 function H_general(n,c,rho,d,r) {
     var pnt = [];
+    var arho = Math.abs(rho);
     var as = Math.sign(rho);
+    if (as == 0) as = 1;
     var kappa = n+ c/3.0;
-    var rk = rho*kappa;
-    var angle = rk + c*2*Math.PI/3;    
+    var rk = arho*kappa;
+    var angle = as*rk + as*c*2*Math.PI/3;
+//    console.log("rk",rk*180/Math.PI);
+//    console.log("angle",angle*180/Math.PI);
+    
     pnt[0] = r*Math.cos(angle);
     pnt[1] = r*Math.sin(angle);
     pnt[2] = d*kappa;
     return pnt;
 }
 
+function test_evenness_H_general() {
+    var rho = BCrho;
+    rho = -BCrho/2;
+    var len = 1.0;
+    var r_opt = optimal_radius(rho,len);
+    var d_opt = optimal_distance(rho,len);
+    console.log(rho,len,r_opt,d_opt);    
+    var p1 = H_general(0,0,BCrho,d_opt,r_opt);
+    var p2 = H_general(0,1,BCrho,d_opt,r_opt);
+    var distance1 = Math.distance3(p1,p2);
+    console.log(p1,p2,distance1);
+
+    var p3 = H_general(0,0,-BCrho,d_opt,r_opt);
+    var p4 = H_general(0,1,-BCrho,d_opt,r_opt);
+    var distance2 = Math.distance3(p3,p4);
+    console.log(p3,p4,distance2);
+
+
+}
 function H_bc(n,c) {
     var BCr = find_rrho_from_d(BCrho,BCd);
     return H_general(n,c,BCrho,BCd,BCr);
