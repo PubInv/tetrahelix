@@ -41,11 +41,14 @@ title: Untwisting the Tetrahelix
 <div id="table-wrapper">
   <div id="table-scroll">
     <table id="trialrecords">
-     <tr>
+    <tr>
+    <th>trial </th>    
     <th>rho </th>
     <th>r</th>
-    <th>h</th>
-    <th>delta</th>
+    <th>d</th>
+    <th>len</th>    
+    <th>one-hop</th>
+    <th>two-hop</th>    
     </tr>
     </table>
   </div>
@@ -98,7 +101,7 @@ var RAIL_ANGLE_RHO = 0;
 var LAMBDA = 0;
 var TET_DISTANCE = 1;
 
-function register_trials(trial,angle,time,divergence_length) {
+function register_trials(trial,angle,radius,len,one_hop,two_hop) {
     var table = document.getElementById("trialrecords");
 
     var row = table.insertRow(1);
@@ -107,10 +110,13 @@ function register_trials(trial,angle,time,divergence_length) {
     var cell3 = row.insertCell(2);
     var cell4 = row.insertCell(3);
     var cell5 = row.insertCell(4);
+    var cell6 = row.insertCell(5);
     cell1.innerHTML = ""+trial;
     cell2.innerHTML = ""+angle.toFixed(4);    
-    cell3.innerHTML = ""+time.toFixed(2) ;
-    cell4.innerHTML = ""+divergence_length.toFixed(2) ;
+    cell3.innerHTML = ""+radius.toFixed(2) ;
+    cell4.innerHTML = ""+len.toFixed(2) ;
+    cell5.innerHTML = ""+one_hop.toFixed(2) ;
+    cell6.innerHTML = ""+two_hop.toFixed(2) ;    
 
 }
 
@@ -842,14 +848,16 @@ function add_equitetrabeam_helix(am,lambda,rho,radius,pvec,len) {
 	    helix_joints: [],
 	    helix_members: []
 	});
+    var onehop = one_hop(radius,rho,len);
+    var twohop = two_hop(radius,rho,len);    
     am.helix_params.push ({ rho: rho,
 			    len: len,
 			    radius: radius,
+			    onehop: onehop,
+			    twohop: twohop,
 			    lambda: lambda});
     
     var hp = am.helix_params.slice(-1)[0];
-//    var d = find_drho_from_r_el(hp.rho,hp.r,hp.len);
-    
     hp.d = len;
 
     load_NTetHelix(am,am.helices.slice(-1)[0],
@@ -869,8 +877,6 @@ function add_equitetrabeam_helix_lambda(am,lambda,pvec,len) {
 			    lambda: lambda});
     
     var hp = am.helix_params.slice(-1)[0];
-//    var d = find_drho_from_r_el(hp.rho,hp.r,hp.len);
-    
     hp.d = len;
 
     load_NTetHelix(am,am.helices.slice(-1)[0],
@@ -931,6 +937,7 @@ for (var i = 0; i < num+1; i++ ) {
     compute_helix_minimax(am.helices[i]);
     console.log(am.helix_params[i]);    
  }
+var trial = 0;
 function draw_central() {
     am.clear_non_floor_body_mesh_pairs();
     for( var i = am.scene.children.length - 1; i >= 0; i--) {
@@ -942,7 +949,15 @@ function draw_central() {
     am.helices = [];
     am.helix_params = [];
     var pvec0 = new THREE.Vector3(0,am.INITIAL_HEIGHT,-3);
+    
+
+    
     draw_new(pvec0);
+    var hp = am.helix_params.slice(-1)[0];
+    register_trials(trial++,RAIL_ANGLE_RHO,HELIX_RADIUS,TET_DISTANCE,
+		    hp.onehop,
+		   hp.twohop);
+    
 }
 
 function draw_new(pvec) {
