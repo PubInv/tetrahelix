@@ -318,7 +318,6 @@ function major_test() {
     var lambda = 1.0;
     var third = 120*Math.PI/180.0;    
     for(var i = 0; i < 4; i++) {
-
 	var red = H_bc_lambda(i,red_phase,lambda);    
 	var yell = H_bc_lambda(i,yellow_phase,lambda);        
 	var blue = H_bc_lambda(i,blue_phase,lambda);    
@@ -341,3 +340,12 @@ function major_test() {
 
 //test_rail_angle_formula_against_BC();
 //test_H_general_against_BC();
+
+function pitchForOptimal(rho,len) {
+    var dopt = optimal_distance(rho,len);
+    return Math.PI*2*dopt/rho;
+}
+
+function pitchLimit(len) {
+    return pitchForOptimal(BCrho,len);
+}

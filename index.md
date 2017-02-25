@@ -13,24 +13,33 @@ title: Untwisting the Tetrahelix
     </section>
 
 
-<p>
-    <label for="tet_distance_val">Distance (1 Tet)</label>
-  <input type="text" id="tet_distance_val" readonly style="border:0; color:#f6931f; font-weight:bold;">
-    <div id="tet_distance"></div>
-</p>    
-
-    <p>
-    <label for="helix_radius_val">Helix Radius</label>
-  <input type="text" id="helix_radius_val" readonly style="border:0; color:#f6931f; font-weight:bold;">
-    <div id="helix_radius"></div>
-</p>    
 
 <p>
     <label for="rail_angle_rho">Rail Angle Rho (degrees)</label>
   <input type="text" id="rail_angle_rho" readonly style="border:0; color:#f6931f; font-weight:bold;">
-    <div id="trial_length_max"></div>
+    <div id="rail_angle_slider"></div>
 </p>
 
+<p>
+    <label for="pitch_input_min">Minimum Pitch (meters)</label>
+    <label for="pitch_input">Pitch Above Minimum (meters)</label>
+  <input type="text" id="pitch_input" readonly style="border:0; color:#f6931f; font-weight:bold;">
+    <div id="pitch_input_slider"></div>
+</p>
+
+
+    <p>
+    <label for="helix_radius_val">Helix Radius (meters)</label>
+  <input type="text" id="helix_radius_val" readonly style="border:0; color:#f6931f; font-weight:bold;">
+    <div id="helix_radius"></div>
+</p>    
+
+
+<p>
+    <label for="tet_distance_val">Rail Edge (meters)</label>
+  <input type="text" id="tet_distance_val" readonly style="border:0; color:#f6931f; font-weight:bold;">
+    <div id="tet_distance"></div>
+</p>    
     
   <fieldset id="chiralityfs">
     <legend>Chirality: </legend>
@@ -55,11 +64,12 @@ title: Untwisting the Tetrahelix
     <th>trial </th>    
     <th>rho </th>
     <th>r</th>
-    <th>d</th>
-    <th>len</th>    
+    <th>len</th>
+    <th>d</th>    
     <th>one-hop</th>
     <th>two-hop</th>
-    <th>pitch</th>        
+    <th>pitch</th>
+    <th>minmax ratio</th>            
     </tr>
     </table>
   </div>
@@ -130,32 +140,7 @@ $( "[name='radio']").on( "change", handleCityChange );
 
 $( "[name='chi']").on( "change", handleChiralityChange );
 
-// {
-//     //$( function() {
-//     $( "counterclockwise2" ).checkboxradio();
-//     $( "clockwise2" ).checkboxradio();    
-//     $( "#chiralityfs2" ).controlgroup();
-//     //} );
-
-//     var CHIRALITY_CCW = 1;
-//     $('#counterclockwise2').attr('checked', true);
-//     function handleChiralityChange2(e) {
-// 	var target = $( e.target );
-// 	CHIRALITY_CCW = (target[0].id == "counterclockwise2") ? 1 : -1;
-// 	draw_central();
-//     }
-
-//     $( "[name='counterclockwise2']").on( "change", handleChiralityChange2 );
-//     $( "[name='clockwise2']").on( "change", handleChiralityChange2 );
-// }
-
-
-var HELIX_RADIUS = 0.53;
-var RAIL_ANGLE_RHO = 0;
-var LAMBDA = 0;
-var TET_DISTANCE = 1;
-
-function register_trials(trial,angle,radius,d,len,one_hop,two_hop,pitch) {
+function register_trials(trial,angle,radius,d,len,one_hop,two_hop,pitch,score) {
     var table = document.getElementById("trialrecords");
 
     var row = table.insertRow(1);
@@ -166,19 +151,27 @@ function register_trials(trial,angle,radius,d,len,one_hop,two_hop,pitch) {
     var cell5 = row.insertCell(4);
     var cell6 = row.insertCell(5);
     var cell7 = row.insertCell(6);
-    var cell8 = row.insertCell(7);        
+    var cell8 = row.insertCell(7);
+    var cell9 = row.insertCell(8);            
     cell1.innerHTML = ""+trial;
     cell2.innerHTML = ""+angle.toFixed(4);    
-    cell3.innerHTML = ""+radius.toFixed(2) ;
-    cell4.innerHTML = ""+d.toFixed(2) ;    
-    cell5.innerHTML = ""+len.toFixed(2) ;
-    cell6.innerHTML = ""+one_hop.toFixed(2) ;
-    cell7.innerHTML = ""+two_hop.toFixed(2) ;    
-    cell8.innerHTML = ""+pitch;
+    cell3.innerHTML = ""+radius.toFixed(4) ;
+    cell4.innerHTML = ""+len.toFixed(4) ;
+    cell5.innerHTML = ""+d.toFixed(4) ;    
+    cell6.innerHTML = ""+one_hop.toFixed(4) ;
+    cell7.innerHTML = ""+two_hop.toFixed(4) ;    
+    cell8.innerHTML = ""+pitch.toFixed(4);
+    cell9.innerHTML = ""+score.toFixed(4);    
 }
 
-
-
+var HELIX_RADIUS = 0.53;
+var RAIL_ANGLE_RHO = 0;
+var LAMBDA = 0;
+var TET_DISTANCE = 0.5;
+var MIN_PITCH = pitchLimit(TET_DISTANCE);
+var MAX_PITCH = 100;
+var ADD_PITCH = pitchForOptimal(RAIL_ANGLE_RHO*Math.PI/180,TET_DISTANCE) - MIN_PITCH;
+var PITCH = MIN_PITCH + ADD_PITCH;
 var paused = false;
 function pause() {
     paused = !paused;
@@ -186,23 +179,6 @@ function pause() {
         requestAnimationFrame(animate);    
 }
 var origin = [0,0];
-
-$(function() {
-    $( "#tet_distance" ).slider({
-	range: "max",
-	min: 0,
-	max: 3,
-	value: 1,
-	step: 0.01,
-	slide: function( event, ui ) {
-	    $( "#tet_distance_val" ).val( ui.value );
-	    TET_DISTANCE = ui.value;
-	    draw_central();
-	}
-    });
-    $( "#tet_distance_val" ).val( $( "#tet_distance" ).slider( "value" ) );
-});
-
 
 
 $(function() {
@@ -223,19 +199,90 @@ $(function() {
 
 
 $(function() {
-    $( "#trial_length_max" ).slider({
+    $( "#rail_angle_slider" ).slider({
 	range: "max",
 	min: 0,
-	max: 35.45,
+	max: BCrho*180/Math.PI,
 	value: 0,
-	step: 0.01,	
+	step: 0.001,	
 	slide: function( event, ui ) {
 	    $( "#rail_angle_rho" ).val( ui.value );
 	    RAIL_ANGLE_RHO = ui.value;
+	    if (OPTIMALITY) {
+		HELIX_RADIUS = optimal_radius(RAIL_ANGLE_RHO*Math.PI/180,TET_DISTANCE);
+		$( "#helix_radius" ).slider('value',HELIX_RADIUS.toFixed(4));
+		$( "#helix_radius_val" ).val( HELIX_RADIUS.toFixed(4) );
+		PITCH = pitchForOptimal(RAIL_ANGLE_RHO*Math.PI/180,TET_DISTANCE);
+		ADD_PITCH = PITCH-MIN_PITCH;
+		$( "#pitch_input" ).val( Math.max(ui.value,ADD_PITCH ));
+		$( "#pitch_input_slider" ).slider('value',ADD_PITCH.toFixed(4));		
+	    }
 	    draw_central();
 	}
     });
-    $( "#rail_angle_rho" ).val( $( "#trial_length_max" ).slider( "value" ) );
+    $( "#rail_angle_rho" ).val( $( "#rail_angle_slider" ).slider( "value" ) );
+});
+
+
+// A pitch too big produces and Equitetrabeam....there is no provision in here
+// for that.  Also, very small pitches are deeply weird.
+// In the case of optimality we should limit the Rail angle to the BC Continuum.
+$(function() {
+    $( "#pitch_input_slider" ).slider({
+	range: "max",
+	min: 0,
+	max: 100,
+	value: PITCH,
+	step: 0.1,	
+	slide: function( event, ui ) {
+	    $( "#pitch_input" ).val( ui.value );
+	    ADD_PITCH = ui.value;
+	    PITCH = MIN_PITCH + ADD_PITCH;
+	    if (OPTIMALITY) {
+		var rho_for_pitch_radians =
+		    newtonRaphson((x) => (pitchForOptimal(x,TET_DISTANCE) - PITCH),1);
+		RAIL_ANGLE_RHO = rho_for_pitch_radians*180/Math.PI;
+
+		$( "#rail_angle_slider" ).slider('value',RAIL_ANGLE_RHO.toFixed(4));
+		$( "#rail_angle_rho" ).val( RAIL_ANGLE_RHO.toFixed(4) );
+		
+		HELIX_RADIUS = optimal_radius(RAIL_ANGLE_RHO*Math.PI/180,TET_DISTANCE);
+		$( "#helix_radius" ).slider('value',HELIX_RADIUS.toFixed(4));
+		$( "#helix_radius_val" ).val( HELIX_RADIUS.toFixed(4) );
+	    } else {
+		
+	    }
+	    draw_central();
+	}
+    });
+    $( "#pitch_input" ).val( $( "#pitch_input_slider" ).slider( "value" ) );
+});
+
+$(function() {
+    $( "#tet_distance" ).slider({
+	range: "max",
+	min: 0,
+	max: 3,
+	value: TET_DISTANCE,
+	step: 0.01,
+	slide: function( event, ui ) {
+	    $( "#tet_distance_val" ).val( ui.value );
+	    TET_DISTANCE = ui.value;
+	    MIN_PITCH = pitchLimit(TET_DISTANCE);
+	    $( "#pitch_input_min" ).val(MIN_PITCH );
+	    $("#pitch_input_slider").slider('option',{min: MIN_PITCH, max: MAX_PITCH});
+	    $("#pitch_input_min").val(MIN_PITCH.toFixed(4));
+	    if (OPTIMALITY) {
+		HELIX_RADIUS = optimal_radius(RAIL_ANGLE_RHO*Math.PI/180,TET_DISTANCE);
+		$("#helix_radius").slider('value',HELIX_RADIUS.toFixed(4));
+		$("#helix_radius_val" ).val( HELIX_RADIUS.toFixed(4) );
+
+		$("#pitch_input_slider").slider('value',pitchForOptimal(RAIL_ANGLE_RHO*Math.PI/180,TET_DISTANCE).toFixed(4));
+	    }
+	    draw_central();
+	}
+    });
+    $( "#tet_distance_val" ).val( $( "#tet_distance" ).slider( "value" ) );
 });
 
 
@@ -878,7 +925,7 @@ var len = am.INITIAL_EDGE_LENGTH;
 function compute_helix_minimax(helix) {
     var min = 100000000;
     var max = 0.0;
-    for(var i = 0; i < helix.helix_members.length; i++) {
+    for(var i = 0; i < Math.min(helix.helix_members.length,6); i++) {
 	var member = helix.helix_members[i];
 	var a = member.a.mesh.position;
 	var b = member.b.mesh.position;
@@ -895,7 +942,7 @@ function compute_helix_minimax(helix) {
     }
     console.log("min, max", min, max);
     console.log("score: ", (100*max/min -100) + "%");
-    return [min,max];
+    return [min,max,(100*max/min -100)];
 }
 
 
@@ -911,10 +958,14 @@ for (var i = 0; i < num+1; i++ ) {
     // an assymmetry which I have not yet explained.
     add_equitetrabeam_helix_lambda(am,1,(i) / num,pvec0,len);
     var hp = am.helix_params.slice(-1)[0];
+        var h = am.helices.slice(-1)[0];
+    var score = compute_helix_minimax(h)[2];
+    hp.score = score;
     register_trials(trial++,RAIL_ANGLE_RHO,HELIX_RADIUS,hp.d,TET_DISTANCE,
 		    hp.onehop,
 		    hp.twohop,
-		   hp.pitch);
+		    hp.pitch,
+		   hp.score);
 }
 
 // var pvec0 = new THREE.Vector3((i - 1)*2*am.INITIAL_EDGE_LENGTH,am.INITIAL_HEIGHT,-3);
@@ -926,12 +977,14 @@ for (var i = 0; i < num+1; i++ ) {
     console.log(am.helix_params[i]);    
  }
 
+
 function draw_central() {
     am.clear_non_floor_body_mesh_pairs();
     for( var i = am.scene.children.length - 1; i >= 0; i--) {
 	var obj = am.scene.children[i];
 	if (obj.type == "Mesh" && obj.name != "GROUND") {
 	    am.scene.remove(obj);
+	    console.log("removing!");
 	}
     }
     am.helices = [];
@@ -941,16 +994,34 @@ function draw_central() {
     
     draw_new(pvec0);
     var hp = am.helix_params.slice(-1)[0];
+    var h = am.helices.slice(-1)[0];
+    var score = compute_helix_minimax(h)[2];
+    hp.score = score;
     register_trials(trial++,RAIL_ANGLE_RHO,HELIX_RADIUS,hp.d,TET_DISTANCE,
 		    hp.onehop,
 		    hp.twohop,
-		   hp.pitch);
+		    hp.pitch,
+		    hp.score);
     
 }
 
 function draw_new(pvec) {
     add_equitetrabeam_helix(am,CHIRALITY_CCW,null,RAIL_ANGLE_RHO*Math.PI/180,HELIX_RADIUS,pvec,TET_DISTANCE);
 }
+
+// var findRoot = require('newton-raphson');
+
+function f(x) {
+  return x * x - 2;
+}
+function fprime(x) {
+  return 2 * x;
+}
+var initialGuess = 1;
+
+console.log(newtonRaphson(f, null, 1));
+
+newtonRaphson((x) => (pitchForOptimal(x,1) - 10),1)
     </script>
 
   
