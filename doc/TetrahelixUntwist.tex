@@ -270,31 +270,50 @@ column having a basis and a capital in the same relation to the
 tetrahedra they touch.
 
 
-\section{Optimal Tetrahelices Have Evenly Spaced Vertices}
+\section{Optimal Tetrahelices Have $z$-axis Evenly Spaced Vertices}
 
 We use the term \emph{tetrahelix} to mean any structure made of
 vertices and edges which is isomorphic to the BC helix, in which the
 vertices lie on three helices, no matter what lengths the edges take
 on. One could consider various definitions of optimality for a
 tetrahelix, but the must useful to an enginner is to minimize the
-maximum difference between any two edges. We call a tetrahelix
+maximum difference between any two edges.
+Define the \emph{projected incircle radius} of a tetrahelix to be
+the radius of the incircle of all point on the tetrahelix projected
+down the $z$ axis into the $xy$ plane.
+We call a tetrahelix
 \emph{member-length minimax optimal} (or just \emph{optimal}) if there is not tetrahelix of the
-same radius and pitch with a smaller maximum edge length difference.
+same project incircle radius and pitch with a smaller maximum edge length difference.
 
 Consider a tetrahelix isomporphic to an BC helix of unbounded
 extent. If all three rails do not have same pitch, there is an edge of
-unbounded length. So we are justified in talking about the pitch of
+unbounded length, so it is not optimal. So we are justified in talking about the pitch of
 the tetrahelix, even though we think of it as three
 helices. Similarly, if the axes are not parallel, there is an edge of
-unbounded length in the structure, so it is not optimal.
+unbounded length in the structure, so it is not optimal. So all three
+rails have the same rail length.
 
+We wish to show that the three helices optimal tetrahelix also have
+coincident axes.
 Consider any tetrahelix in which the axes of the helices are parallel
-to $z$ but not coincident, but in which all three helices have the
-same radius. Consider the projection along the $z$ axis, which will be
+to $z$ but not coincident, but in which all vertices lie on or outside
+a cylinder of radius $r$ centered on the $z$ axis.
+Since all three rails have the same rail length, no matter how we
+move the rails in the $xy$ plane if we shorten the $xy$ distance between
+vertices we shorten the total distance.
+Consider the projection along the $z$ axis of all vertices into the $xy$ plane, which will be
 a figure of dots and connecting segments in the $xy$ plane. The convex
 hull for any one helix projection will be a circle (if its pitch is
-irrational) or an polygon if rational. So long as its rail angle is
-not $0$, it will have at least two points in the plane. One of these
+irrational) or an polygon if rational, or a point if the helix has
+zero curvature. Each of these figures by definitions lies outside the
+circle of radius $r$ in the $xy$ plane.
+It is easiest to consider helices of zero curvature which only have one point
+as a special case. 
+For one rail consider a point in this projected figure furthest from the midpoint of the
+the two rails. The lengths to the furthest point on the other two rails will
+be decreased by moving the axis of that rail closer to the midpoint of the
+other two. Such motion 
+One of these segements
 will be longer and will be made shorter by moving that helix closer to
 the midpoint of the other two in the $xy$ plane. Even if the rail
 angle is $\pi$, there will be two vertices for each rail, each of
@@ -302,6 +321,14 @@ which is connected to both vertices of the other two rails. At lesast
 one of these lines is a longest line which will be made shorter by
 moving that helix in the $xy$ plane closer to the midpoint of the
 other two.
+
+For the special case of degenerate helix where we do not know the angle
+of the points from the axis, we can see that we minimize the maximum lengths
+when the projected vertices form an equilateral triangle around the $z$ axis at
+length $6r/sqrt{3}$.
+This is a equivalent to some let of helices which do have their axes on
+the $z$ axis, so without loss of generality we treat these degenerate
+helices as if they have their axis at the $z$-axis.
 
 So any any optimal tetrahelix with a rail-angle of greater than $0$,
 that is, with any curvature, will have conincident axes.
