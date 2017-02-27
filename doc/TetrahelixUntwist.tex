@@ -14,8 +14,6 @@
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{corollary}{Corollary}
-\newtheorem{conjecture}{Conjecture}
-\newtheorem{proofsketch}{Proof Sketech}
 
 \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
 
@@ -263,83 +261,121 @@ The pitch is less than the number of tetrahedra because the tetrahedra
 are not lined up perfectly.  It is a famous and interesting result
 that the pitch is irrational, a BC helix never has two tetrahedra at
 precisely the same orientation around the $z$-axis. However, this is
-inconvenient to designers, who might prefer a rational pitch. For
-example, a slight irregularity that led to a pitch of precisely 10
-tetrahedra in one revolution would allow an architect to design a
+inconvenient to designers, who might prefer a rational pitch.
+The idea of deveoping a rational period by arranging solid tetrahedra by relaxing the face-to-face matching
+has been explored\cite{sadler2013periodic}. In this paper
+we develop slightly irregular edge lengths that support, for example, a pitch of precisely 10
+tetrahedra in one revolution which would allow an architect to design a
 column having a basis and a capital in the same relation to the
-tetrahedra they touch.
+tetrahedra they touch at the bottom and top of the column.
 
 
 \section{Optimal Tetrahelices Have $z$-axis Evenly Spaced Vertices}
 
 We use the term \emph{tetrahelix} to mean any structure made of
 vertices and edges which is isomorphic to the BC helix, in which the
-vertices lie on three helices, no matter what lengths the edges take
-on. One could consider various definitions of optimality for a
+vertices lie on three helices. We further demand that all edge lengths
+be finite, as we are only interested in physically constructable tetrahelices.
+By isomporphic we mean there is a one-to-one mapping between both
+vertices and edges in the two tetrahelices.
+One could consider various definitions of optimality for a
 tetrahelix, but the must useful to an enginner is to minimize the
 maximum difference between any two edges.
-Define the \emph{projected incircle radius} of a tetrahelix to be
-the radius of the incircle of all point on the tetrahelix projected
-down the $z$ axis into the $xy$ plane.
-We call a tetrahelix
-\emph{member-length minimax optimal} (or just \emph{optimal}) if there is not tetrahelix of the
-same project incircle radius and pitch with a smaller maximum edge length difference.
 
-Consider a tetrahelix isomporphic to an BC helix of unbounded
-extent. If all three rails do not have same pitch, there is an edge of
-unbounded length, so it is not optimal. So we are justified in talking about the pitch of
-the tetrahelix, even though we think of it as three
-helices. Similarly, if the axes are not parallel, there is an edge of
-unbounded length in the structure, so it is not optimal. So all three
-rails have the same rail length.
+If all three rails do not have the same pitch, there is an edge of
+unbounded length, so it is not optimal. So we are justified in talking about the
+\emph{pitch} of 
+the tetrahelix as the pitch of its rail helices, even though there are
+three such helices.
 
-We wish to show that the three helices optimal tetrahelix also have
-coincident axes.
-Consider any tetrahelix in which the axes of the helices are parallel
-to $z$ but not coincident, but in which all vertices lie on or outside
-a cylinder of radius $r$ centered on the $z$ axis.
+Similarly, if the axes are not parallel, there is an edge of
+unbounded length in the structure, so we exclude such a strcturue.
+
+Since the axes are parallel, we may define the \emph{inradius} of a tetrahelix to be the radius of the largest
+``in cylinder'': a
+cylinder parallel to this axis contained within circumscribing cylinder which is penetrated by no edge.
+Define an \emph{minimax edge-length optimal tetrahelix} or just an
+\emph{optimal tetrahelix} to be a tetrahelix for which there exists
+no other tetrahelix of the same inradius and pitch with a lower maximum
+difference between its edge lengths. 
+
+We wish to show that in an optimal tetrahelix, all vertices lie on the cylinder
+of radius $r$, regardless of where they lie on the $z$-axis.
+
 Since all three rails have the same rail length, no matter how we
 move the rails in the $xy$ plane if we shorten the $xy$ distance between
 vertices we shorten the total distance.
-Consider the projection along the $z$ axis of all vertices into the $xy$ plane, which will be
+Our tool for thinking about this is to project out the $z$ dimension to form
+a two-dimensional figure of nodes and non-rail edges.
+Consider the projection along the $z$ axis of all vertices and non-rail edges into the $xy$ plane, which will be
 a figure of dots and connecting segments in the $xy$ plane. The convex
 hull for any one helix projection will be a circle (if its pitch is
 irrational) or an polygon if rational, or a point if the helix has
 zero curvature. Each of these figures by definitions lies outside the
 circle of radius $r$ in the $xy$ plane.
-It is easiest to consider helices of zero curvature which only have one point
-as a special case. 
-For one rail consider a point in this projected figure furthest from the midpoint of the
-the two rails. The lengths to the furthest point on the other two rails will
-be decreased by moving the axis of that rail closer to the midpoint of the
-other two. Such motion 
-One of these segements
-will be longer and will be made shorter by moving that helix closer to
-the midpoint of the other two in the $xy$ plane. Even if the rail
-angle is $\pi$, there will be two vertices for each rail, each of
-which is connected to both vertices of the other two rails. At lesast
-one of these lines is a longest line which will be made shorter by
-moving that helix in the $xy$ plane closer to the midpoint of the
-other two.
 
-For the special case of degenerate helix where we do not know the angle
-of the points from the axis, we can see that we minimize the maximum lengths
-when the projected vertices form an equilateral triangle around the $z$ axis at
-length $6r/sqrt{3}$.
-This is a equivalent to some let of helices which do have their axes on
-the $z$ axis, so without loss of generality we treat these degenerate
-helices as if they have their axis at the $z$-axis.
+\begin{theorem}
+  Any optimal tetrahelix has all vertices on a single cylinder.
+\end{theorem}
 
-So any any optimal tetrahelix with a rail-angle of greater than $0$,
-that is, with any curvature, will have conincident axes.
-
-We call a tetrahelix with $0$ curvature a \emph{tetrabeam}, and
-consider it as an important special case and an endpoint of a
-continuum of tetrahelices of decreasing curvature.
+\begin{proof}
 
 
- Now that we have coincident axes, the same pitch, we can go on to
- the hard proof about where they occur.
+
+Case 1: Suppose that $\rho$ is zero. Then for any given inradius, an equilateral
+triangle is the minimax solution for all non-rail edges. Since there is only
+one rail-edge length, this is the minimax solution for the entire set. Since
+the projection is an equilateral triangle lies on a circle, all points lie on
+a cylinder.
+
+Case 2: Suppose that $\rho$ is positive but less than $\pi$.
+In this case each rail helix has
+curavature and places points on both sides of any line through the origin
+of the $xy$ plane (or both coincident on such a line.)
+
+We first show that the inradius is touched by one segment from each pair
+of rails.
+
+\begin{figure}[H]
+  \label{untouchingrailfig}
+     \centering
+     \includegraphics[width=0.7\textwidth]{figures/UntouchingRail.png}
+     \caption{Untouching Rail}
+\end{figure}
+
+Figure\ref{untouchingrailfig} depicts a projection of
+depicting only the point $P$, the point $P'$ which is an adjacent vertex on the same rail,
+and the intermediary points $R$ and $Q$ on the other two rails.
+
+Supoose there is a rail $P$ which does not have a segment touching the incircle
+at all in the projection, as depicted in 
+Then a segment connecting the other two $Q$ and $R$ is a longest
+rail, because any chord touching an incircle is longer than any which does not.
+These two rails ($Q$ and $R$) can be moved closer to each other, and further away from $P$, to form a better minimax solution
+by shortening the longest rail, until one of the segments from $P$ the previously
+untouching rail touches one of the incircle. By induction then all rails have
+at least one segement touch each vertex on the rail that is tangent to the
+the inradius in an optimal tetrahelix.
+
+Now suppose that you attempt to move the axis of one of the rails. Because
+$\rho > 0 $ and $\rho$ is not a multiple of $\pi$, there is some vertex on the two sides of any diameter
+halving our circle. Moving the axis of a tetrahelix lengthens a longest line while ``pinching'' the
+inradius on the other side, so it is not optimal. Since the axes of these helices are the
+same and they have the same curvature and pitch, the points defined by the helices all lie
+on a cylinder.
+
+
+\end{proof}
+
+Now that we have show that any optimal tetrahelix vertices that
+are on helices of the same axes and pitch, we see that the vertices 
+of any optimal tetrahelix will lie on a cylinder, or a circle when axis dimension
+is projected out. Therefore is is reasonable to now speak of the \emph{radius}
+of a tetrahelix as the radius of the cylinder, and the notion
+of the projected incircle radius is now obsolete.
+
+Now that we have coincident axes, the same pitch, we can go on to
+ the hard proof about where they occur along the $z$-axis.
 
  We show that in fact the nodes must be distributed in even thirds
  along the $z$-axis.
@@ -366,14 +402,14 @@ continuum of tetrahelices of decreasing curvature.
  However, we have already shown the rail
  lengths are equal in any optimal tetrahelix.
 
- \begin{theorem}
+\begin{theorem}
    \label{eventhirds}
    A tetrahelix of a given radius and axial distance $d$ in which all nodes are evenly spaced at $d/3$ intervals on the $z$ axis is optimal.
      Any one tetrahedron in a tetrahelix has $1$ rail edge, $2$ one-hop edges connected to the rail and $2$ two-hop edges connected to the rail.
   The edge opposite of the rail edge is a one-hop edge.
-  \end{theorem}
+\end{theorem}
 
- \begin{proof}
+\begin{proof}
     Consider the tetrahelix in which the vertices are evenly spaced at
     $h/3$ intervals on the $z$ axis. Every edge is either a rail edge,
     or it makes one hop, or it makes two hops. All of the one-hop
@@ -386,7 +422,7 @@ continuum of tetrahelices of decreasing curvature.
     matter what the rail edge length is, since all rail edges are the
     same length. Therefore, an evenly spaced tetrahelix is the unique
     optimal for any given radius and height.
-  \end{proof}
+\end{proof}
   
 
  Note that based on \ref{eventhirds}, there are only 3 possible lengths in an optimal tethrahelix,
@@ -665,7 +701,7 @@ $\frac{2}{\sqrt{3}}$. The difference between this
 and $1$ of $\approx 15.47\% $.
 
 \footnote{Another interesting but non-optimal solution is derived by setting (one-hop + two-hop)/2 = 1,  occurs at $r = \sqrt{35}/4$,
-which produces three length classes of $11/12, 12/12, 13/12$!}
+which produces three length classes of $11/12, 12/12, 13/12$}
 
 In Figure \ref{series}, the furthest tetrahelix is the optimal equitetrabeam.
 
@@ -968,7 +1004,69 @@ H_{continuum}(n,c,\lambda) =
     $\rho_{bc} = (3 \theta - 2 \pi)$ \\
    $ \theta = \arccos(-2/3) $
   \end{tabular}      
-\]
+  \]
+
+
+
+  Consider any tetrahelix in which the axes of the helices are parallel
+to $z$ but not coincident, but in which all vertices lie on or outside
+a cylinder of radius $r$ centered on the $z$ axis.
+Since all three rails have the same rail length, no matter how we
+move the rails in the $xy$ plane if we shorten the $xy$ distance between
+vertices we shorten the total distance.
+Consider the projection along the $z$ axis of all vertices and non-rail edges into the $xy$ plane, which will be
+a figure of dots and connecting segments in the $xy$ plane. The convex
+hull for any one helix projection will be a circle (if its pitch is
+irrational) or an polygon if rational, or a point if the helix has
+zero curvature. Each of these figures by definitions lies outside the
+circle of radius $r$ in the $xy$ plane.
+It is easiest to consider helices of zero curvature which only have one point
+as a special case. 
+For one rail consider a point in this projected figure furthest from the midpoint of the
+the two rails. The lengths to the furthest point on the other two rails will
+be decreased by moving the axis of that rail closer to the midpoint of the
+other two.
+One of these segements
+will be longer and will be made shorter by moving that helix closer to
+the midpoint of the other two in the $xy$ plane. Even if the rail
+angle is $\pi$, there will be two vertices for each rail, each of
+which is connected to both vertices of the other two rails. At lesast
+one of these lines is a longest line which will be made shorter by
+moving that helix in the $xy$ plane closer to the midpoint of the
+other two.
+
+For the special case of degenerate helix where we do not know the angle
+of the points from the axis, we can see that we minimize the maximum lengths
+when the projected vertices form an equilateral triangle around the $z$ axis at
+length $6r/\sqrt{3}$.
+This is a equivalent to some set of helices which do have their axes on
+the $z$ axis, so without loss of generality we treat these degenerate
+helices as if they have their axis at the $z$-axis.
+
+So any any optimal tetrahelix with a rail-angle of greater than $0$,
+that is, with any curvature, will have conincident axes, or are indistinguishable
+from such a set.
+
+
+
+
+
+Possible addtional refrerences and submissions:
+
+Journal of applied geometry seems like a good fit:
+
+http://epubs.siam.org/toc/sjaabq/1/1
+
+According to there editorial board, they welcome mathematcal software and
+online resources such as I provie.
+
+This one has a nice editing structure: Metric Geometry is a nice subset:
+
+http://discreteanalysisjournal.com/for-authors
 
   
 http://bit-player.org/2013/tetrahedra-with-a-twist
+
+This is unrelated, but well worth reading:
+
+https://arxiv.org/pdf/1702.06388.pdf
