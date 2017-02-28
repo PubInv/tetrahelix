@@ -52,16 +52,16 @@ title: Untwisting the Tetrahelix
   <fieldset id="chiralityfs">
     <legend>Chirality: </legend>
     <label for="chi-1">Counter-Clockwise</label>
-    <input type="radio" name="chi" id="chi-1" checked="true">
+    <input type="radio" name="chi" id="chi-1" >
     <label for="chi-2">Clockwise</label>
-    <input type="radio" name="chi" id="chi-2">
+    <input type="radio" name="chi" id="chi-2" checked="true">
     </fieldset>
 <fieldset>
   <legend>Optimality: </legend>
-  <label for="radio-1">Optimal</label>
-  <input type="radio" name="radio" id="radio-1" checked="true">
-  <label for="radio-2">Free</label>
-  <input type="radio" name="radio" id="radio-2">
+  <label for="optimal-1">Optimal</label>
+  <input type="radio" name="optimal" id="optimal-1" checked="true">
+  <label for="optimal-2">Free</label>
+  <input type="radio" name="optimal" id="optimal-2">
 </fieldset>
  
 
@@ -126,30 +126,31 @@ title: Untwisting the Tetrahelix
     <script>
 
 $( "input[type='radio']" ).checkboxradio();
+
 var OPTIMALITY = true;
-	function handleCityChange(e) {
-	    var target = $( e.target );
-	    OPTIMALITY = (target[0].id == "radio-1") ;
-	    if (OPTIMALITY) {
-		HELIX_RADIUS = optimal_radius(RAIL_ANGLE_RHO*Math.PI/180,TET_DISTANCE);
-		$("#helix_radius").slider('value',HELIX_RADIUS.toFixed(4));
-		$("#helix_radius_val" ).val( HELIX_RADIUS.toFixed(4) );
-	    }
-	    draw_central();
-	    console.log(OPTIMALITY);
-	    return true;
-	}
+function handleOptimalityChange(e) {
+    var target = $( e.target );
+    OPTIMALITY = (target[0].id == "optimal-1") ;
+    if (OPTIMALITY) {
+	HELIX_RADIUS = optimal_radius(RAIL_ANGLE_RHO*Math.PI/180,TET_DISTANCE);
+	$("#helix_radius").slider('value',HELIX_RADIUS.toFixed(4));
+	$("#helix_radius_val" ).val( HELIX_RADIUS.toFixed(4) );
+    }
+    draw_central();
+    console.log(OPTIMALITY);
+    return true;
+}
 
-$( "[name='radio']").on( "change", handleCityChange );
+$( "[name='optimal']").on( "change", handleOptimalityChange );
 
-	var CHIRALITY_CCW = 1;
-	function handleChiralityChange(e) {
-	    var target = $( e.target );
-	    CHIRALITY_CCW = (target[0].id == "chi-1") ? 1 : -1;
-	    draw_central();
-	    console.log(CHIRALITY_CCW);
-	    return true;
-	}
+var CHIRALITY_CCW = 1;
+function handleChiralityChange(e) {
+    var target = $( e.target );
+    CHIRALITY_CCW = (target[0].id == "chi-1") ? -1 : 1;
+    draw_central();
+    console.log(CHIRALITY_CCW);
+    return true;
+}
 
 $( "[name='chi']").on( "change", handleChiralityChange );
 
@@ -191,22 +192,16 @@ $( "#pitch_input" ).val( ADD_PITCH.toFixed(4));
 $("#pitch_input_min").val(MIN_PITCH.toFixed(4));
 $("#actual_pitch").val(PITCH.toFixed(4));	    
 
-var paused = false;
-function pause() {
-    paused = !paused;
-    if (!paused) 
-        requestAnimationFrame(animate);    
-}
 var origin = [0,0];
 
 function show_pitch() {
-	    if (RAIL_ANGLE_RHO < 0.3) {
-		$("#pitchundefined").show();
-		$("#validpitch").hide();
-	    } else {
-		$("#pitchundefined").hide();
-		$("#validpitch").show();
-	    }
+    if (RAIL_ANGLE_RHO < 0.3) {
+	$("#pitchundefined").show();
+	$("#validpitch").hide();
+    } else {
+	$("#pitchundefined").hide();
+	$("#validpitch").show();
+    }
 }
 show_pitch();
 $(function() {
@@ -373,7 +368,7 @@ function createParalellepiped( sx, sy, sz, pos, quat, material ) {
 function createSphere(r,pos,color) {
     //    var cmat = memo_color_mat(tcolor);
     var tcolor = new THREE.Color(color);
-        var cmat = new THREE.MeshPhongMaterial( { color: tcolor } );
+    var cmat = new THREE.MeshPhongMaterial( { color: tcolor } );
     var ball = new THREE.Mesh( new THREE.SphereGeometry( r, 18, 16 ), cmat );
     ball.position.set(pos.x,pos.y,pos.z);
     ball.castShadow = false;;
@@ -397,7 +392,7 @@ function create_actuator(d,b_a,b_z,pos,color) {
     var len = d+ -am.JOINT_RADIUS*2;
     var quat = new THREE.Quaternion();
 
-//    var color = get_member_color(am,d);
+    //    var color = get_member_color(am,d);
     var tcolor = new THREE.Color(color.r,color.g,color.b);
     var cmat = memo_color_mat(tcolor);
 
@@ -467,7 +462,7 @@ function load_NTetHelix(am,helix,tets,pvec,hparams) {
     var n = tets+3;    
 
     var colors = [ d3.color("red"), d3.color("yellow"), d3.color("blue") ];
-//    var scolors = [ d3.rgb("firebrick"), d3.rgb("goldenrod"), d3.rgb("indigo") ];    
+    //    var scolors = [ d3.rgb("firebrick"), d3.rgb("goldenrod"), d3.rgb("indigo") ];    
     var dcolor = [null,d3.color("Green"),d3.color("purple")];
     for(var i = 0; i < n; i++) {
 
@@ -614,7 +609,7 @@ var AM = function() {
 
     this.LENGTH_FACTOR = 20;
 
-// Helices look like this...
+    // Helices look like this...
     // {
     // 	helix_joints: [],
     // 	helix_members: []
@@ -742,14 +737,7 @@ function initGraphics() {
 
     am.cameraOrtho = new THREE.OrthographicCamera( 0, am.SCREEN_WIDTH, am.SCREEN_HEIGHT, 0, - 10, 10 );
     
-  //  am.renderer.shadowMap.enabled = true;
-//    am.renderer.physicallyCorrectLights = true;
-//    am.renderer.gammaInput = true;
-//    am.renderer.gammaOutput = true;
-
-//    am.textureLoader = new THREE.TextureLoader();
-
-      hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 1 );
+    hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 1 );
     am.scene.add( hemiLight );
 
     var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.8 );
@@ -764,7 +752,7 @@ function initGraphics() {
     // GROUND
     var groundGeo = new THREE.PlaneBufferGeometry( 10000, 10000 );
     var groundMat = new THREE.MeshPhongMaterial( { color: 0x777777, specular: 0x050505 } );
-//    groundMat.color.setHSL( 0.095, 1, 0.75 );
+    //    groundMat.color.setHSL( 0.095, 1, 0.75 );
 
     var ground = new THREE.Mesh( groundGeo, groundMat );
     ground.name = "GROUND";
@@ -890,7 +878,7 @@ function render() {
     am.controls.update( deltaTime );
 
     // note this....
-//    am.renderer.autoClear = true;        
+    //    am.renderer.autoClear = true;        
     am.renderer.render( am.scene, am.camera );
     am.renderer.render( am.grid_scene, am.camera);
     am.renderer.autoClear = false;        
@@ -905,7 +893,7 @@ function initiation_stuff() {
 
 function init() {
     initGraphics();
-//    createGround(am);
+    //    createGround(am);
 }
 
 function add_equitetrabeam_helix(am,chi,lambda,rho,radius,pvec,len) {
@@ -992,7 +980,7 @@ function compute_helix_minimax(helix) {
 	    // 			    member.b.mesh.position.y)/Math.PI;
 	    
 	    // console.log("distance:",d,q1-q0);
-	 }
+	}
 	
 	if (min > d) min = d;
 	if (max < d) max = d;
@@ -1011,20 +999,20 @@ var r0 = (2/3)*Math.sqrt(2/3);
 var trial = 0;
 var num = 4;
 /* for (var i = 0; i < num+1; i++ ) {
-    var pvec0 = new THREE.Vector3((i - 5)*2*am.INITIAL_EDGE_LENGTH,am.INITIAL_HEIGHT,-3);
-    // Note: It is interesting to place very high lambda values in here --- it produces
-    // an assymmetry which I have not yet explained.
-    add_equitetrabeam_helix_lambda(am,1,(i) / num,pvec0,TET_DISTANCE);
-    var hp = am.helix_params.slice(-1)[0];
-        var h = am.helices.slice(-1)[0];
-    var score = compute_helix_minimax(h)[2];
-    hp.score = score;
-    register_trials(trial++,RAIL_ANGLE_RHO,HELIX_RADIUS,hp.d,TET_DISTANCE,
-		    hp.onehop,
-		    hp.twohop,
-		    hp.pitch,
-		   hp.score);
-}
+   var pvec0 = new THREE.Vector3((i - 5)*2*am.INITIAL_EDGE_LENGTH,am.INITIAL_HEIGHT,-3);
+   // Note: It is interesting to place very high lambda values in here --- it produces
+   // an assymmetry which I have not yet explained.
+   add_equitetrabeam_helix_lambda(am,1,(i) / num,pvec0,TET_DISTANCE);
+   var hp = am.helix_params.slice(-1)[0];
+   var h = am.helices.slice(-1)[0];
+   var score = compute_helix_minimax(h)[2];
+   hp.score = score;
+   register_trials(trial++,RAIL_ANGLE_RHO,HELIX_RADIUS,hp.d,TET_DISTANCE,
+   hp.onehop,
+   hp.twohop,
+   hp.pitch,
+   hp.score);
+   }
 */
 // var pvec0 = new THREE.Vector3((i - 1)*2*am.INITIAL_EDGE_LENGTH,am.INITIAL_HEIGHT,-3);
 //add_equitetrabeam_helix_lambda(am, 1.0, pvec0, len);
@@ -1067,10 +1055,10 @@ function draw_new(pvec) {
 // var findRoot = require('newton-raphson');
 
 function f(x) {
-  return x * x - 2;
+    return x * x - 2;
 }
 function fprime(x) {
-  return 2 * x;
+    return 2 * x;
 }
 var initialGuess = 1;
 
@@ -1092,11 +1080,11 @@ function build_central() {
     // Why do I have to divide by 2?
     console.log("inradius", ir);
     {
-    var geometry = new THREE.CylinderGeometry( ir, ir, 3, 32 );
-    var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
-    var cylinder = new THREE.Mesh( geometry, material );
-    cylinder.rotateX(Math.PI/2);
-    am.scene.add( cylinder );
+	var geometry = new THREE.CylinderGeometry( ir, ir, 3, 32 );
+	var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+	var cylinder = new THREE.Mesh( geometry, material );
+	cylinder.rotateX(Math.PI/2);
+	am.scene.add( cylinder );
     }
     // {
     // var geometry = new THREE.CylinderGeometry( HELIX_RADIUS, HELIX_RADIUS, 3, 32 );
@@ -1111,11 +1099,11 @@ function build_central() {
 var pvec0 = new THREE.Vector3(0,am.INITIAL_HEIGHT,-3);
 draw_new(pvec0);
 
- for(var i = 0; i < am.helices.length; i++) {
+for(var i = 0; i < am.helices.length; i++) {
     console.log(am.helix_params[i]);
     compute_helix_minimax(am.helices[i]);
     console.log(am.helix_params[i]);    
- }
+}
 
 
     </script>
