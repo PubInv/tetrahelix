@@ -12,7 +12,19 @@ title: Untwisting the Tetrahelix
     <section id="visualsection" style="{border: red;}">
     </section>
 
-
+    <table id="trialrecord">
+    <tr>
+    <th>trial </th>    
+    <th>rho </th>
+    <th>r</th>
+    <th>len</th>
+    <th>d</th>    
+    <th>one-hop</th>
+    <th>two-hop</th>
+    <th>pitch</th>
+    <th>minmax ratio (%)</th>            
+    </tr>
+    </table>
 
 <p>
     <label for="rail_angle_rho">Rail Angle Rho (degrees)</label>
@@ -48,14 +60,19 @@ title: Untwisting the Tetrahelix
   <input type="text" id="tet_distance_val" readonly style="border:0; color:#f6931f; font-weight:bold;">
     <div id="tet_distance"></div>
 </p>    
-    
-  <fieldset id="chiralityfs">
+
+<table style="width:100%">
+  <tr>
+    <td>
+      <fieldset id="chiralityfs">
     <legend>Chirality: </legend>
     <label for="chi-1">Counter-Clockwise</label>
     <input type="radio" name="chi" id="chi-1" >
     <label for="chi-2">Clockwise</label>
     <input type="radio" name="chi" id="chi-2" checked="true">
     </fieldset>
+    </td>
+    <td>
 <fieldset>
   <legend>Optimality: </legend>
   <label for="optimal-1">Optimal</label>
@@ -63,6 +80,9 @@ title: Untwisting the Tetrahelix
   <label for="optimal-2">Free</label>
   <input type="radio" name="optimal" id="optimal-2">
 </fieldset>
+    </td>
+  </tr>
+</table>
  
 
 <div id="table-wrapper">
@@ -77,6 +97,7 @@ title: Untwisting the Tetrahelix
     <th>one-hop</th>
     <th>two-hop</th>
     <th>pitch</th>
+    <th>inradius</th>    
     <th>minmax ratio (%)</th>            
     </tr>
     </table>
@@ -154,9 +175,8 @@ function handleChiralityChange(e) {
 
 $( "[name='chi']").on( "change", handleChiralityChange );
 
-function register_trials(trial,angle,radius,d,len,one_hop,two_hop,pitch,score) {
-    var table = document.getElementById("trialrecords");
 
+function insert_trail_row(table,trial,angle,radius,d,len,one_hop,two_hop,pitch,inradius,score) {
     var row = table.insertRow(1);
     var cell1 = row.insertCell(0);
     var cell2 = row.insertCell(1);
@@ -166,7 +186,8 @@ function register_trials(trial,angle,radius,d,len,one_hop,two_hop,pitch,score) {
     var cell6 = row.insertCell(5);
     var cell7 = row.insertCell(6);
     var cell8 = row.insertCell(7);
-    var cell9 = row.insertCell(8);            
+    var cell9 = row.insertCell(8);
+    var cell10 = row.insertCell(9);                
     cell1.innerHTML = ""+trial;
     cell2.innerHTML = ""+angle.toFixed(4);    
     cell3.innerHTML = ""+radius.toFixed(4) ;
@@ -175,7 +196,20 @@ function register_trials(trial,angle,radius,d,len,one_hop,two_hop,pitch,score) {
     cell6.innerHTML = ""+one_hop.toFixed(4) ;
     cell7.innerHTML = ""+two_hop.toFixed(4) ;    
     cell8.innerHTML = ""+pitch.toFixed(4);
-    cell9.innerHTML = ""+score.toFixed(4);    
+    cell9.innertHTML = ""+inradius.toFixed(4);
+    cell10.innerHTML = ""+score.toFixed(4);
+}
+
+function register_recent_trial(trial,angle,radius,d,len,one_hop,two_hop,pitch,inradius,score) {
+    var table = document.getElementById("trialrecord");
+    if (table.rows.length > 1) 
+	table.deleteRow(1);
+    insert_trail_row(table,trial,angle,radius,d,len,one_hop,two_hop,pitch,inradius,score);
+}
+function register_trials(trial,angle,radius,d,len,one_hop,two_hop,pitch,inradius,score) {
+    var table = document.getElementById("trialrecords");
+    insert_trail_row(table,trial,angle,radius,d,len,one_hop,two_hop,pitch,inradius,score);
+    register_recent_trial(trial,angle,radius,d,len,one_hop,two_hop,pitch,inradius,score);
 }
 
 
@@ -921,37 +955,7 @@ function add_equitetrabeam_helix(am,chi,lambda,rho,radius,pvec,len) {
     load_NTetHelix(am,am.helices.slice(-1)[0],
 		   am.NUMBER_OF_TETRAHEDRA,
 		   pvec,hp);
-}
-
-function add_equitetrabeam_helix_lambda(am,chi,lambda,pvec,len) {
-
-    am.helices.push(
-	{
-	    helix_joints: [],
-	    helix_members: []
-	});
-    var rho = rho_opt_interp(lambda);
-    var radius = optimal_radius(rho,len);
-    var onehop = one_hop(radius,rho,len);
-    var twohop = two_hop(radius,rho,len);
-    var d = find_drho_from_r_el(rho,radius,len);
-    var pitch = 2*Math.PI*d/rho;    
-    am.helix_params.push ({ 
-	len: len,
-	radius: radius,
-	chirality: chi,
-	rho: rho,
-	onehop: onehop,
-	twohop: twohop,
-	pitch: pitch,
-	lambda: lambda});
-    
-    var hp = am.helix_params.slice(-1)[0];
-    hp.d = len;
-
-    load_NTetHelix(am,am.helices.slice(-1)[0],
-		   am.NUMBER_OF_TETRAHEDRA,
-		   pvec,hp);
+        return hp;
 }
 
 initiation_stuff();
@@ -998,22 +1002,6 @@ var r0 = (2/3)*Math.sqrt(2/3);
 // var r0 = Math.sqrt(35/9)/4;
 var trial = 0;
 var num = 4;
-/* for (var i = 0; i < num+1; i++ ) {
-   var pvec0 = new THREE.Vector3((i - 5)*2*am.INITIAL_EDGE_LENGTH,am.INITIAL_HEIGHT,-3);
-   // Note: It is interesting to place very high lambda values in here --- it produces
-   // an assymmetry which I have not yet explained.
-   add_equitetrabeam_helix_lambda(am,1,(i) / num,pvec0,TET_DISTANCE);
-   var hp = am.helix_params.slice(-1)[0];
-   var h = am.helices.slice(-1)[0];
-   var score = compute_helix_minimax(h)[2];
-   hp.score = score;
-   register_trials(trial++,RAIL_ANGLE_RHO,HELIX_RADIUS,hp.d,TET_DISTANCE,
-   hp.onehop,
-   hp.twohop,
-   hp.pitch,
-   hp.score);
-   }
-*/
 // var pvec0 = new THREE.Vector3((i - 1)*2*am.INITIAL_EDGE_LENGTH,am.INITIAL_HEIGHT,-3);
 //add_equitetrabeam_helix_lambda(am, 1.0, pvec0, len);
 
@@ -1029,43 +1017,30 @@ function draw_central() {
     }
     am.helices = [];
     am.helix_params = [];
-    var pvec0 = new THREE.Vector3(0,am.INITIAL_HEIGHT,-3);
-    
-    
-    draw_new(pvec0);
-    var hp = am.helix_params.slice(-1)[0];
+    draw_and_register();
+}
+
+function draw_and_register() {
+    var pvec0 = new THREE.Vector3(0,HELIX_RADIUS*3,-3);
+    var hp = draw_new(pvec0);
     var h = am.helices.slice(-1)[0];
     var score = compute_helix_minimax(h)[2];
     hp.score = score;
+    hp.inradius = inradius_assumption1(hp.rho,hp.r);
     register_trials(trial++,RAIL_ANGLE_RHO,HELIX_RADIUS,hp.d,TET_DISTANCE,
 		    hp.onehop,
 		    hp.twohop,
 		    hp.pitch,
+		    hp.inradius,
 		    hp.score);
-    
 }
 
 function draw_new(pvec) {
-    add_equitetrabeam_helix(am,CHIRALITY_CCW,null,
+    return add_equitetrabeam_helix(am,CHIRALITY_CCW,null,
 			    RAIL_ANGLE_RHO*Math.PI/180,
 			    HELIX_RADIUS,pvec,TET_DISTANCE);
     
 }
-
-// var findRoot = require('newton-raphson');
-
-function f(x) {
-    return x * x - 2;
-}
-function fprime(x) {
-    return 2 * x;
-}
-var initialGuess = 1;
-
-console.log(newtonRaphson(f, null, 1));
-
-newtonRaphson((x) => (pitchForOptimal(x,1) - 10),1)
-
 
 function build_central() {
     var pvec0 = new THREE.Vector3(0,0,0);    
@@ -1096,8 +1071,8 @@ function build_central() {
     
 }
 
-var pvec0 = new THREE.Vector3(0,am.INITIAL_HEIGHT,-3);
-draw_new(pvec0);
+
+draw_and_register();
 
 for(var i = 0; i < am.helices.length; i++) {
     console.log(am.helix_params[i]);
