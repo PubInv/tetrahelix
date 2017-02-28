@@ -180,8 +180,8 @@ function register_trials(trial,angle,radius,d,len,one_hop,two_hop,pitch,score) {
 
 var RAIL_ANGLE_RHO = BCrho*180/Math.PI;
 var LAMBDA = 0;
-var TET_DISTANCE = 0.5;
-var HELIX_RADIUS = HELIX_RADIUS = optimal_radius(RAIL_ANGLE_RHO*Math.PI/180,TET_DISTANCE);
+var TET_DISTANCE = 0.25;
+var HELIX_RADIUS = optimal_radius(RAIL_ANGLE_RHO*Math.PI/180,TET_DISTANCE);
 var MIN_PITCH = pitch_min(TET_DISTANCE);
 var MAX_PITCH = 30;
 var ADD_PITCH = pitchForOptimal(RAIL_ANGLE_RHO*Math.PI/180,TET_DISTANCE) - MIN_PITCH;
@@ -316,11 +316,22 @@ $(function() {
 	range: "max",
 	min: 0.0,
 	max: 3,
-	value: 0.53,
+	value: HELIX_RADIUS,
 	step: 0.01,	
 	slide: function( event, ui ) {
 	    $( "#helix_radius_val" ).val( ui.value );
 	    HELIX_RADIUS = ui.value ;
+	    if (OPTIMALITY) {
+		// here we must compute the optimal The Rail Angle...
+		var rho = RAIL_ANGLE_RHO*Math.PI/180;
+		var opt_el_for_this_radius =
+		    newtonRaphson((x) => (optimal_radius(rho,x) - HELIX_RADIUS),rho);
+		console.log("optimum edge:",opt_el_for_this_radius);
+		TET_DISTANCE = opt_el_for_this_radius;
+		$( "#tet_distance_val" ).val( TET_DISTANCE.toFixed(4) );
+		$( "#tet_distance" ).slider('value',TET_DISTANCE.toFixed(4));
+
+	    }
 	    draw_central();	    
 	}
     });
@@ -469,8 +480,6 @@ function load_NTetHelix(am,helix,tets,pvec,hparams) {
 	} else {
 	    q = H_bc_eqt_lambda(num,rail,lambda);	    
 	}
-	
-	//	var v = new THREE.Vector3(q[0]*len, q[1]*len, q[2]*len);
 	var v = new THREE.Vector3(q[0], q[1], q[2]);
 	v = v.add(pvec);
 
@@ -593,7 +602,7 @@ var AM = function() {
     this.gplane=false;
 
 
-    this.INITIAL_EDGE_LENGTH = 0.3;
+    this.INITIAL_EDGE_LENGTH = TET_DISTANCE;
     this.INITIAL_EDGE_WIDTH = this.INITIAL_EDGE_LENGTH/40;
     this.INITIAL_HEIGHT = 3*this.INITIAL_EDGE_LENGTH/2;
 
@@ -962,7 +971,7 @@ initiation_stuff();
 init();
 animate();
 
-var len = am.INITIAL_EDGE_LENGTH;
+// var len = am.INITIAL_EDGE_LENGTH;
 
 
 function compute_helix_minimax(helix) {
@@ -974,15 +983,15 @@ function compute_helix_minimax(helix) {
 	var b = member.b.mesh.position;
 	var d = a.distanceTo(b);
 	if (i < 100) {
-	    console.log("member:",i);
-//	    console.log("a:",member.a.mesh.position);
-//	    console.log("b:",member.b.mesh.position);
-	    var q0 = 180*Math.atan2(member.a.mesh.position.x,
-				   member.a.mesh.position.y)/Math.PI;
-	    var q1 = 180*Math.atan2(member.b.mesh.position.x,
-				   member.b.mesh.position.y)/Math.PI;
+	    // console.log("member:",i);
+	    // //	    console.log("a:",member.a.mesh.position);
+	    // //	    console.log("b:",member.b.mesh.position);
+	    // var q0 = 180*Math.atan2(member.a.mesh.position.x,
+	    // 			    member.a.mesh.position.y)/Math.PI;
+	    // var q1 = 180*Math.atan2(member.b.mesh.position.x,
+	    // 			    member.b.mesh.position.y)/Math.PI;
 	    
-	    console.log("distance:",d,q1-q0);
+	    // console.log("distance:",d,q1-q0);
 	 }
 	
 	if (min > d) min = d;
@@ -1001,11 +1010,11 @@ var r0 = (2/3)*Math.sqrt(2/3);
 // var r0 = Math.sqrt(35/9)/4;
 var trial = 0;
 var num = 4;
-for (var i = 0; i < num+1; i++ ) {
+/* for (var i = 0; i < num+1; i++ ) {
     var pvec0 = new THREE.Vector3((i - 5)*2*am.INITIAL_EDGE_LENGTH,am.INITIAL_HEIGHT,-3);
     // Note: It is interesting to place very high lambda values in here --- it produces
     // an assymmetry which I have not yet explained.
-    add_equitetrabeam_helix_lambda(am,1,(i) / num,pvec0,len);
+    add_equitetrabeam_helix_lambda(am,1,(i) / num,pvec0,TET_DISTANCE);
     var hp = am.helix_params.slice(-1)[0];
         var h = am.helices.slice(-1)[0];
     var score = compute_helix_minimax(h)[2];
@@ -1016,15 +1025,10 @@ for (var i = 0; i < num+1; i++ ) {
 		    hp.pitch,
 		   hp.score);
 }
-
+*/
 // var pvec0 = new THREE.Vector3((i - 1)*2*am.INITIAL_EDGE_LENGTH,am.INITIAL_HEIGHT,-3);
 //add_equitetrabeam_helix_lambda(am, 1.0, pvec0, len);
 
- for(var i = 0; i < am.helices.length; i++) {
-    console.log(am.helix_params[i]);
-    compute_helix_minimax(am.helices[i]);
-    console.log(am.helix_params[i]);    
- }
 
 
 function draw_central() {
@@ -1086,7 +1090,6 @@ function build_central() {
 
 
     // Why do I have to divide by 2?
-//    ir = ir/2;
     console.log("inradius", ir);
     {
     var geometry = new THREE.CylinderGeometry( ir, ir, 3, 32 );
@@ -1104,6 +1107,17 @@ function build_central() {
     // }
     
 }
+
+var pvec0 = new THREE.Vector3(0,am.INITIAL_HEIGHT,-3);
+draw_new(pvec0);
+
+ for(var i = 0; i < am.helices.length; i++) {
+    console.log(am.helix_params[i]);
+    compute_helix_minimax(am.helices[i]);
+    console.log(am.helix_params[i]);    
+ }
+
+
     </script>
 
   
