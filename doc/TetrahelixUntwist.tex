@@ -64,8 +64,10 @@
   for any rail angle between $0$ and $\rho_{bc}$ is given, thus
   defining a continuum of tetrahelices terminated by the equitetrabeam
   and BC helix. Numerically finding the rail angle from the equation for
-  pitch allows optimal tetrahelices of any pitch to be designed.
+  pitch allows optimal tetrahelices of any pitch to be designed. 
   An interactive tool for such design and experimentation is provided.
+  A formula
+  for the inradius is given.
   Utility and use for static and variable geometry
   truss/space frame design and robotics based on the are discussed.
 \end{abstract}
@@ -639,17 +641,17 @@ we equate one-hop to $1$ to find the optimum radius:
 
 \begin{align*}
   1 &=  \sqrt{\frac{1}{9}  + r_{opt}^2(-\frac{4 (\sin^2( \rho / 2))}{9} + \sin^2(\rho/3+ \frac{2\pi}{3})  + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2)} \\
-  r_{opt} &= \frac{2}{\sqrt{\frac{9}{2} \cdot ( \sqrt{3} sin(\rho/3) + \cos(\rho/3)) + cos(\rho)+ 8 }} \numberthis  \label{eqrhoopt} \\
+  r_{opt} &= \frac{2}{\sqrt{\frac{9}{2} \cdot ( \sqrt{3} sin(\rho/3) + \cos(\rho/3)) + \cos(\rho)+ 8 }} \numberthis  \label{eqrhoopt} \\
 \end{align*}
 
 We can now give a formula for $ d_{opt} $ computed from $\rho, r_{opt}$ via the rail angle equation \eqref{railangle}:
 
 \begin{align*}
-  d_{opt}^2 &= 1 - 4 \frac{2}{\sqrt{\frac{9}{2} \cdot ( \sqrt{3} sin(\rho/3) + \cos(\rho/3)) + cos(\rho)+ 8 }}^2 (\sin{ \rho / 2})^2   \\
-  d_{opt}^2 &= 1 - 4 \frac{4(\sin{ \rho / 2})^2}{\frac{9}{2} \cdot ( \sqrt{3} sin(\rho/3) + \cos(\rho/3)) + cos(\rho)+ 8 }    \\
-  d_{opt}^2 &= 1 - \frac{16(\sin{ \rho / 2})^2}{9 ( \sqrt{3} sin(\rho/3) + \cos(\rho/3)) + cos(\rho)+ 8 }    \\
-  d_{opt}^2 &= 1 - \frac{16 sin^2(\rho / 2) }{ cos(\rho) + 9( \sqrt{3} sin(\rho/3) + \cos(\rho/3)) + 8 }   \\
-    d_{opt} &= \sqrt{1 - \frac{16 sin^2(\rho / 2) }{ cos(\rho) + 9( \sqrt{3} sin(\rho/3) + \cos(\rho/3)) + 8 }}    \numberthis  \label{dopt}  \\      
+  d_{opt}^2 &= 1 - 4 \frac{2}{\sqrt{\frac{9}{2} \cdot ( \sqrt{3} \sin(\rho/3) + \cos(\rho/3)) + \cos(\rho)+ 8 }}^2 (\sin{ \rho / 2})^2   \\
+  d_{opt}^2 &= 1 - 4 \frac{4(\sin{ \rho / 2})^2}{\frac{9}{2} \cdot ( \sqrt{3} \sin(\rho/3) + \cos(\rho/3)) + \cos(\rho)+ 8 }    \\
+  d_{opt}^2 &= 1 - \frac{16(\sin{ \rho / 2})^2}{9 ( \sqrt{3} \sin(\rho/3) + \cos(\rho/3)) + \cos(\rho)+ 8 }    \\
+  d_{opt}^2 &= 1 - \frac{16 \sin^2(\rho / 2) }{ \cos(\rho) + 9( \sqrt{3} \sin(\rho/3) + \cos(\rho/3)) + 8 }   \\
+    d_{opt} &= \sqrt{1 - \frac{16 \sin^2(\rho / 2) }{ \cos(\rho) + 9( \sqrt{3} \sin(\rho/3) + \cos(\rho/3)) + 8 }}    \numberthis  \label{dopt}  \\      
 \end{align*}
 
 Thus, by computing $r_{opt}$  and $d_{opt}$ as a function of $\rho$ from this equation, we can construct minimax optimal tetrahelix for an $0 \leq \rho \leq \rho_{bc}$.
@@ -900,7 +902,7 @@ Note: Would be really nice to have the GUI show you all computed parameters.
 
 Note: Distance is clearly lower on first computations..
 
-Create working toolkit for desin/exploration.
+Create working toolkit for design/exploration.
 
 Improve code that way, use white background, floor.
 
