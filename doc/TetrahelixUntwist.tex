@@ -31,7 +31,7 @@
 
 % See the ``Article customise'' template for come common customisations
 
-\title{Untwisting the Tetrahelix (v0.6)}
+\title{Untwisting the Tetrahelix (v0.7)}
 \author{Robert L. Read \texttt{read.robert@gmail.com} \and
   Robert Gatliff \texttt{robert@toubat.org}
 }
@@ -315,6 +315,7 @@ zero curvature. Each of these figures by definitions lies outside the
 circle of radius $r$ in the $xy$ plane.
 
 \begin{theorem}
+  \label{thm:cylinder}
   Any optimal tetrahelix has all vertices on a single cylinder.
 \end{theorem}
 
@@ -343,7 +344,7 @@ of rails.
      \caption{Untouching Rail}
 \end{figure}
 
-Figure\ref{untouchingrailfig} depicts a projection of
+Figure \ref{untouchingrailfig} depicts a projection of
 depicting only the point $P$, the point $P'$ which is an adjacent vertex on the same rail,
 and the intermediary points $R$ and $Q$ on the other two rails.
 
@@ -366,6 +367,8 @@ on a cylinder.
 
 
 \end{proof}
+
+Theorem \ref{thm:cylinder} is not true when $\rho$ is an odd multiple of $\pi$.
 
 Now that we have show that any optimal tetrahelix vertices that
 are on helices of the same axes and pitch, we see that the vertices 
@@ -666,7 +669,27 @@ Thus, by computing $r_{opt}$  and $d_{opt}$ as a function of $\rho$ from this eq
   as Equation \eqref{eq:general} does.
   Theorem \ref{generalformulaoptimal} tell us that
   that plugging $r_{opt}, d_{opt}$ into $H_{general}(\chi,n,c,\rho,d_{\rho},r_{\rho})$ minimizes the maximum length difference.
-  \end{proof}
+\end{proof}
+
+If you look down the axis of an optimal tetrahelix, it happens that only the one-hop edges
+come closest to the axis. In other words, they define the radius of the incircle of the
+projection, or the radius of a cylinder that would just fit inside the tetrahelix.
+This is useful to know if the tetrahelix is used as a structure to house a pipe or
+a ladder or that must bear a human or to armor a conduit. The \emph{inradius} of
+an optimal tetrahelix is a function of the radius $r$ and the rail angle $\rho$:
+\begin{equation}
+  \label{eq:inradius}
+  \frac{r \sin{(\pi - \rho)}}{6}
+\end{equation}
+Which can be seen from the trigonometry of the projection diagram:
+
+\begin{figure}[H]
+  \label{projectiondiagram}
+     \centering
+     \includegraphics[width=0.3\textwidth]{figures/ProjectionDiagram.png}
+     \caption{Projection Diagram (needs labels)}
+\end{figure}
+
 
 \section{The Equitetrabeam}
 

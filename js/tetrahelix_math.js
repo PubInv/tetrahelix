@@ -346,6 +346,10 @@ function pitchForOptimal(rho,len) {
     return Math.PI*2*dopt/rho;
 }
 
-function pitchLimit(len) {
+function pitch_min(len) {
     return pitchForOptimal(BCrho,len);
+}
+
+function inradius_assumption1(rho,r) {
+    return r*Math.sin((Math.PI - rho)/6);
 }

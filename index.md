@@ -470,7 +470,8 @@ function load_NTetHelix(am,helix,tets,pvec,hparams) {
 	    q = H_bc_eqt_lambda(num,rail,lambda);	    
 	}
 	
-	var v = new THREE.Vector3(q[0]*len, q[1]*len, q[2]*len);
+	//	var v = new THREE.Vector3(q[0]*len, q[1]*len, q[2]*len);
+	var v = new THREE.Vector3(q[0], q[1], q[2]);
 	v = v.add(pvec);
 
 	var pos = new THREE.Vector3();
@@ -967,24 +968,29 @@ var len = am.INITIAL_EDGE_LENGTH;
 function compute_helix_minimax(helix) {
     var min = 100000000;
     var max = 0.0;
-    for(var i = 0; i < Math.min(helix.helix_members.length,6); i++) {
+    for(var i = 0; i < Math.min(helix.helix_members.length,100); i++) {
 	var member = helix.helix_members[i];
 	var a = member.a.mesh.position;
 	var b = member.b.mesh.position;
 	var d = a.distanceTo(b);
-/*	if (i < 10) {
-	     console.log("member:",i);
-	     console.log("a:",member.a.mesh.position);
-	     console.log("b:",member.b.mesh.position);
-	     console.log("distance:",d);
+	if (i < 100) {
+	    console.log("member:",i);
+//	    console.log("a:",member.a.mesh.position);
+//	    console.log("b:",member.b.mesh.position);
+	    var q0 = 180*Math.atan2(member.a.mesh.position.x,
+				   member.a.mesh.position.y)/Math.PI;
+	    var q1 = 180*Math.atan2(member.b.mesh.position.x,
+				   member.b.mesh.position.y)/Math.PI;
+	    
+	    console.log("distance:",d,q1-q0);
 	 }
 	
-*/	if (min > d) min = d;
+	if (min > d) min = d;
 	if (max < d) max = d;
     }
-/*    console.log("min, max", min, max);
+    console.log("min, max", min, max);
     console.log("score: ", (100*max/min -100) + "%");
-*/
+
     return [min,max,(100*max/min -100)];
 }
 
@@ -1048,7 +1054,10 @@ function draw_central() {
 }
 
 function draw_new(pvec) {
-    add_equitetrabeam_helix(am,CHIRALITY_CCW,null,RAIL_ANGLE_RHO*Math.PI/180,HELIX_RADIUS,pvec,TET_DISTANCE);
+    add_equitetrabeam_helix(am,CHIRALITY_CCW,null,
+			    RAIL_ANGLE_RHO*Math.PI/180,
+			    HELIX_RADIUS,pvec,TET_DISTANCE);
+    
 }
 
 // var findRoot = require('newton-raphson');
@@ -1064,6 +1073,37 @@ var initialGuess = 1;
 console.log(newtonRaphson(f, null, 1));
 
 newtonRaphson((x) => (pitchForOptimal(x,1) - 10),1)
+
+
+function build_central() {
+    var pvec0 = new THREE.Vector3(0,0,0);    
+    add_equitetrabeam_helix(am,CHIRALITY_CCW,null,RAIL_ANGLE_RHO*Math.PI/180,HELIX_RADIUS,pvec0,TET_DISTANCE);
+
+    // I can't figure out if HELIX_RADIUS is wrong, if
+    // my formula is wrong, or if the CylinderGeometry is wrong....
+    // The formula checks out in the 2-D case.
+    var ir = inradius_assumption1(Math.PI*RAIL_ANGLE_RHO/180,HELIX_RADIUS);
+
+
+    // Why do I have to divide by 2?
+//    ir = ir/2;
+    console.log("inradius", ir);
+    {
+    var geometry = new THREE.CylinderGeometry( ir, ir, 3, 32 );
+    var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+    var cylinder = new THREE.Mesh( geometry, material );
+    cylinder.rotateX(Math.PI/2);
+    am.scene.add( cylinder );
+    }
+    // {
+    // var geometry = new THREE.CylinderGeometry( HELIX_RADIUS, HELIX_RADIUS, 3, 32 );
+    // var material = new THREE.MeshBasicMaterial( {color: 0xff0000} );
+    // var cylinder = new THREE.Mesh( geometry, material );
+    // cylinder.rotateX(Math.PI/2);
+    // 	am.scene.add( cylinder );
+    // }
+    
+}
     </script>
 
   
