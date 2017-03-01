@@ -213,12 +213,14 @@ function register_trials(trial,optimal,angle,radius,d,len,one_hop,two_hop,pitch,
 
 var RAIL_ANGLE_RHO = BCrho*180/Math.PI;
 var LAMBDA = 0;
-var TET_DISTANCE = 0.25;
+var TET_DISTANCE = 0.5;
 var HELIX_RADIUS = optimal_radius(RAIL_ANGLE_RHO*Math.PI/180,TET_DISTANCE);
 var MIN_PITCH = pitch_min(TET_DISTANCE);
 var MAX_PITCH = 30;
 var ADD_PITCH = pitchForOptimal(RAIL_ANGLE_RHO*Math.PI/180,TET_DISTANCE) - MIN_PITCH;
 var PITCH = MIN_PITCH + ADD_PITCH;
+
+
 
 $( "#pitch_input" ).val( ADD_PITCH.toFixed(4));
 $("#pitch_input_min").val(MIN_PITCH.toFixed(4));
@@ -475,16 +477,6 @@ var smats = [ new THREE.Color(0x8B0000),
 	      new THREE.Color(0xFF8C00),
 	      new THREE.Color(0x4B0082)];
 function load_NTetHelix(am,helix,tets,pvec,hparams) {
-
-    // Okay, so here we need to create the geometry of the tetrahelix.
-    // This could be done in a variety of ways.
-    // Probably the most mathematical is to first define a vector
-    // representing the center axis, and then use a formula the nth vertex.
-    // Looks like some math as been worked out by R. W. Gray:
-    // http://www.rwgrayprojects.com/rbfnotes/helix/helix01.html
-    // I guess I will use a CounterClockWise (ccw) tetrahelix:
-    // Vn = (r cos(n*theta), r sin(n*theta), n*h)
-
     var len = hparams.len;
     var rho = hparams.rho;
     var d = hparams.d;
@@ -501,12 +493,7 @@ function load_NTetHelix(am,helix,tets,pvec,hparams) {
 	var myRho = rho;
 	var rail = i % 3;
 	var num = Math.floor(i/3);
-	var q;
-	if ((typeof lambda === 'undefined') || lambda === null) {
-	    q = H_general(chi,num,rail,myRho,d,radius);
-	} else {
-	    q = H_bc_eqt_lambda(num,rail,lambda);	    
-	}
+	var q = H_general(chi,num,rail,myRho,d,radius);
 	var v = new THREE.Vector3(q[0], q[1], q[2]);
 	v = v.add(pvec);
 
@@ -944,12 +931,11 @@ function add_equitetrabeam_helix(am,chi,lambda,rho,radius,pvec,len) {
 			    radius: radius,
 			    onehop: onehop,
 			    twohop: twohop,
+			    d: d,
 			    pitch: pitch,
 			    lambda: lambda});
     
     var hp = am.helix_params.slice(-1)[0];
-    hp.d = len;
-
     load_NTetHelix(am,am.helices.slice(-1)[0],
 		   am.NUMBER_OF_TETRAHEDRA,
 		   pvec,hp);
@@ -973,15 +959,15 @@ function compute_helix_minimax(helix) {
 	var b = member.b.mesh.position;
 	var d = a.distanceTo(b);
 	if (i < 100) {
-	    // console.log("member:",i);
-	    // //	    console.log("a:",member.a.mesh.position);
-	    // //	    console.log("b:",member.b.mesh.position);
-	    // var q0 = 180*Math.atan2(member.a.mesh.position.x,
-	    // 			    member.a.mesh.position.y)/Math.PI;
-	    // var q1 = 180*Math.atan2(member.b.mesh.position.x,
-	    // 			    member.b.mesh.position.y)/Math.PI;
+	    console.log("member:",i);
+	    console.log("a:",member.a.mesh.position);
+	    console.log("b:",member.b.mesh.position);
+	    var q0 = 180*Math.atan2(member.a.mesh.position.x,
+	    			    member.a.mesh.position.y)/Math.PI;
+	    var q1 = 180*Math.atan2(member.b.mesh.position.x,
+	    			    member.b.mesh.position.y)/Math.PI;
 	    
-	    // console.log("distance:",d,q1-q0);
+	    console.log("distance:",d,q1-q0);
 	}
 	
 	if (min > d) min = d;

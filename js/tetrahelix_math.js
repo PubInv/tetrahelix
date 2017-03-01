@@ -192,6 +192,7 @@ function test_assert_optimal_radius_even() {
 }
 
 function H_general(chi,n,c,rho,d,r) {
+    console.log("params",chi,n,c,rho,d,r);
     if (chi != 1 && chi != -1) {
 	console.log("chirality must be 1 or -1!");
 	return null;
@@ -204,13 +205,37 @@ function H_general(chi,n,c,rho,d,r) {
     var kappa = n+ c/3.0;
     var rk = rho*kappa;
     var angle = chi*(rk + c*2*Math.PI/3);
-//    console.log("rk",rk*180/Math.PI);
-//    console.log("angle",angle*180/Math.PI);
+    console.log("rk",rk*180/Math.PI);
+    console.log("angle",angle*180/Math.PI);
     
     pnt[0] = r*Math.cos(angle);
     pnt[1] = r*Math.sin(angle);
     pnt[2] = d*kappa;
+    console.log("pnt",pnt);
     return pnt;
+}
+
+function test_BC_unity() {
+    var rho = BCrho;
+    var len = 1.0;
+    var r_opt = optimal_radius(rho,len);
+    var d_opt = optimal_distance(rho,len);
+    var pnts = [];
+    for(var i = 0; i < 4; i++) {
+	var num = Math.floor(i / 3);
+	var rail = i % 3;
+	var q = H_general(1,num,rail,rho,d_opt,r_opt);
+	pnts.push(q);
+    }
+    console.log(pnts);    
+    for(var i = 0; i < 4; i++) {
+	var p0 = pnts[i];
+	var p1 = pnts[(i+1) % 4];
+	var distance = Math.distance3(p0,p1);
+	// All distances should be 1 here...
+	console.log(p0,p1,distance);
+    }
+
 }
 
 function test_evenness_H_general() {
