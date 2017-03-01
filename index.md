@@ -14,7 +14,8 @@ title: Untwisting the Tetrahelix
 
     <table id="trialrecord">
     <tr>
-    <th>trial </th>    
+    <th>trial </th>
+    <th>optimal </th>        
     <th>rho </th>
     <th>r</th>
     <th>len</th>
@@ -90,7 +91,8 @@ title: Untwisting the Tetrahelix
   <div id="table-scroll">
     <table id="trialrecords">
     <tr>
-    <th>trial </th>    
+    <th>trial </th>
+    <th>optimal </th>
     <th>rho </th>
     <th>r</th>
     <th>len</th>
@@ -177,40 +179,35 @@ function handleChiralityChange(e) {
 $( "[name='chi']").on( "change", handleChiralityChange );
 
 
-function insert_trail_row(table,trial,angle,radius,d,len,one_hop,two_hop,pitch,inradius,score) {
+function insert_trail_row(table,trial,optimal,angle,radius,d,len,one_hop,two_hop,pitch,inradius,score) {
     var row = table.insertRow(1);
-    var cell1 = row.insertCell(0);
-    var cell2 = row.insertCell(1);
-    var cell3 = row.insertCell(2);
-    var cell4 = row.insertCell(3);
-    var cell5 = row.insertCell(4);
-    var cell6 = row.insertCell(5);
-    var cell7 = row.insertCell(6);
-    var cell8 = row.insertCell(7);
-    var cell9 = row.insertCell(8);
-    var cell10 = row.insertCell(9);                
-    cell1.innerHTML = ""+trial;
-    cell2.innerHTML = ""+angle.toFixed(4);    
-    cell3.innerHTML = ""+radius.toFixed(4) ;
-    cell4.innerHTML = ""+len.toFixed(4) ;
-    cell5.innerHTML = ""+d.toFixed(4) ;    
-    cell6.innerHTML = ""+one_hop.toFixed(4) ;
-    cell7.innerHTML = ""+two_hop.toFixed(4) ;    
-    cell8.innerHTML = ""+pitch.toFixed(4);
-    cell9.innerHTML = ""+inradius.toFixed(4);
-    cell10.innerHTML = ""+score.toFixed(4);
+    var cells = [];
+    for (var i = 0; i < 11; i++) {
+	cells[i] = row.insertCell(i);	
+    }
+    cells[0].innerHTML = ""+trial;
+    cells[1].innerHTML = ""+optimal;    
+    cells[2].innerHTML = ""+angle.toFixed(4);    
+    cells[3].innerHTML = ""+radius.toFixed(4) ;
+    cells[4].innerHTML = ""+len.toFixed(4) ;
+    cells[5].innerHTML = ""+d.toFixed(4) ;    
+    cells[6].innerHTML = ""+one_hop.toFixed(4) ;
+    cells[7].innerHTML = ""+two_hop.toFixed(4) ;    
+    cells[8].innerHTML = ""+pitch.toFixed(4);
+    cells[9].innerHTML = ""+inradius.toFixed(4);
+    cells[10].innerHTML = ""+score.toFixed(4);
 }
 
-function register_recent_trial(trial,angle,radius,d,len,one_hop,two_hop,pitch,inradius,score) {
+function register_recent_trial(trial,optimal,angle,radius,d,len,one_hop,two_hop,pitch,inradius,score) {
     var table = document.getElementById("trialrecord");
     if (table.rows.length > 1) 
 	table.deleteRow(1);
-    insert_trail_row(table,trial,angle,radius,d,len,one_hop,two_hop,pitch,inradius,score);
+    insert_trail_row(table,trial,optimal,angle,radius,d,len,one_hop,two_hop,pitch,inradius,score);
 }
-function register_trials(trial,angle,radius,d,len,one_hop,two_hop,pitch,inradius,score) {
+function register_trials(trial,optimal,angle,radius,d,len,one_hop,two_hop,pitch,inradius,score) {
     var table = document.getElementById("trialrecords");
-    insert_trail_row(table,trial,angle,radius,d,len,one_hop,two_hop,pitch,inradius,score);
-    register_recent_trial(trial,angle,radius,d,len,one_hop,two_hop,pitch,inradius,score);
+    insert_trail_row(table,trial,optimal,angle,radius,d,len,one_hop,two_hop,pitch,inradius,score);
+    register_recent_trial(trial,optimal,angle,radius,d,len,one_hop,two_hop,pitch,inradius,score);
 }
 
 
@@ -1028,7 +1025,7 @@ function draw_and_register() {
     var score = compute_helix_minimax(h)[2];
     hp.score = score;
     hp.inradius = inradius_assumption1(hp.rho,hp.radius);
-    register_trials(trial++,RAIL_ANGLE_RHO,HELIX_RADIUS,hp.d,TET_DISTANCE,
+    register_trials(trial++,OPTIMALITY,RAIL_ANGLE_RHO,HELIX_RADIUS,hp.d,TET_DISTANCE,
 		    hp.onehop,
 		    hp.twohop,
 		    hp.pitch,
