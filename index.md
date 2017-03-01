@@ -22,7 +22,8 @@ title: Untwisting the Tetrahelix
     <th>one-hop</th>
     <th>two-hop</th>
     <th>pitch</th>
-    <th>minmax ratio (%)</th>            
+    <th>inradius</th>
+    <th>minmax ratio (%)</th>
     </tr>
     </table>
 
@@ -196,7 +197,7 @@ function insert_trail_row(table,trial,angle,radius,d,len,one_hop,two_hop,pitch,i
     cell6.innerHTML = ""+one_hop.toFixed(4) ;
     cell7.innerHTML = ""+two_hop.toFixed(4) ;    
     cell8.innerHTML = ""+pitch.toFixed(4);
-    cell9.innertHTML = ""+inradius.toFixed(4);
+    cell9.innerHTML = ""+inradius.toFixed(4);
     cell10.innerHTML = ""+score.toFixed(4);
 }
 
@@ -1026,7 +1027,7 @@ function draw_and_register() {
     var h = am.helices.slice(-1)[0];
     var score = compute_helix_minimax(h)[2];
     hp.score = score;
-    hp.inradius = inradius_assumption1(hp.rho,hp.r);
+    hp.inradius = inradius_assumption1(hp.rho,hp.radius);
     register_trials(trial++,RAIL_ANGLE_RHO,HELIX_RADIUS,hp.d,TET_DISTANCE,
 		    hp.onehop,
 		    hp.twohop,
@@ -1039,7 +1040,6 @@ function draw_new(pvec) {
     return add_equitetrabeam_helix(am,CHIRALITY_CCW,null,
 			    RAIL_ANGLE_RHO*Math.PI/180,
 			    HELIX_RADIUS,pvec,TET_DISTANCE);
-    
 }
 
 function build_central() {
