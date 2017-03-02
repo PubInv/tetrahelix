@@ -110,9 +110,54 @@ title: Untwisting the Tetrahelix
         <section id="textsection" style="{border: red;}">
       <h1 id="message_banner">
     Untwisting the Tetrahelix </h1>
-
+<p>
     A mathematical investigation of the Tetrahelix and Boerdijk-Coxeter helix, which provides a new
-    formulaic way of producing a continuum of untwisted tetrahelices.
+formulaic way of producing a continuum of untwisted tetrahelices.
+    </p>
+<p>
+    All of the code on this site is released under the GNU General Public License, and I hope you will reuse it.
+    </p>
+    <h2> Motivation </h2>
+
+Tetrahelixes are cool. Further motivation is described in an academic paper we are preparing that will
+be linked in draft form here.
+
+    <h2> How to Use </h2>
+    <p>
+    The site uses the so-called THREE.js "orbit" control.  Click on the scene and drag and you will find your self
+rotating, always looking at approximately the center point. Moving the middle mouse wheel or the Mac scrolling
+pattern will zoom you in or out.
+</p>
+
+
+    <h2> Accessing the Math  </h2>
+
+<p>
+    This site is coded in the file <a href="https://pubinv.github.io/tetrahelix/index.md">index.md</a>,
+which has the THREE.js rendering code and
+code to to use the fundamental math.  The math from our paper, however, is in
+    <a href="https://pubinv.github.io/tetrahelix/js/tetrahelix_math.js">tetrahelix_math.js</a>.
+    You are welcome to use tetrahelix_math.js in for your own purposes, such as in a computer game or to
+design your own physical structures.
+    </p>
+<p>
+    <h2> Running the Test </h2>
+<p>
+    Although it is currently a work in progress, my goal is to make tetrahelix_math.js testable via
+Mocha. You will need to install npm, node, and <a href="https://mochajs.org/">mocha</a> for this to work.
+    </p>
+
+    <p>
+    I am not a node expert, but basically I did:
+> npm install -g browserify
+> npm install -g mocha
+
+    In order to use the tetrahelix_math module in the browser.
+    I build the browser ready file with:
+> browserify js/tetrahelix_math.js -o js/tetrahelix_math_browser.js
+    </p>
+
+
 </section>
 
 	<script type="x-shader/x-vertex" id="vertexShader">
@@ -146,8 +191,10 @@ title: Untwisting the Tetrahelix
 
 			}
 
+
 		</script>	
     <script>
+    var tm = UGLY_GLOBAL_SINCE_I_CANT_GET_MY_MODULE_INTO_THE_BROWSER;
 
 $( "input[type='radio']" ).checkboxradio();
 
@@ -156,7 +203,7 @@ function handleOptimalityChange(e) {
     var target = $( e.target );
     OPTIMALITY = (target[0].id == "optimal-1") ;
     if (OPTIMALITY) {
-	HELIX_RADIUS = optimal_radius(RAIL_ANGLE_RHO*Math.PI/180,TET_DISTANCE);
+	HELIX_RADIUS = tm.optimal_radius(RAIL_ANGLE_RHO*Math.PI/180,TET_DISTANCE);
 	$("#helix_radius").slider('value',HELIX_RADIUS.toFixed(4));
 	$("#helix_radius_val" ).val( HELIX_RADIUS.toFixed(4) );
     }
@@ -211,13 +258,13 @@ function register_trials(trial,optimal,angle,radius,d,len,one_hop,two_hop,pitch,
 }
 
 
-var RAIL_ANGLE_RHO = BCrho*180/Math.PI;
+var RAIL_ANGLE_RHO = tm.BCrho*180/Math.PI;
 var LAMBDA = 0;
 var TET_DISTANCE = 0.5;
-var HELIX_RADIUS = optimal_radius(RAIL_ANGLE_RHO*Math.PI/180,TET_DISTANCE);
-var MIN_PITCH = pitch_min(TET_DISTANCE);
+var HELIX_RADIUS = tm.optimal_radius(RAIL_ANGLE_RHO*Math.PI/180,TET_DISTANCE);
+var MIN_PITCH = tm.pitch_min(TET_DISTANCE);
 var MAX_PITCH = 30;
-var ADD_PITCH = pitchForOptimal(RAIL_ANGLE_RHO*Math.PI/180,TET_DISTANCE) - MIN_PITCH;
+var ADD_PITCH = tm.pitchForOptimal(RAIL_ANGLE_RHO*Math.PI/180,TET_DISTANCE) - MIN_PITCH;
 var PITCH = MIN_PITCH + ADD_PITCH;
 
 
@@ -242,7 +289,7 @@ $(function() {
     $( "#rail_angle_slider" ).slider({
 	range: "max",
 	min: 0,
-	max: BCrho*180/Math.PI,
+	max: tm.BCrho*180/Math.PI,
 	value: RAIL_ANGLE_RHO,
 	step: 0.001,	
 	slide: function( event, ui ) {
@@ -250,11 +297,11 @@ $(function() {
 	    RAIL_ANGLE_RHO = ui.value;
 	    show_pitch();
 	    if (OPTIMALITY) {
-		HELIX_RADIUS = optimal_radius(RAIL_ANGLE_RHO*Math.PI/180,TET_DISTANCE);
+		HELIX_RADIUS = tm.optimal_radius(RAIL_ANGLE_RHO*Math.PI/180,TET_DISTANCE);
 		$( "#helix_radius" ).slider('value',HELIX_RADIUS.toFixed(4));
 		$( "#helix_radius_val" ).val( HELIX_RADIUS.toFixed(4) );
 		if (RAIL_ANGLE_RHO != 0); {
-		    PITCH = pitchForOptimal(RAIL_ANGLE_RHO*Math.PI/180,TET_DISTANCE);
+		    PITCH = tm.pitchForOptimal(RAIL_ANGLE_RHO*Math.PI/180,TET_DISTANCE);
 		    ADD_PITCH = PITCH-MIN_PITCH;
 		}
 		$( "#pitch_input" ).val(ADD_PITCH.toFixed(4) );
@@ -287,17 +334,17 @@ $(function() {
 	    $("#pitch_input").val(ADD_PITCH.toFixed(4));	    	    
 	    if (OPTIMALITY) {
 		var rho_for_pitch_radians =
-		    newtonRaphson((x) => (pitchForOptimal(x,TET_DISTANCE) - PITCH),RAIL_ANGLE_RHO*Math.PI/180);
+		    newtonRaphson((x) => (tm.pitchForOptimal(x,TET_DISTANCE) - PITCH),RAIL_ANGLE_RHO*Math.PI/180);
 		RAIL_ANGLE_RHO = rho_for_pitch_radians*180/Math.PI;
 		$( "#rail_angle_slider" ).slider('value',RAIL_ANGLE_RHO.toFixed(4));
 		$( "#rail_angle_rho" ).val( RAIL_ANGLE_RHO.toFixed(4) );
 		
-		HELIX_RADIUS = optimal_radius(RAIL_ANGLE_RHO*Math.PI/180,TET_DISTANCE);
+		HELIX_RADIUS = tm.optimal_radius(RAIL_ANGLE_RHO*Math.PI/180,TET_DISTANCE);
 		$( "#helix_radius" ).slider('value',HELIX_RADIUS.toFixed(4));
 		$( "#helix_radius_val" ).val( HELIX_RADIUS.toFixed(4) );
 	    } else {
 		// here we want to make sure the pitch matches PITCH by changing the TET_DISTANCE.
-		var dopt = optimal_distance(RAIL_ANGLE_RHO*Math.PI/180,TET_DISTANCE);
+		var dopt = tm.optimal_distance(RAIL_ANGLE_RHO*Math.PI/180,TET_DISTANCE);
 		var desired_d = (RAIL_ANGLE_RHO*Math.PI/180) * PITCH / (2 * Math.PI);
 		var len = Math.sqrt(desired_d*desired_d +
 				    4 * HELIX_RADIUS * HELIX_RADIUS *
@@ -323,16 +370,16 @@ $(function() {
 	slide: function( event, ui ) {
 	    $( "#tet_distance_val" ).val( ui.value );
 	    TET_DISTANCE = ui.value;
-	    MIN_PITCH = pitch_min(TET_DISTANCE);
+	    MIN_PITCH = tm.pitch_min(TET_DISTANCE);
 	    $("#pitch_input_slider").slider('option',{min: 0, max: MAX_PITCH});
 	    $("#pitch_input_min").val(MIN_PITCH.toFixed(4));
 	    $("#actual_pitch").val(PITCH.toFixed(4));	    
 	    if (OPTIMALITY) {
-		HELIX_RADIUS = optimal_radius(RAIL_ANGLE_RHO*Math.PI/180,TET_DISTANCE);
+		HELIX_RADIUS = tm.optimal_radius(RAIL_ANGLE_RHO*Math.PI/180,TET_DISTANCE);
 		$("#helix_radius").slider('value',HELIX_RADIUS.toFixed(4));
 		$("#helix_radius_val" ).val( HELIX_RADIUS.toFixed(4) );
 
-		$("#pitch_input_slider").slider('value',pitchForOptimal(RAIL_ANGLE_RHO*Math.PI/180,TET_DISTANCE).toFixed(4));
+		$("#pitch_input_slider").slider('value',tm.pitchForOptimal(RAIL_ANGLE_RHO*Math.PI/180,TET_DISTANCE).toFixed(4));
 	    }
 	    draw_central();
 	}
@@ -354,7 +401,7 @@ $(function() {
 		// here we must compute the optimal The Rail Angle...
 		var rho = RAIL_ANGLE_RHO*Math.PI/180;
 		var opt_el_for_this_radius =
-		    newtonRaphson((x) => (optimal_radius(rho,x) - HELIX_RADIUS),rho);
+		    newtonRaphson((x) => (tm.optimal_radius(rho,x) - HELIX_RADIUS),rho);
 		console.log("optimum edge:",opt_el_for_this_radius);
 		TET_DISTANCE = opt_el_for_this_radius;
 		$( "#tet_distance_val" ).val( TET_DISTANCE.toFixed(4) );
@@ -493,7 +540,7 @@ function load_NTetHelix(am,helix,tets,pvec,hparams) {
 	var myRho = rho;
 	var rail = i % 3;
 	var num = Math.floor(i/3);
-	var q = H_general(chi,num,rail,myRho,d,radius);
+	var q = tm.H_general(chi,num,rail,myRho,d,radius);
 	var v = new THREE.Vector3(q[0], q[1], q[2]);
 	v = v.add(pvec);
 
@@ -921,9 +968,9 @@ function add_equitetrabeam_helix(am,chi,lambda,rho,radius,pvec,len) {
 	    helix_joints: [],
 	    helix_members: []
 	});
-    var onehop = one_hop(radius,rho,len);
-    var twohop = two_hop(radius,rho,len);
-    var d = find_drho_from_r_el(rho,radius,len);
+    var onehop = tm.one_hop(radius,rho,len);
+    var twohop = tm.two_hop(radius,rho,len);
+    var d = tm.find_drho_from_r_el(rho,radius,len);
     var pitch = 2*Math.PI*d/rho;
     am.helix_params.push ({ rho: rho,
 			    len: len,
@@ -1010,7 +1057,7 @@ function draw_and_register() {
     var h = am.helices.slice(-1)[0];
     var score = compute_helix_minimax(h)[2];
     hp.score = score;
-    hp.inradius = inradius_assumption1(hp.rho,hp.radius);
+    hp.inradius = tm.inradius_assumption1(hp.rho,hp.radius);
     register_trials(trial++,OPTIMALITY,RAIL_ANGLE_RHO,HELIX_RADIUS,hp.d,TET_DISTANCE,
 		    hp.onehop,
 		    hp.twohop,
@@ -1032,7 +1079,7 @@ function build_central() {
     // I can't figure out if HELIX_RADIUS is wrong, if
     // my formula is wrong, or if the CylinderGeometry is wrong....
     // The formula checks out in the 2-D case.
-    var ir = inradius_assumption1(Math.PI*RAIL_ANGLE_RHO/180,HELIX_RADIUS);
+    var ir = tm.inradius_assumption1(Math.PI*RAIL_ANGLE_RHO/180,HELIX_RADIUS);
 
 
     // Why do I have to divide by 2?
