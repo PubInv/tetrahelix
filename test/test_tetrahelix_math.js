@@ -33,6 +33,30 @@ describe('tetrahelix_math', function() {
 	    }
 	});
     });
+    describe('optimal_radius()', function() {
+	it('BC helix should be perfectly regular', function() {
+	    var rho = tm.BCrho;
+	    var len = 1.0;
+	    var r_opt = tm.optimal_radius(rho,len);
+	    var d_opt = tm.optimal_distance(rho,len);
+	    var pnts = [];
+	    for(var i = 0; i < 4; i++) {
+		var num = Math.floor(i / 3);
+		var rail = i % 3;
+		var q = tm.H_general(1,num,rail,rho,d_opt,r_opt);
+		pnts.push(q);
+	    }
+	    console.log(pnts);    
+	    for(var i = 0; i < 4; i++) {
+		var p0 = pnts[i];
+		var p1 = pnts[(i+1) % 4];
+		var distance = Math.distance3(p0,p1);
+		// All distances should be 1 here...
+		assert(tm.nearlyEqual(distance,1,0.0000001));
+	    }
+	});
+    });
+    
     describe('test rail angle formula against BC', function() {
 	it('find functions should match Coxeter\'s solutions for BC helix', function() {
 	    var BCr_check = tm.find_rrho_from_d(tm.BCrho,tm.BCd);
@@ -66,15 +90,71 @@ describe('tetrahelix_math', function() {
 	    var p1 = tm.H_general(1,0,0,tm.BCrho,d_opt,r_opt);
 	    var p2 = tm.H_general(1,0,1,tm.BCrho,d_opt,r_opt);
 	    var distance1 = Math.distance3(p1,p2);
-	    console.log(p1,p2,distance1);
 
 	    var p3 = tm.H_general(-1,0,0,tm.BCrho,d_opt,r_opt);
-	    var p4 = tm.H_general(-1,1,1,tm.BCrho,d_opt,r_opt);
+	    var p4 = tm.H_general(-1,0,1,tm.BCrho,d_opt,r_opt);
 	    var distance2 = Math.distance3(p3,p4);
-	    console.log(p3,p4,distance2);	    
 	    assert.equal(distance1,distance2);
 
 	});
     });
 
+    describe('optimal_radius', function() {
+	it('optimal_radius is an even function', function() {
+	    var MAX_DEGREES = 45;
+	    for(var i = 0; i < 100;i++) {
+		var rho = Math.PI*(i*MAX_DEGREES/100)/180;
+		var rp = tm.optimal_radius(rho,1.0);
+		var rn = tm.optimal_radius(-rho,1.0);
+		assert(rp == rn,'evenness of optimal_radius failed','spud');
+	    }
 	});
+	it('one_hop and two_hop are always with in 16%', function() {
+	    var MAX_DEGREES = 45;
+	    for(var i = 0; i < 100;i++) {
+		var rho = Math.PI*(i*MAX_DEGREES/100)/180;
+		var r = tm.optimal_radius(rho,1.0);
+		var h1 = tm.one_hop(r,rho,1.0);
+		var h2 = tm.two_hop(r,rho,1.0);
+		// We have proven this result should always be within 16%
+		assert(Math.abs(h2-h1) < 0.16,'h2 failed'+h2+' '+h1);
+	    }
+	});
+    });
+    
+    describe('optimal_d', function() {
+	it('optimal_d returns correct values', function() {
+    	    var r = tm.optimal_radius(tm.BCrho,1.0);
+    	    var dbc = tm.optimal_distance(tm.BCrho,1.0);
+	    // Now check that d_opt matches...
+	    var dp = tm.find_drho_from_r_el(tm.BCrho,r,1);
+	    console.log(180*tm.BCrho/Math.PI,r,dbc,dp);
+	    assert.equal(dbc,dp);
+	    
+	    var MAX_DEGREES = 45;
+	    for(var i = 0; i < 100;i++) {
+		var rho = Math.PI*(i*MAX_DEGREES/100)/180;
+		var r = tm.optimal_radius(rho,1.0);
+		var d = tm.optimal_distance(rho,1.0);
+		// Now check that d_opt matches...
+		var dp = tm.find_drho_from_r_el(rho,r,1);
+		assert(tm.nearlyEqual(d,dp,1,0.0000001));
+	    }
+	});
+    });
+    describe('one_hop', function() {
+	it('one_hop returns consistent values', function() {
+	    var rho = tm.BCrho;
+	    rho = tm.BCrho/2;
+	    var len = 0.5;
+	    var r_opt = tm.optimal_radius(rho,len);
+	    var d_opt = tm.optimal_distance(rho,len);
+	    var onehop = tm.one_hop(r_opt,rho,len);
+	    var p1 = tm.H_general(1,0,0,tm.BCrho,d_opt,r_opt);
+	    var p2 = tm.H_general(1,0,1,tm.BCrho,d_opt,r_opt);
+	    var distance = Math.distance3(p1,p2);
+	    assert(tm.nearlyEqual(distance,onehop-distance,1,0.0000001));	    
+
+	});
+    });
+});
