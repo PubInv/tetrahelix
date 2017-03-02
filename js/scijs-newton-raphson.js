@@ -1,6 +1,13 @@
 'use strict';
 
-//module.exports = newtonRaphson;
+/* This code is from: https://github.com/scijs/newton-raphson-method 
+which says it distributed with the MIT License. The author
+seems to be Ricky Reusser. I'm not a expert in bundling 
+javascript; it seems that I have the right to reuse it here
+in this way. It works really well for me, but if you want to 
+use it I suggest you take it from there repo and not copy this.
+*/
+
 
 function newtonRaphson (f, fp, x0, options) {
   var x1, y, yp, tol, maxIter, iter, yph, ymh, yp2h, ym2h, h, hr, verbose, eps;
