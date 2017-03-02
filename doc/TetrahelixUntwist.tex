@@ -32,7 +32,7 @@
 
 % See the ``Article customise'' template for come common customisations
 
-\title{Untwisting the Tetrahelix (v0.8)}
+\title{Untwisting the Tetrahelix (v0.9)}
 \author{Robert L. Read \texttt{read.robert@gmail.com} \and
   Robert Gatliff \texttt{robert@toubat.org}
 }
@@ -101,13 +101,6 @@ Buckminster Fuller called the BC helix a \emph{tetrahelix}\cite{fuller1982synerg
 a term now commonly used. In this paper we reserve \emph{BC helix} to mean the purely regular structre and use \emph{tetrahelix} to refer
 to any structure isomophic to a the BC helix, whether regular or not.
 
-
-\begin{figure}[H]
-  \label{fig:spudboy}
-  \centering
-     \includegraphics[width=0.95\textwidth]{figures/TetrahelixSeries.png}
-     \caption{A Series of Tetrahelices}
-\end{figure}
 
 
 \begin{figure}[H]
@@ -205,7 +198,7 @@ This formula defines a helix, but it is not any of the apparent helices, or rail
 BC helix, but rather one that winds three times as rapidly through all
 nodes. To a designer of tetrahelices, it is more natural to think of
 the three helices which are visually apparent, that is, those three
-which are closely approximated by the by the outer edges or rails of
+which are closely approximated by the outer edges or rails of
 the BC helix. We think of each of these three rails as being a different color, red, blue, or yellow.
 
 It is convenient to have a formula that gives us the nodes of just
@@ -249,9 +242,48 @@ This quantity appears so often that we call it the ``rail angle rho''. For the B
      \caption{Rail Angle Geometry}
 \end{figure}
 
-Note in Figure \ref{railanglefig} the $z$-axis travel for one rail edge is denoted by $d$. In \eqref{graycoxeter} and \label{eq:colored}, the variable
+Note in Figure \ref{railanglefig} the $z$-axis travel for one rail edge is denoted by $d$. In \eqref{graycoxeter} and \eqref{eq:colored}, the variable
 $h$ is used for one third of the distance we name $d$. We will later justify that $d = 3h$. In this paper we assume the length of a rail
 is alwyas $1$ is a simplification, although we make the rail length a parameter in our JavaScript codein \texttt{tetrahelixmath.js} \cite{readtetrahelix}.
+
+This Gray-Coxeter formulation $V(n)$ from \eqref{graycoxeter} is valuable, but obscures the fact that we have three
+apparent rail helices.
+In order to rewrite this expression with an explicit rotation of $2\pi/3$, we expand 
+the expressions $\theta$ and $\rho_{bc}$ and seek to isolate the term $c2\pi/3 $.
+\begin{align*}
+  \rho_{bc} n + c \theta  &=   \text{\{we aim for 3 in denominator, so we split...\}} \\
+    (3 \theta - 2 \pi)n + (c/3)  (3 \theta)  &=   \text{\{we want $2\pi$ in numerator, so add canceling terms...\}} \\
+  (3 \theta - 2 \pi)n + (c/ 3) (3 \theta - 2 \pi  + 2 \pi) &=  \text{\{associate...\}} \\
+  (3 \theta - 2 \pi)n + (c/ 3) ((3 \theta - 2 \pi)  + 2 \pi) &=  \text{\{distribute...\}} \\  
+  (3 \theta - 2 \pi)n + (c / 3) (3 \theta - 2 \pi)  + c 2 \pi /3 &=  \text{\{definition of $\rho_{bc}$...\}} \\
+  \rho_{bc} n + (c / 3) \rho_{bc}  + c 2 \pi /3 &=  \text{\{collect like factors...\}} \\  
+  n \rho_{bc}  +\rho_{bc} ( c+  2 \pi) /3  \\
+\end{align*}
+Now the the term on the left is the only one that depends on the scalar $n$. We use this to a create
+a new formulation: $H_{BCsymmetric}(n,c) = H_{BCcolored}(n,c)$
+
+Recall that $c \in \{0,1,2\}$, but $n$ is continuous (rational or real-valued.)
+
+%% Actually, I am not sure if this is a clearer formulation...it might be, and need to put it in general!!!
+\begin{equation}
+H_{BCsymmmetric}(n,c) =
+\left [
+  \begin{tabular}{c}
+    $ r  \cos(\rho_{bc} n + c (\rho_{bc} +  2 \pi) /3) $\\
+   $ r  \sin(\rho_{bc} n + c (\rho_{bc} +  2 \pi) /3) $\\
+   $ (n+c/3)  h_{bc} $
+  \end{tabular}
+  \right ],
+\text{where:}
+  \begin{tabular}{c}
+%%  $\kappa = n + c/3$ \\
+    $\rho_{bc} = (3 \theta - 2 \pi)$ \\
+    $ \theta = \arccos(-2/3) $ \\
+    $ h_{bc} = 1/\sqrt{10} $ \\    
+  \end{tabular}      
+\end{equation}
+
+
 
 Since:
 \[ \frac{2 \pi}{\rho_{bc}} \approx 10.16
@@ -266,12 +298,12 @@ The pitch of the Boerdijk--Coxeter helix of edge length $1$ is the length of thr
 \end{align*}
 The pitch is less than the number of tetrahedra because the tetrahedra
 are not lined up perfectly.  It is a famous and interesting result
-that the pitch is irrational, a BC helix never has two tetrahedra at
+that the pitch is irrational. A BC helix never has two tetrahedra at
 precisely the same orientation around the $z$-axis. However, this is
 inconvenient to designers, who might prefer a rational pitch.
-The idea of deveoping a rational period by arranging solid tetrahedra by relaxing the face-to-face matching
+The idea of developing a rational period by arranging solid tetrahedra by relaxing the face-to-face matching
 has been explored\cite{sadler2013periodic}. In this paper
-we develop slightly irregular edge lengths that support, for example, a pitch of precisely 10
+we develop slightly irregular edge lengths that support, for example, a pitch of precisely 12
 tetrahedra in one revolution which would allow an architect to design a
 column having a basis and a capital in the same relation to the
 tetrahedra they touch at the bottom and top of the column.
@@ -290,7 +322,7 @@ tetrahelix, but the must useful to an enginner is to minimize the
 maximum difference between any two edges.
 
 If all three rails do not have the same pitch, there is an edge of
-unbounded length, so it is not optimal. So we are justified in talking about the
+unbounded length, so it is hardly optimal. So we are justified in talking about the
 \emph{pitch} of 
 the tetrahelix as the pitch of its rail helices, even though there are
 three such helices.
@@ -298,9 +330,10 @@ three such helices.
 Similarly, if the axes are not parallel, there is an edge of
 unbounded length in the structure, so we exclude such a strcturue.
 
-Since the axes are parallel, we may define the \emph{inradius} of a tetrahelix to be the radius of the largest
-``in cylinder'': a
-cylinder parallel to this axis contained within circumscribing cylinder which is penetrated by no edge.
+Since the axes are parallel, we may define the \emph{inradius} of a
+tetrahelix to be the radius of the largest
+cylinder parallel to this axis contained within the circumscribing cylinder w
+hich is penetrated by no edge.
 Define an \emph{minimax edge-length optimal tetrahelix} or just an
 \emph{optimal tetrahelix} to be a tetrahelix for which there exists
 no other tetrahelix of the same inradius and pitch with a lower maximum
@@ -317,9 +350,9 @@ a two-dimensional figure of nodes and non-rail edges.
 Consider the projection along the $z$ axis of all vertices and non-rail edges into the $xy$ plane, which will be
 a figure of dots and connecting segments in the $xy$ plane. The convex
 hull for any one helix projection will be a circle (if its pitch is
-irrational) or an polygon if rational, or a point if the helix has
+irrational) or a polygon if rational, or a point if the helix has
 zero curvature. Each of these figures by definitions lies outside the
-circle of radius $r$ in the $xy$ plane.
+circle of inradius $i$ in the $xy$ plane.
 
 \begin{theorem}
   \label{thm:cylinder}
@@ -350,7 +383,7 @@ of rails.
 \end{figure}
 
 Figure \ref{untouchingrailfig} depicts a projection of
-depicting only the point $P$, the point $P'$ which is an adjacent vertex on the same rail,
+only the point $P$, the point $P'$ which is an adjacent vertex on the same rail,
 and the intermediary points $R$ and $Q$ on the other two rails.
 
 Supoose there is a rail $P$ which does not have a segment touching the incircle
@@ -359,9 +392,9 @@ Then a segment connecting the other two $Q$ and $R$ is a longest
 rail, because any chord touching an incircle is longer than any which does not.
 These two rails ($Q$ and $R$) can be moved closer to each other, and further away from $P$, to form a better minimax solution
 by shortening the longest rail, until one of the segments from $P$ the previously
-untouching rail touches one of the incircle. By induction then all rails have
-at least one segement touch each vertex on the rail that is tangent to the
-the inradius in an optimal tetrahelix.
+untouching rail touches one of the incircle. By induction, then all rails have
+at least one segement touching each vertex on the rail that is tangent to the
+incircle in an optimal tetrahelix.
 
 Now suppose that you attempt to move the axis of one of the rails. Because
 $\rho > 0 $ and $\rho$ is not a multiple of $\pi$, there is some vertex on the two sides of any diameter
@@ -373,23 +406,22 @@ on a cylinder.
 
 \end{proof}
 
-Theorem \ref{thm:cylinder} is not true when $\rho$ is an odd multiple of $\pi$.
+Theorem \ref{thm:cylinder} is not true when $\rho$ is an odd integer multiple of $\pi$.
 
-Now that we have show that any optimal tetrahelix vertices that
+Now that we have shown that any optimal tetrahelix vertices
 are on helices of the same axes and pitch, we see that the vertices 
 of any optimal tetrahelix will lie on a cylinder, or a circle when axis dimension
-is projected out. Therefore is is reasonable to now speak of the \emph{radius}
-of a tetrahelix as the radius of the cylinder, and the notion
-of the projected incircle radius is now obsolete.
+is projected out. Therefore it is reasonable to now speak of the \emph{radius} $r$
+of a tetrahelix as the radius of the cylinder, as distinct from the inradius $i$.
 
-Now that we have coincident axes, the same pitch, we can go on to
- the hard proof about where they occur along the $z$-axis.
+Now that we have coincident axes, the same pitch, and the same radius, we can go on to
+ the harder proof about where vertices occur along the $z$-axis.
 
  We show that in fact the nodes must be distributed in even thirds
  along the $z$-axis.
 
  Note that from the point of view of a single edge, we are on a
- slanted cylinder, when $\rho \neq 0$.  This means for its point of
+ slanted cylinder, when $\rho \neq 0$.  This means from its point of
  view a cross section is an ellipse. So we have to be very careful in
  comparing lengths of edges relative to the tetrahedron, because a
  change in position along the edge changes the length of a line, but
@@ -411,9 +443,9 @@ Now that we have coincident axes, the same pitch, we can go on to
  lengths are equal in any optimal tetrahelix.
 
 \begin{theorem}
-   \label{eventhirds}
-   A tetrahelix of a given radius and axial distance $d$ in which all nodes are evenly spaced at $d/3$ intervals on the $z$ axis is optimal.
-     Any one tetrahedron in a tetrahelix has $1$ rail edge, $2$ one-hop edges connected to the rail and $2$ two-hop edges connected to the rail.
+  \label{eventhirds}
+  An optimal tetrahelix of any rail angle $\rho < \pi$ has all nodes evenly spaced at $d/3$ intervals on the $z$ axis.
+  Any one tetrahedron in a tetrahelix has $1$ rail edge, $2$ one-hop edges connected to the rail and $2$ two-hop edges connected to the rail.
   The edge opposite of the rail edge is a one-hop edge.
 \end{theorem}
 
@@ -423,15 +455,21 @@ Now that we have coincident axes, the same pitch, we can go on to
     or it makes one hop, or it makes two hops. All of the one-hop
     edges are equal length.  All of the two-hop edges are equal
     length.
-    
-    Any displacemnt along the $z$ axis of any rail increases the
-    length of one or two two-hop edges and shortens the length of one
-    or two one-hop edges.  This increases the minimax distance no
-    matter what the rail edge length is, since all rail edges are the
-    same length. Therefore, an evenly spaced tetrahelix is the unique
-    optimal for any given radius and height.
+
+    Every vertex is connected to 4 non-rail edges. There is a one-hop edge
+    in both the positive and negative $z$ direction. Likewise there is a two-hop
+    edge in both the positive and negative $z$ direction. Let $A$ be the set
+    of edge lengths, which has only 3 members, represented by $A = \{o,t,r\}$ for
+    the one-hop, two-hop, and rail edge lengths.
+
+    Any attempt to move any rail in either $z$ direction lengthens one two-hop edge to $t' > t$
+    edge and shortens one one-hop edge $o' < o$. Let $B = \{o',t' \} \cup A$ be new edges.
+    The minimax of $B$ > $A$ since there is a single rail length which cannot be both greater
+    than $t'$ and $o'$ and less than $t'$ and $o'$.
+    Therefore, any optimal tetrahelix has all one-hop edges between all rails are equal to each other, and
+    all two-hop edges are equal to each other, and the $z$ distances between rails are equal, and therefore
+    $d/3$ from each other.
 \end{proof}
-  
 
  Note that based on \ref{eventhirds}, there are only 3 possible lengths in an optimal tethrahelix,
  and we are justified in classifying edge lengths as \emph{rail},\emph{one-hop}, or
@@ -456,43 +494,6 @@ where we have not yet investigated in the general case the relationships betewee
 However, we understand that when $\alpha = 0$, the helices are degenerate, having curvature of $0$, and
 we have the equitetrabeam.
 
-
-This formulation $V(n,c)$ above is valuable, but obscures the essentially fact that the red, yellow, and blue helices distributed
-about the central $z$ axis $120\degree$ from each other.
-In order to rewrite this expression with an explicit rotation of $2\pi/3$, we expand 
-the expression and seek to isolate the term $c2\pi/3$.
-\begin{align*}
-  \rho_{bc} n + c \theta  &=   \text{\{we aim for 3 in denominator, so we split...\}} \\
-    (3 \theta - 2 \pi)n + (c/3)  (3 \theta)  &=   \text{\{we want $2\pi$ in numerator, so add canceling terms...\}} \\
-  (3 \theta - 2 \pi)n + (c/ 3) (3 \theta - 2 \pi  + 2 \pi) &=  \text{\{associate...\}} \\
-  (3 \theta - 2 \pi)n + (c/ 3) ((3 \theta - 2 \pi)  + 2 \pi) &=  \text{\{distribute...\}} \\  
-  (3 \theta - 2 \pi)n + (c / 3) (3 \theta - 2 \pi)  + c 2 \pi /3 &=  \text{\{definition of $\rho_{bc}$...\}} \\
-  \rho_{bc} n + (c / 3) \rho_{bc}  + c 2 \pi /3 &=  \text{\{collect like factors...\}} \\  
-  \rho_{bc} (n + c/3)  + c 2 \pi /3  \\
-\end{align*}
-Now the the term on the left is the only one that depends on the scalar $n$. We use this to a create
-a new formulation: $H_{BCsymmetric}(n,c) = H_{BCcolored}(n,c)$
-
-The expression $n+c/3$ will now occur so often that we call it the ``c($\kappa$)olored number'' and we use the variable $\kappa$ to represent it: $\kappa = n+c/3$.
-Recall that $c \in \{0,1,2\}$, but $n$ and $\kappa$ are are continuous (rational or real-valued.)
-
-\begin{equation}
-H_{BCsymmmetric}(n,c) =
-\left [
-  \begin{tabular}{c}
-   $ r  \cos(\rho_{bc} \kappa  + c 2 \pi /3) $\\
-   $ r  \sin(\rho_{bc} \kappa  + c 2 \pi /3) $\\
-   $ \kappa 3  h_{bc} $
-  \end{tabular}
-  \right ],
-\text{where:}
-  \begin{tabular}{c}
- $\kappa = n + c/3$ \\
-    $\rho_{bc} = (3 \theta - 2 \pi)$ \\
-    $ \theta = \arccos(-2/3) $ \\
-    $ h_{bc} = 1/\sqrt{10} $ \\    
-  \end{tabular}      
-\end{equation}
 
 
 
@@ -540,15 +541,15 @@ Rewriting our formulation in terms of $\rho$:
 H_{general}(\chi,n,c,\rho,d_{\rho},r_{\rho}) =
 \left [
   \begin{tabular}{c}
-   $ r_{\rho} \cos(\chi \cdot (\rho \kappa + c 2 \pi /3)) $\\
-   $ r_{\rho}  \sin(\chi \cdot (\rho \kappa + c 2 \pi /3)) $\\
-   $ d_{\rho} \kappa $
+   $ r_{\rho} \cos(\chi \cdot (n \rho + c(\rho +  2 \pi) /3)) $\\
+   $ r_{\rho}  \sin(\chi \cdot (n \rho + c(\rho +  2 \pi) /3)) $\\
+   $ d_{\rho} (n + c /3) $
   \end{tabular}
   \right ],
 \text{where:}
 \begin{tabular}{c}
   $   1 = d_{\rho}^2 + 4 r_{\rho}^2 (\sin{ \rho / 2})^2 $ \\
-  $\kappa = n + c/3$ \\
+%%  $\kappa = n + c/3$ \\
     $\chi \in \{-1,1\}$ \\  
   \end{tabular}      
 \end{equation}
@@ -590,7 +591,7 @@ Which are invarinat for all $n$ and $c$.
 %%    r_{\rho}^2(1 - \cos(\rho/3 + \frac{2\pi}{3}))^2} \\
   %% Formula above checks at sqrt(8/27), 1, 0, and rho_bc, h_bc, r_bc.
   \text{one-hop}  &= \sqrt{\frac{d_{\rho}^2}{9} + r_{\rho}^2(\sin^2(\rho/3 + \frac{2\pi}{3})  + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2)} \\
-  \text{but: }  d_{\rho}^2 &= 1 - 4 r_{\rho}^2 (\sin( \rho / 2)^2 \text{so we substitute:}\\
+  \text{but: }  d_{\rho}^2 &= 1 - 4 r_{\rho}^2 (\sin( \rho / 2)^2 \text{ ...so we substitute:}\\
   %% Formula above checks at sqrt(8/27), 1, 0, and rho_bc, h_bc, r_bc.  
   \text{one-hop}  &= \sqrt{\frac{1}{9}  + r_{\rho}^2(-\frac{4 (\sin^2( \rho / 2))}{9} + \sin^2(\rho/3+ \frac{2\pi}{3})  + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2)} \\
   %% Formula above checks at sqrt(8/27), 1, 0, and rho_bc, h_bc, r_bc.    
@@ -660,33 +661,18 @@ We can now give a formula for $ d_{opt} $ computed from $\rho, r_{opt}$ via the 
 Thus, by computing $r_{opt}$  and $d_{opt}$ as a function of $\rho$ from this equation, we can construct minimax optimal tetrahelix for an $0 \leq \rho \leq \rho_{bc}$.
 \end{proof}
 
-
-
-\begin{theorem}
-  \label{optimality}
-  For any rail angle $\rho$ where $\rho \leq \rho_{bc}$, a tetrahelix of minimum maximum edge length
-  difference is generated by $H_{general}(\chi,n,c,\rho,d_{\rho},r_{opt})$, where $r_{opt}$ and $d_{opt}$ are
-  computed from $\rho$. 
-\end{theorem}
-
-\begin{proof}
-  Theorem \ref{eventhirds} theorem tells us an optimal will have even thirds,
-  as Equation \eqref{eq:general} does.
-  Theorem \ref{generalformulaoptimal} tell us that
-  that plugging $r_{opt}, d_{opt}$ into $H_{general}(\chi,n,c,\rho,d_{\rho},r_{\rho})$ minimizes the maximum length difference.
-\end{proof}
-
 If you look down the axis of an optimal tetrahelix, it happens that only the one-hop edges
 come closest to the axis. In other words, they define the radius of the incircle of the
 projection, or the radius of a cylinder that would just fit inside the tetrahelix.
 This is useful to know if the tetrahelix is used as a structure to house a pipe or
-a ladder that must bear a human or to armor a conduit. The \emph{inradius} of
+a ladder that must bear a human or to armor a conduit. The inradius $i_\rho$ of
 an optimal tetrahelix is a remarkably simple function of the radius $r$ and the rail angle $\rho$:
 \begin{equation}
   \label{eq:inradius}
-  \frac{r \sin{(\pi - \rho)}}{6}
+  i_{\rho} = \frac{r \sin{(\pi - \rho)}}{6}
 \end{equation}
-Which can be seen from the trigonometry of the projection diagram:
+Which can be seen from the trigonometry of a diagram of the projected one-hop edges
+connecting four sequentially numbered vertices:
 
 \begin{figure}[H]
   \label{projectiondiagram}
@@ -706,29 +692,33 @@ and $d = 1$ (the edgelength), where the cross sectional area is
 an equilateral triangle of unchanging orientation.
 We call this the \emph{equitetrabeam}.
 
-Choosing $d = 1$ and $\rho = 0$ we use Equation \eqref{eqrhoopt} to find the radius of 
-optimal minimax difference.
 
 \begin{corollary}
   The equitetrabeam with minimal maximal edge difference is produced
   by $H_{general}$ when $ r = \sqrt{\frac{8}{27}} $.
-  \end{corollary}
+\end{corollary}
+
+\begin{proof}
+Choosing $d = 1$ and $\rho = 0$ we use Equation \eqref{eqrhoopt} to find the radius of 
+optimal minimax difference.
+
+Substituting into \eqref{eq:general}:
 
 \begin{align*}
   \text{one-hop} &= \sqrt{\frac{1}{9} + 3r^2}\\
 \end{align*}
 Then:
 \begin{align*}
-   1  &=  \sqrt{\frac{1}{9} + 3r^2} \\
-   r  &= \sqrt{\frac{8}{27}} \\
-   r &\approx 0.5443
+   1  &=  \sqrt{\frac{1}{9} + 3r^2} & \text{ solved by... }\\
+   r  &= \sqrt{\frac{8}{27}} &\approx 0.5443 \\
 \end{align*}
+\end{proof}
 
-This radius produces a two-hop rail length of
-$\frac{2}{\sqrt{3}}$\footnote{Another interesting but non-optimal solution is derived by setting (one-hop + two-hop)/2 = 1,  occurs at $r = \sqrt{35}/4$,
-which produces three length classes of $11/12, 12/12, 13/12$.}
-. The difference between this 
-and $1$ is $\approx 15.47\% $.
+This radius\footnote{Another interesting but non-optimal solution is derived by setting (one-hop + two-hop)/2 = 1,
+  occurs at $r = \sqrt{35}/4$ which produces
+  three length classes of $11/12, 12/12, 13/12$.}
+produces a two-hop rail length of $\frac{2}{\sqrt{3}}$.
+The difference between this and $1$ is $\approx 15.47\% $.
 
 
 
@@ -737,7 +727,7 @@ and $1$ is $\approx 15.47\% $.
   \label{fig:unfolded}
      \centering
      \includegraphics[width=0.6\textwidth]{figures/EquitetrabeamUnfolded.JPG}
-     \caption{Projection Diagram (needs labels)}
+     \caption{Projection Diagram}
 \end{figure}
 
 In Figure \ref{fig:spudboy}, the furthest tetrahelix is the optimal equitetrabeam.
@@ -756,12 +746,19 @@ continuum of tetrahelices.
 
 \section{An Untwisted Continuum}
 
+\begin{figure}[H]
+  \label{fig:spudboy}
+  \centering
+     \includegraphics[width=0.95\textwidth]{figures/TetrahelixSeries.png}
+     \caption{A Series of Tetrahelices}
+\end{figure}
+
 We observe that Equations \eqref{eqrhoopt} and \eqref{dopt} compute $r_{opt}$ and $d_{opt}$ which
 create an optimal tetrahelix for any value rail angle $\rho$ between $0$, which
 gives the Equitetrahelix and
 $\rho_{bc} \approx 35.43 \degree$, which gives the BC Helix.
 
- Because the equitetrabeam which as a rail angle of $0$ still has
+ Because the equitetrabeam which has a rail angle of $0$ still has
  chirality, that is, one still must decide to connect with one-hop to
  the clockwise or counter-clockwise node, it is not poosible to build
  a smooth continuum where $\rho$ transitions from positive to negative
@@ -770,23 +767,25 @@ $\rho_{bc} \approx 35.43 \degree$, which gives the BC Helix.
  untwisting a conter-clockwise tetrahelix to rail angle $0$ and then going
 even further does produce a clockwise tetrahelix, but one in which the
  one-hop and two-hop lengths in the wrong places (that is, two-hop
- becomes shorter than one-hop.)
+ becomes shorter than one-hop.) Likewise, $\rho > \rho_{bc}$ generates
+ a tetrahelix, but minimax optimality is not guaranteed by $H_{general}$.
  
-
-
 The pitch of any tetrahelix 
 where $\rho \neq 0$ is:
 \begin{equation}
   \label{pitcheqn}
 p(\rho) = \frac{2 \pi  \cdot d}{\rho}
 \end{equation}
-For a fixed $z$-axis travel $d$, this is trivial. 
-$z$-axis travel as per \eqref{dopt} pitch increases monotonically and smoothly with decreasing $\rho$, so
-Equation \eqref{pitcheqn} can be easily solved numerically.
+For a fixed $z$-axis travel $d$, this is trivial.
+However, if one is computing 
+$z$-axis travel from \eqref{dopt} the pitch is not simple.
+However, it increases monotonically and smoothly with decreasing $\rho$, so
+Equation \eqref{pitcheqn} can be easily solved numerically with a Newton-Raphson
+solver, as we do on our website.
 For a pitch at least $ p \geq \frac{3  \sqrt{\frac{2}{5}}  \pi}{\rho_{bc}} \approx 9.64 $,
 using \eqref{dopt} produces minimax optimal tetrahelices.
 
-In this way a rail angle can be chosen for any desired (possible) pitch, yield
+In this way a rail angle can be chosen for any desired (sufficiently large) pitch, yield
 the optimum radius, one-hop, and two-hop lengths an engineer needs to
 construct a physical structure.
 
@@ -800,7 +799,7 @@ approach was at most 1\% worse than the optimum computed by
  However, it should
 be noted that an engineer or architect may also use $H_{general}$
 directly and interactively, and that minimax length optimality is a
-mathematic notion only loosely related to the beauty and utility of
+mathematic starting point rather than the final word on the beauty and utility of
 physical structures. For example, a structural engineer might increase
 radius in order to resist buckling. If an equitetrabeam were actually
 used as a beam, an engineer might start with the optimal tetrabeam and
@@ -810,9 +809,6 @@ changes curve the equitetrabeam into an ``arch''.
 Trusses and space frames remain an important design field in
 mechanical and structural engineering\cite{mikulas1985sequentially},
 including deployable and moving trusses\cite{claypool2012readily}.
-
-
-
 
 
 \section{Utility for Robotics}
@@ -933,159 +929,6 @@ On Rail diagram, add a second tetrahedron, and a second rho.
 
 
 Make YouTube video.
-
-
-    \section{Old Proofs}
-    
-We can create the distance between representative nodes as:
-\begin{align*}
-  \overline{\rm AB}  &= 1 \\        
-  \overline{\rm CD}  &= \sqrt{G^2 + r^2(1 + -\cos{2 G \rho})} \\
-  \overline{\rm AC}  &= \sqrt{O^2 + r^2(1 + \sin^2{O \rho}  - \cos^2{O \rho})} \\  
-  \overline{\rm AC}  &= \sqrt{O^2 + r^2(1 + -\cos{2 O  \rho})} \\
-  \overline{\rm BD}  &= \sqrt{P^2 + r^2(1 + -\cos{2 P \rho}))} \\
-  \overline{\rm AD}  &= \sqrt{(O+G)^2 + r^2(1 + -\cos{2 (O + G)  \rho})} \\
-  \overline{\rm BC}  &= \sqrt{(P+G)^2 + r^2(1 + -\cos{2 (P + G) \rho})} \\      
-\end{align*}
-
-
-Using the cartesian distance formula:
-\begin{align*}
-  \overline{\rm CD}  &= \sqrt{G^2 + (r\sin{0 \rho} -  r\sin{G \rho})^2 + (r\cos{0 \rho} - r\cos{G \rho})^2} \\
-    \overline{\rm CD}  &= \sqrt{G^2 + (0 -  r\sin{G \rho})^2 + (r - r\cos{G \rho})^2} \\
-    \overline{\rm CD}  &= \sqrt{G^2 + r^2(\sin{G \rho})^2 + r^2(1 - \cos{G \rho})^2} \\
-    \overline{\rm CD}  &= \sqrt{G^2 + r^2(1 + \sin^2{G \rho}  - \cos^2{G \rho})} \\
-    \overline{\rm CD}  &= \sqrt{G^2 + r^2(1 + -\cos{2 G \rho})} \\        
-\end{align*}
-Note: $\sin^2{x \rho}  - \cos^2{x \rho} = -\cos{2 x \rho}$
-
-So, for all O,G,P,
-\begin{align*}
-  \overline{\rm AB}  &= 1 \\        
-  \overline{\rm CD}  &= \sqrt{G^2 + r^2(1 + -\cos{2 G \rho})} \\
-  \overline{\rm AC}  &= \sqrt{O^2 + r^2(1 + \sin^2{O \rho}  - \cos^2{O \rho})} \\  
-  \overline{\rm AC}  &= \sqrt{O^2 + r^2(1 + -\cos{2 O  \rho})} \\
-  \overline{\rm BD}  &= \sqrt{P^2 + r^2(1 + -\cos{2 P \rho}))} \\
-  \overline{\rm AD}  &= \sqrt{(O+G)^2 + r^2(1 + -\cos{2 (O + G)  \rho})} \\
-  \overline{\rm BC}  &= \sqrt{(P+G)^2 + r^2(1 + -\cos{2 (P + G) \rho})} \\      
-\end{align*}
-
-
-
-
-Then we can simplify our distance equations:
-\begin{align*}
-  \overline{\rm AB}  &= 1 \\        
-  \overline{\rm CD}  &= \sqrt{G^2 + r^2(1 + -\cos{2 G \rho})} \\
-  \overline{\rm AC} &=   \overline{\rm BD} &= \sqrt{P^2 + r^2(1 + -\cos{2 P \rho}))} \\
-  \overline{\rm AC} &=   \overline{\rm BD} &= \sqrt{((1-G)/2)^2 + r^2(1 + -\cos{ \rho (1-G) }))} \\  
-  \overline{\rm AD} &=  \overline{\rm BC} &=  \sqrt{((P+G)^2 + r^2(1 + -\cos{2 (P + G) \rho})} \\
-  \overline{\rm AD} &=  \overline{\rm BC} &=  \sqrt{((1+ G)/2 )^2 + r^2(1 + -\cos{\rho (1 + G)})} \\        
-\end{align*}
-
-When $G = 0$, $\overline{\rm CD} = 0$. Our solution is improved as we
-increase $G$ until either $ \overline{\rm CD} = \overline{\rm AC}$, or
-the quantity $ \overline{\rm BC} - \overline{\rm CD} $ starts
-increasing rather than decreasing (that is, when the derivative is
-positive.)
-
-
-
-Suppose $\overline{\rm C'D'}$ is the shortest edge. Increasing $G$
-thereby improves our mimimum, up until the next shortest edge length,
-$\overline{\rm AC}$.  This may increase $\overline{\rm BC}$ and
-$\overline{\rm AD}$, but more slowly than $\overline{\rm C'D'}$
-is being increased, until $\overline{\rm C'D'} = \overline{\rm AC}$.
-Note: This is sketchy, can we show that the derivative of our formula
-for CD with respect to $G$ is really higher than $AD$? These
-derivatives will depend on $\rho$ slightly, which is exactly right!
-
-\begin{align*}
-  \text{rail} &=  1 \\
-  \text{one-hop} &= \sqrt{\frac{1}{3}^2 + (\frac{3a}{2\sqrt{3}})^2 + (a/2)^2}\\
-\text{one-hop}  &= \sqrt{\frac{1}{9} + a^2} \\
-    \text{two-hop} &= \sqrt{\frac{2}{3}^2 + (\frac{3a}{2\sqrt{3}})^2 + (a/2)^2}  \\
-\text{two-hop}    &= \sqrt{\frac{4}{9} + a^2}
-\end{align*}
-Computing the derivative of two-hop - one-hop:
-\begin{align*}
- \frac{\partial \text{two-hop} - \text{one-hop}}{a} &= \frac{\partial \sqrt{4/9 + a^2} - \sqrt{1/9 + a^2}}{\partial a} \\
-  \frac{\partial \text{two-hop} - \text{one-hop}}{a} &= \frac{a}{\sqrt{a^2 + 4/9}} - \frac{a}{\sqrt{ a^2 + 1/9}} 
-\end{align*}
-
-  
-Now basic components of the helix, which are the radius $r$, the rate of rotation, and the rate of
-axial growth can all be linearly interpolated with a parameter $\lambda$ between their high values (for the BC helix)
-and low values (for the equitetrabeam):
-
-\begin{align*}
-r_{\lambda}  &=  \lvert \lambda \rvert \cdot (\frac{3 \sqrt{3}}{10}  - \sqrt{\frac{8}{27}}) + \sqrt{\frac{8}{27}}  \\
-d_{\lambda} &=   \lvert \lambda \rvert \cdot (3 \sqrt{10} - 1) + 1 \\
-\phi_{\lambda} &=  \lambda \cdot \rho_{bc}  + 0
-\end{align*}
-to create a formula that generates a continuum of tetrahedral structures:
-
-\[
-H_{continuum}(n,c,\lambda) =
-\left [
-  \begin{tabular}{c}
-   $ r_{\lambda} \cos(\phi_{\lambda} \kappa + c 2 \pi /3) $\\
-   $ r_{\lambda}  \sin(\phi_{\lambda} \kappa + c 2 \pi /3) $\\
-   $ d_{\lambda} \kappa $
-  \end{tabular}
-  \right ],
-\text{where:}
-  \begin{tabular}{c}
-    $\kappa = n + c/3$ \\
-    $ r_{opt} =  \text{is used : \eqref{eqrhoopt}} $ \\    
-    $ \phi_{\lambda} =  \lambda \rho_{bc}  + 0 $\\
-    $\rho_{bc} = (3 \theta - 2 \pi)$ \\
-   $ \theta = \arccos(-2/3) $
-  \end{tabular}      
-  \]
-
-
-
-  Consider any tetrahelix in which the axes of the helices are parallel
-to $z$ but not coincident, but in which all vertices lie on or outside
-a cylinder of radius $r$ centered on the $z$ axis.
-Since all three rails have the same rail length, no matter how we
-move the rails in the $xy$ plane if we shorten the $xy$ distance between
-vertices we shorten the total distance.
-Consider the projection along the $z$ axis of all vertices and non-rail edges into the $xy$ plane, which will be
-a figure of dots and connecting segments in the $xy$ plane. The convex
-hull for any one helix projection will be a circle (if its pitch is
-irrational) or an polygon if rational, or a point if the helix has
-zero curvature. Each of these figures by definitions lies outside the
-circle of radius $r$ in the $xy$ plane.
-It is easiest to consider helices of zero curvature which only have one point
-as a special case. 
-For one rail consider a point in this projected figure furthest from the midpoint of the
-the two rails. The lengths to the furthest point on the other two rails will
-be decreased by moving the axis of that rail closer to the midpoint of the
-other two.
-One of these segements
-will be longer and will be made shorter by moving that helix closer to
-the midpoint of the other two in the $xy$ plane. Even if the rail
-angle is $\pi$, there will be two vertices for each rail, each of
-which is connected to both vertices of the other two rails. At lesast
-one of these lines is a longest line which will be made shorter by
-moving that helix in the $xy$ plane closer to the midpoint of the
-other two.
-
-For the special case of degenerate helix where we do not know the angle
-of the points from the axis, we can see that we minimize the maximum lengths
-when the projected vertices form an equilateral triangle around the $z$ axis at
-length $6r/\sqrt{3}$.
-This is a equivalent to some set of helices which do have their axes on
-the $z$ axis, so without loss of generality we treat these degenerate
-helices as if they have their axis at the $z$-axis.
-
-So any any optimal tetrahelix with a rail-angle of greater than $0$,
-that is, with any curvature, will have conincident axes, or are indistinguishable
-from such a set.
-
-
 
 
 
