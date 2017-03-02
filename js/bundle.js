@@ -261,17 +261,17 @@ function test_evenness_H_general() {
 
 
 }
-function H_bc(n,c) {
-    var BCr = find_rrho_from_d(BCrho,BCd);
-    return H_general(1,n,c,BCrho,BCd,BCr);
+module.exports.H_bc = (n,c) => {
+    var BCr = this.find_rrho_from_d(this.BCrho,this.BCd);
+    return this.H_general(1,n,c,this.BCrho,this.BCd,this.BCr);
 }
 
-function H_bc_el(n,c,el) {
-    var BCdl = BCd*el;
-    var BCrl = el * find_rrho_from_d(BCrho,BCd);
-    return H_general(1,n,c,BCrho,BCdl,BCrl);
+module.exports.H_bc_el = (n,c,el) => {
+    var BCdl = this.BCd*el;
+    var BCrl = el * this.find_rrho_from_d(this.BCrho,this.BCd);
+    return this.H_general(1,n,c,this.BCrho,this.BCdl,this.BCrl);
 }
-
+/*
 
 function H_bc_eqt_lambda(n,c,lambda) {
     // Note this is a particular scheme for parametrization.
@@ -316,7 +316,8 @@ function H_interp_lambda(lambda,n,c,rho0,d0,r0,rho1,d1,r1) {
 	return H_general(1,n,c,rhoi,di,rinterp);	
     }
 }
-
+*/
+/*
 function test_rail_angle_formula_against_BC() {
     var BCr_check = find_rrho_from_d(BCrho,BCd);
     var BCd_check = find_drho_from_r(BCrho,BCr);
@@ -325,6 +326,8 @@ function test_rail_angle_formula_against_BC() {
     assert(nearlyEqual(BCd,BCd_check,0.0000001),
 	   'BCd == '+BCd+', BCd_check == '+BCd_check);
 }
+
+
 
 function test_H_general_against_BC() {
     var R0 = H_bc(0,0);
@@ -336,6 +339,7 @@ function test_H_general_against_BC() {
     assert(nearlyEqual(Math.distance(R0,B0),1,0.0000001),"\n R0 = " + R0 +"\n B0 = " + B0 +"\n distance =" + Math.distance(R0,B0));
 
 }
+*/
 
 function major_test() {
     var reds = [];

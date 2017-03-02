@@ -154,7 +154,7 @@ Mocha. You will need to install npm, node, and <a href="https://mochajs.org/">mo
 
     In order to use the tetrahelix_math module in the browser.
     I build the browser ready file with:
-> browserify js/tetrahelix_math.js -o js/tetrahelix_math_browser.js
+> browserify tm_shim.js  -o bundle.js
     </p>
 
 
