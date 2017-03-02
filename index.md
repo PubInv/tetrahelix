@@ -87,27 +87,7 @@ title: Untwisting the Tetrahelix
 </table>
  
 
-<div id="table-wrapper">
-  <div id="table-scroll">
-    <table id="trialrecords">
-    <tr>
-    <th>trial </th>
-    <th>optimal </th>
-    <th>rho </th>
-    <th>r</th>
-    <th>len</th>
-    <th>d</th>    
-    <th>one-hop</th>
-    <th>two-hop</th>
-    <th>pitch</th>
-    <th>inradius</th>    
-    <th>minmax ratio (%)</th>            
-    </tr>
-    </table>
-  </div>
-</div>    
-    
-        <section id="textsection" style="{border: red;}">
+        <section id="textsection" style="{border: red;}">    
       <h1 id="message_banner">
     Untwisting the Tetrahelix </h1>
 <p>
@@ -122,13 +102,28 @@ formulaic way of producing a continuum of untwisted tetrahelices.
 Tetrahelixes are cool. Further motivation is described in an academic paper we are preparing that will
 be linked in draft form here.
 
+The math on this site creates two novel things:
+    <ol>
+    <item> The ability to untwist adn retwist the Boerdijk-Coxeter tetrahelix (BC helix) in an way that is smooth
+and optimal in terms the difference between the longest member and the shortest member.
+    <item> A new structure, the equitetrabeam, which is a fully untwisted BC helix.</item>
+    <item> Both the mathematics and an interactive GUI for designing tetrahelices to match a
+desired pitch.</item>    
+    </ol>
+    This is valuable because architects, engineers, and roboticists can now use the beautiful and
+regular structure of the BC helix. In fact, this application was driven by the Tetrobot project.
+    The BC helix happens to have an irrational pitch, which means that an architect of game
+designer who wanted to use this beautiful structure in a periodic and symmetric way could not do so.
+    However, using the software here they can use a slightly irregular but still in a sense optimal
+tetrahelix with a pitch of exactly 12 tetrahedral to a singel revolution, for example. Robotocists
+such as myself can dynmaicall make a tetrobot untwist, in order to lay flat on a plane, but still
+build the robot out of actuators of exactly the same size.
     <h2> How to Use </h2>
     <p>
     The site uses the so-called THREE.js "orbit" control.  Click on the scene and drag and you will find your self
 rotating, always looking at approximately the center point. Moving the middle mouse wheel or the Mac scrolling
 pattern will zoom you in or out.
 </p>
-
 
     <h2> Accessing the Math  </h2>
 
@@ -149,16 +144,49 @@ Mocha. You will need to install npm, node, and <a href="https://mochajs.org/">mo
 
     <p>
     I am not a node expert, but basically I did:
-> npm install -g browserify
-> npm install -g mocha
+
+<blockquote><pre><code>
+npm install -g browserify
+npm install -g mocha
+</code></pre></blockquote>
 
     In order to use the tetrahelix_math module in the browser.
     I build the browser ready file with:
-> browserify tm_shim.js  -o bundle.js
+<blockquote><pre><code>
+browserify tm_shim.js  -o bundle.js    
+</code></pre></blockquote>
+
+    In order to run the tests, in the main repo, type:
+
+<blockquote><pre><code>
+mocha
+</code></pre></blockquote>
+
+
     </p>
 
 
 </section>
+
+<div id="table-wrapper">
+  <div id="table-scroll">
+    <table id="trialrecords">
+    <tr>
+    <th>trial </th>
+    <th>optimal </th>
+    <th>rho </th>
+    <th>r</th>
+    <th>len</th>
+    <th>d</th>    
+    <th>one-hop</th>
+    <th>two-hop</th>
+    <th>pitch</th>
+    <th>inradius</th>    
+    <th>minmax ratio (%)</th>            
+    </tr>
+    </table>
+  </div>
+</div>    
 
 	<script type="x-shader/x-vertex" id="vertexShader">
 
