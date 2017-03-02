@@ -284,6 +284,7 @@ function show_pitch() {
 	$("#validpitch").show();
     }
 }
+
 show_pitch();
 $(function() {
     $( "#rail_angle_slider" ).slider({
