@@ -91,24 +91,28 @@ title: Untwisting the Tetrahelix
       <h1 id="message_banner">
     Untwisting the Tetrahelix </h1>
 <p>
-    A mathematical investigation of the Tetrahelix and Boerdijk-Coxeter helix, which provides a new
+    A mathematical investigation of the Tetrahelix and <a href="https://en.wikipedia.org/wiki/Boerdijk%E2%80%93Coxeter_helix">Boerdijk-Coxeter helix</a>, which provides a new
 formulaic way of producing a continuum of untwisted tetrahelices.
     </p>
 <p>
     All of the code on this site is released under the GNU General Public License, and I hope you will reuse it.
     </p>
     <h2> Motivation </h2>
-
-Tetrahelixes are cool. Further motivation is described in an academic paper we are preparing that will
+<p>
+    Tetrahelixes are cool. R.W. Gray has a great
+    <a href="http://www.rwgrayprojects.com/rbfnotes/helix/helix01.html">site</a> about them.
+    Further motivation is described in an academic paper we are preparing that will
 be linked in draft form here.
-
-The math on this site creates two novel things:
+</p>
+<p>
+The math on this site creates three novel things:
     <ol>
-    <item> The ability to untwist adn retwist the Boerdijk-Coxeter tetrahelix (BC helix) in an way that is smooth
+    <li> The ability to untwist adn retwist the Boerdijk-Coxeter tetrahelix (BC helix) in an way that is smooth
 and optimal in terms the difference between the longest member and the shortest member.
-    <item> A new structure, the equitetrabeam, which is a fully untwisted BC helix.</item>
-    <item> Both the mathematics and an interactive GUI for designing tetrahelices to match a
-desired pitch.</item>    
+    </li>
+    <li> A new structure, the equitetrabeam, which is a fully untwisted BC helix.</li>
+    <li> Both the mathematics and an interactive GUI for designing tetrahelices to match a
+desired pitch.</li>    
     </ol>
     This is valuable because architects, engineers, and roboticists can now use the beautiful and
 regular structure of the BC helix. In fact, this application was driven by the Tetrobot project.
@@ -164,7 +168,6 @@ mocha
 
 
     </p>
-
 
 </section>
 
