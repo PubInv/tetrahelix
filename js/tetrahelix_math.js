@@ -82,7 +82,7 @@ module.exports.find_rrho_from_d_el = (rho,d,el) => {
     return r;
 }
 module.exports.find_drho_from_r = (rho,r) =>    {
-    return this.find_drho_from_r_el(rho,r,1)
+    return this.find_drho_from_r_el(rho,r,1);
 }
 
 module.exports.find_rrho_from_d = (rho,d) => {
