@@ -32,7 +32,7 @@
 
 % See the ``Article customise'' template for come common customisations
 
-\title{Untwisting the Tetrahelix (v0.11)}
+\title{Untwisting the Tetrahelix (v0.12)}
 \author{Robert L. Read \texttt{read.robert@gmail.com} \and
   Robert Gatliff \texttt{robert@toubat.org}
 }
@@ -52,12 +52,12 @@
   face-to-face stack of regular tetrahedra.  Considering the edges of
   these tetrahedra as structural members, the resulting structure is attractive and
   inherently rigid, and therefore interesting to architects,
-  mechanical engineers, and robotocists.  A formula that matches the
+  mechanical engineers, and robotocists.  A formula is developed that matches the
   visually apparent helices forming the outer rails of the BC helix.
   This formula is generalized to a formula convenient to designers.
   Formulae for 
   computing the
-  parameters that give an edge-length minimax-optimal tetrahelices
+  parameters that give edge-length minimax-optimal tetrahelices
   are given, defining a continuum of tetrahelices of varying curvature.
   The endpoints of the optimality of this continuum are the BC helix and
   a structure of zero curvature, the \emph{equitetrabeam}.
@@ -65,8 +65,8 @@
   pitch allows optimal tetrahelices of any pitch to be designed. 
   An interactive tool for such design and experimentation is provided: \url{https://pubinv.github.io/tetrahelix/}.
   A formula for the inradius of optimal tetrahelices is given.
-  Utility and use for static and variable geometry
-  truss/space frame design and robotics based on the are discussed.
+  Utility for static and variable geometry
+  truss/space frame design and robotics is discussed.
 \end{abstract}
 
 
@@ -103,8 +103,12 @@ to any structure isomorphic to a the BC helix.
   \label{fig:closeup}
   \centering
      \includegraphics[width=0.95\textwidth]{figures/BCHelixCloseUp.png}
-     \caption{BC Helix Close-up}
+     \caption{BC Helix Close-up (partly along axis)}
+  \centering
+     \includegraphics[width=0.95\textwidth]{figures/VerticalCloseUp.png}
+     \caption{BC Helix Close-up (orthogonal)}
 \end{figure}
+
 
 
 Imagining Figure \ref{fig:closeup} as a static mechanical structure,
@@ -114,7 +118,7 @@ omni-triangulated space frame, which is
 somewhat mechanically strong.
 Imagine further in Figure \ref{fig:closeup}, that each static edge was replaced with an
 actuator that could dynamically become shorter or longer in response to electronic control,
-and the they vertices were a joint that supported sufficient angular displacement
+and the vertices were a joint that supported sufficient angular displacement
 for this to be possible. Such a machine is a Tetrobot\cite{TetrobotBook}.
 
 A BC helix does not rest comfortably on a plane. It is convenient to
@@ -139,7 +143,7 @@ gives the vertices in space. Eventually we would like to design nearly regular
 tetrahelices by choosing the lengths of a small set of members.
 If you are designing a
 space frame, this is a static design choice, in a robot, it is a
-dynamic choice that can be used to twist\footnote{The formal definition of twistieness, or \emph{torsion},
+dynamic choice that can be used to twist\footnote{The formal definition of twistiness, or \emph{torsion},
   is not useful or used in the paper. The formal \emph{curvature} and \emph{torsion} of the helices defined here
 may be easily computed from the formualae if desired.} the robot and/or exert linear or
 angular force on the environment.
@@ -161,11 +165,16 @@ h_{bc} = 1/\sqrt{10}
 \]
 
 $\theta$ is approximately $131.81$ degrees.
-The angle $\theta$ is the rotation of a \emph{each} tetrahedra, not the tetraheda along a rail.  In Figure \ref{fig:closeup},
+The angle $\theta$ is the rotation of \emph{each} tetrahedra, not the tetraheda along a rail.  In Figure \ref{fig:closeup},
 each tetrahedra has either a yellow, blue, or red outer edge or rail.
 That is, a blue-rail tetrahedron is rotated slightly more than a $1/3$ of a revolution to match the face of the yellow tetrahedra.
 
-R.W. Gray's site\cite{graytetrahelix}, repeating a formula by Coxeter\cite{coxeter1985simplicial} in more accessible form, gives for a counter-clockwise BC Helix:
+R.W. Gray's site\cite{graytetrahelix}, repeating a formula by Coxeter\cite{coxeter1985simplicial} in more accessible form, gives the Cartesian coordinates $\begin{bmatrix}
+           x \\
+           y \\
+           z
+         \end{bmatrix}$
+for a counter-clockwise BC Helix:
 \begin{equation}
   \label{graycoxeter}
 V(n) =
@@ -185,7 +194,7 @@ V(n) =
 \end{equation}
 where $n$ represents each integer numbered node in succession on every colored rail.
 
-The apparent rotation of tetrhedra of the same outer-edge color ($V_3$ relative from $V_0$ for example,
+The apparent rotation of a vertex an outer-edge, $V(n)$ relative from $V(n+3)$ for any integer $n$
 in \eqref{graycoxeter}, is $3 \theta - 2\pi$).
 
 This formula defines a helix, but it is not any of the apparent helices, or rail helices, of the
@@ -240,9 +249,9 @@ Note in Figure \ref{railanglefig} the $z$-axis travel for one rail edge is denot
 $h$ is used for one third of the distance we name $d$. We will later justify that $d = 3h$. In this paper we assume the length of a rail
 is always $1$ is a simplification, although we make the rail length a parameter in our JavaScript code in \texttt{tetrahelixmath.js} \cite{readtetrahelix}.
 
-This Gray-Coxeter formulation $V(n)$ from \eqref{graycoxeter} is valuable, but obscures the fact that we have three
-apparent rail helices.
-In order to rewrite this expression with an explicit rotation of $2\pi/3$, we expand 
+The $H_{BCcolored}(n,c)$ formulation can be further clarified by rewriting directly in terms of the rail angle $\rho{bc}$ rather than $\theta$.
+Intuitively we see an expression where $c/3$ is multiplied by a $1/3$ rotation plus the rail angle $\rho$.
+We expand 
 the expressions $\theta$ and $\rho_{bc}$ in \eqref{eq:colored} and seek to isolate the term $c2\pi/3 $.
 \begin{align*}
  c \theta  &=   \text{\{we aim for 3 in denominator, so we split...\}} \\
@@ -251,15 +260,12 @@ the expressions $\theta$ and $\rho_{bc}$ in \eqref{eq:colored} and seek to isola
   (c / 3) \rho_{bc}  + c 2 \pi /3 &=  \text{algebra...} \\  
 c  ( \rho_{bc} +  2 \pi) /3  \\
 \end{align*}
-We use this to a create
-a new formulation: $H_{BCsymmetric}(n,c) = H_{BCcolored}(n,c)$.
-%% TODO: I seem to have lost the thread of my thought. I don't seem to be introducing d at that right time.
 
-Recall that $c \in \{0,1,2\}$, but $n$ is continuous (rational or real-valued.)
+This allows us to redefine:
 
 %% Actually, I am not sure if this is a clearer formulation...it might be, and need to put it in general!!!
 \begin{equation}
-H_{BCsymmmetric}(n,c) =
+H_{BCcolored}(n,c) =
 \left [
   \begin{tabular}{c}
     $ r  \cos{\rho_{bc} n + c (\rho_{bc} +  2 \pi) /3} $\\
@@ -276,8 +282,9 @@ H_{BCsymmmetric}(n,c) =
   \end{tabular}      
 \end{equation}
 
+Recall that $c \in \{0,1,2\}$, but $n$ is continuous (rational or real-valued.)
 
-We can see the each rail tetrahedron moves us $\rho_{bc}$ radians around a circle. Since:
+From this formulation it is easy to see that moving one vertex on a rail moves us $\rho_{bc}$ radians around a circle. Since:
 \[ \frac{2 \pi}{\rho_{bc}} \approx 10.16
 \]
 we can see that there are approximately $10.16$ red, blue or yellow tetrahedra on one rail in a single revolution.
@@ -312,7 +319,7 @@ be finite, as we are only interested in physically constructable tetrahelices.
 By isomporphic we mean there is a one-to-one mapping between both
 vertices and edges in the two tetrahelices.
 One could consider various definitions of optimality for a
-tetrahelix, but the must useful to an enginner is to minimize the
+tetrahelix, but the most useful to us as robotocists extending the Tetrobot concept is to minimize the
 maximum difference between any two edges.
 
 If all three rails do not have the same pitch, there is an edge of
@@ -324,7 +331,7 @@ three such helices.
 Similarly, if the axes are not parallel, there is an edge of
 unbounded length in the structure, so we exclude such a strcturue.
 
-Since the axes are parallel, we may define the \emph{inradius} of a
+Since the axes are parallel, we may define the \emph{inradius}, represented by the letter $i$, of a
 tetrahelix to be the radius of the largest
 cylinder parallel to this axis contained within the circumscribing cylinder
 which is penetrated by no edge.
@@ -340,7 +347,7 @@ Since all three rails have the same rail length, no matter how we
 move the rails in the $xy$ plane if we shorten the $xy$ distance between
 vertices we shorten the total distance.
 Our tool for thinking about this is to project out the $z$ dimension to form
-a two-dimensional figure of nodes and non-rail edges (see Figure \ref{untouchingrailfig}.
+a two-dimensional figure of nodes and non-rail edges (see Figure \ref{untouchingrailfig}.)
 Consider the projection along the $z$ axis of all vertices and non-rail edges into the $xy$ plane, which will be
 a figure of dots and connecting segments in the $xy$ plane. The convex
 hull for any one helix projection will be a circle (if its pitch is
@@ -549,8 +556,7 @@ H_{general}(\chi,n,c,\rho,d_{\rho},r_{\rho}) =
 \end{equation}
 
 
-$H_{general}$ forces the user to select a $d_{\rho}$
-which has a sensible radius.
+$H_{general}$ forces the user to select three values: $\rho$, $r_{\rho}$, and $d_{\rho}$ satisfying \eqref{railangle}.
 
 Note that when $\rho = 0$ then $h_{\rho} = 1$, but $r_{\rho}$ is not determined by
 Equation \ref{railangle}.
@@ -656,7 +662,7 @@ Thus, by computing $r_{opt}$  and $d_{opt}$ as a function of $\rho$ from this eq
 \end{proof}
 
 If you look down the axis of an optimal tetrahelix, it happens that only one of the one-hop edges
-come closest to the axis. In other words, they define the radius of the incircle of the
+comes closest to the axis. In other words, they define the radius of the incircle of the
 projection, or the radius of a cylinder that would just fit inside the tetrahelix.
 This is useful to know if the tetrahelix is used as a structure to house a pipe or
 a ladder that must bear a human or to armor a conduit. The inradius $i_\rho$ of
@@ -731,6 +737,8 @@ an equilateral triangle is half the circumradius is $\sqrt{\frac{8}{27}}/2$, or 
 
 In Figure \ref{fig:spudboy}, the furthest tetrahelix is the optimal equitetrabeam.
 Figure \ref{fig:unfolded} shows a representation of an unfolded equitetrabeam.
+Note that folding the outer edges of the paper upward or downward effectively
+chooses the chirality of the equitetrabeam.
 
 To the extent that we value tetrabeams (that is, tetrahelicies with a rail angle of $0$,
 and therefore zero curvature) as mathematical or engineering objects
@@ -825,7 +833,7 @@ pure geometry.
 As suggested by Buckminster Fuller, the most convenient geometries to
 consider are those that have regular member lengths, in order to
 facilitate the inexpensive manufacture and construction of the robot.
-In a plane, the octet truss is such a geometry, but in a line, the
+In a plane, the octet truss\cite{richard1961synergetic} is such a geometry, but in a line, the
 Boerdijk--Coxeter helix is a regular structure.
 
 However, a robot must move, and so it is interesting to consider the
