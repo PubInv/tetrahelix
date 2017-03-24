@@ -100,13 +100,13 @@ to any structure isomorphic to a the BC helix.
 
 
 \begin{figure}[H]
-  \label{fig:closeup}
   \centering
      \includegraphics[width=0.95\textwidth]{figures/BCHelixCloseUp.png}
      \caption{BC Helix Close-up (partly along axis)}
   \centering
      \includegraphics[width=0.95\textwidth]{figures/VerticalCloseUp.png}
      \caption{BC Helix Close-up (orthogonal)}
+  \label{fig:closeup}
 \end{figure}
 
 
@@ -132,8 +132,16 @@ design website \url{https://pubinv.github.io/tetrahelix/}\cite{readtetrahelix},
 from which Figures \ref{fig:closeup} and
 the figure below are taken.
 
+\begin{figure}
+  \centering
+     \includegraphics[width=0.95\textwidth]{figures/TetrahelixSeries.png}
+     \caption{A Series of Tetrahelices}
+  \label{fig:series}
+\end{figure}
 
-In Figure \ref{fig:spudboy}, the closest helix is the BC helix, and the furthest
+
+Figure \ref{fig:series} displays a continuum of tetrahelices optimal in a certain sense, which is the result of this
+paper. The closest helix is the BC helix, and the furthest
 is the equitetrabeam, defined in Section \ref{sec:equitetrabeam}.
 
 \section{A Designer's Formulation of the BC Helix}
@@ -239,10 +247,10 @@ $V(3(n+1)+c)=H_{BCcolored}(n+1,c)$.
 This quantity appears so often that we call it the ``rail angle rho''. For the BC helix, $\rho_{bc} = (3 \theta - 2 \pi)$.
 
 \begin{figure}[H]
-  \label{railanglefig}
      \centering
      \includegraphics[width=0.7\textwidth]{figures/RailAngleGeometry.png}
      \caption{Rail Angle Geometry}
+  \label{railanglefig}
 \end{figure}
 
 Note in Figure \ref{railanglefig} the $z$-axis travel for one rail edge is denoted by $d$. In \eqref{graycoxeter} and \eqref{eq:colored}, the variable
@@ -250,7 +258,7 @@ $h$ is used for one third of the distance we name $d$. We will later justify tha
 is always $1$ is a simplification, although we make the rail length a parameter in our JavaScript code in \texttt{tetrahelixmath.js} \cite{readtetrahelix}.
 
 The $H_{BCcolored}(n,c)$ formulation can be further clarified by rewriting directly in terms of the rail angle $\rho{bc}$ rather than $\theta$.
-Intuitively we see an expression where $c/3$ is multiplied by a $1/3$ rotation plus the rail angle $\rho$.
+Intuitively we seek an expression where $c/3$ is multiplied by a $1/3$ rotation plus the rail angle $\rho$.
 We expand 
 the expressions $\theta$ and $\rho_{bc}$ in \eqref{eq:colored} and seek to isolate the term $c2\pi/3 $.
 \begin{align*}
@@ -284,7 +292,9 @@ H_{BCcolored}(n,c) =
 
 Recall that $c \in \{0,1,2\}$, but $n$ is continuous (rational or real-valued.)
 
-From this formulation it is easy to see that moving one vertex on a rail moves us $\rho_{bc}$ radians around a circle. Since:
+From this formulation it is easy to see that moving one vertex on a rail
+($H_{BCcolored}(n,c)$ to $H_{BCcolored}(n+1,c)$ for any $n$ and $c$)
+moves us $\rho_{bc}$ radians around a circle. Since:
 \[ \frac{2 \pi}{\rho_{bc}} \approx 10.16
 \]
 we can see that there are approximately $10.16$ red, blue or yellow tetrahedra on one rail in a single revolution.
@@ -320,7 +330,8 @@ By isomporphic we mean there is a one-to-one mapping between both
 vertices and edges in the two tetrahelices.
 One could consider various definitions of optimality for a
 tetrahelix, but the most useful to us as robotocists extending the Tetrobot concept is to minimize the
-maximum difference between any two edges.
+maximum difference between any two edges, because the Tetrobot uses linear acutators of limit range of extension.
+
 
 If all three rails do not have the same pitch, there is an edge of
 unbounded length, so it is hardly optimal. So we are justified in talking about the
@@ -377,10 +388,10 @@ We first show that the inradius is touched by one segment from each pair
 of rails.
 
 \begin{figure}[H]
-  \label{untouchingrailfig}
      \centering
      \includegraphics[width=0.7\textwidth]{figures/UntouchingRail.png}
      \caption{Untouching Rail}
+  \label{untouchingrailfig}
 \end{figure}
 
 Figure \ref{untouchingrailfig} depicts a projection of
@@ -631,10 +642,9 @@ Then:
 By graph inspection using Mathematica, we see the partial derivative of this with respect to
 radius $r_{\rho}$ is always negative.
 Since the partial derivative of $\text{two-hop} - \text{one-hop}$ with respect to the
-radius is negative up until $\rho_{bc}$ when it is $0$, then
-we will opitmize the overall minimax distance by choosing the largest radius
+radius $r_{\rho}$ is negative up until $\rho_{bc}$ where it is $0$, 
+we opitmize the overall minimax distance by choosing the largest radius
 up until one-hop $= 1$, the rail-edge length.
-
 
 Therefore we decrease the minimax length
 of the whole system as we increase the radius
@@ -729,13 +739,13 @@ an equilateral triangle is half the circumradius is $\sqrt{\frac{8}{27}}/2$, or 
 
 
 \begin{figure}[H]
-  \label{fig:unfolded}
      \centering
      \includegraphics[width=0.6\textwidth]{figures/EquitetrabeamUnfolded.JPG}
      \caption{Projection Diagram}
+  \label{fig:unfolded}
 \end{figure}
 
-In Figure \ref{fig:spudboy}, the furthest tetrahelix is the optimal equitetrabeam.
+In Figure \ref{fig:series}, the furthest tetrahelix is the optimal equitetrabeam.
 Figure \ref{fig:unfolded} shows a representation of an unfolded equitetrabeam.
 Note that folding the outer edges of the paper upward or downward effectively
 chooses the chirality of the equitetrabeam.
@@ -753,12 +763,6 @@ continuum of tetrahelices.
 
 \section{An Untwisted Continuum}
 
-\begin{figure}[H]
-  \label{fig:spudboy}
-  \centering
-     \includegraphics[width=0.95\textwidth]{figures/TetrahelixSeries.png}
-     \caption{A Series of Tetrahelices}
-\end{figure}
 
 We observe that Equations \eqref{eqrhoopt} and \eqref{dopt} compute $r_{opt}$ and $d_{opt}$ which
 create an optimal tetrahelix for any value rail angle $\rho$ between $0$, which
@@ -821,8 +825,8 @@ including deployable and moving trusses\cite{claypool2012readily}.
 \section{Utility for Robotics}
 
 Starting twenty years ago, Sanderson\cite{sanderson1996modular},
-Hamlin,\cite{TetrobotBook}, and others including
-Lee\cite{lee2002dynamic} created a style of robotics based on changing
+Hamlin,cite{TetrobotBook}, Lee\cite{lee2002dynamic}, and others
+ created a style of robotics based on changing
 the lengths of members joined at the center of a joint, thereby
 creating a connection to pure geometry. More recently NASA has
 experimented with tensegrities\cite{NTRT}, a different point in the
@@ -841,14 +845,13 @@ transmutations of these geometries, which was in fact the motivation
 for creating the equitetrabream.
 
 \begin{theorem}
-  By changing only the length of the members that change rails and make two nodes, you can dynamically untwist a tetrobot
+  By changing only the length of the longer members that connect two distinct rails (the two-hop members), you can dynamically untwist a tetrobot
   forming the Boerdijk-Coxeter configuration to the equitetrabeam which rests flat on the plane.
 \end{theorem}
 
 \begin{proof}
-  Proof by our computer program that does this using Equation \eqref{eq:general}.
-  See video on website\cite{readtetrahelix}.
-
+  Proof by our computer program that does this using Equation \eqref{eq:general} applied to the
+  7-tet Tetrobot/Glussbot.
 
 \begin{figure}[H] %float with two figures
   \centering
