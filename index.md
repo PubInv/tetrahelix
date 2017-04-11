@@ -511,13 +511,9 @@ function get_member_color(gui,len) {
     }
 }
 
-function create_actuator(d,b_a,b_z,pos,color) {
+function create_actuator(d,b_a,b_z,pos,cmat) {
     var len = d+ -am.JOINT_RADIUS*2;
     var quat = new THREE.Quaternion();
-
-    //    var color = get_member_color(am,d);
-    var tcolor = new THREE.Color(color.r,color.g,color.b);
-    var cmat = memo_color_mat(tcolor);
 
     var d = new THREE.Vector3(b_z.x,b_z.y,b_z.z);
     d.sub(b_a);
@@ -574,9 +570,9 @@ function load_NTetHelix(am,helix,tets,pvec,hparams) {
     var chi = hparams.chirality;
     var n = tets+3;    
 
-    var colors = [ d3.color("red"), d3.color("yellow"), d3.color("blue") ];
-    //    var scolors = [ d3.rgb("firebrick"), d3.rgb("goldenrod"), d3.rgb("indigo") ];    
-    var dcolor = [null,d3.color("Green"),d3.color("purple")];
+    var colors = [ d3.color("DarkRed"), d3.color("DarkOrange"), d3.color("Indigo") ];
+    var darkgreen = d3.color("#008000");
+    var dcolor = [null,darkgreen,d3.color("purple")];
     for(var i = 0; i < n; i++) {
 
 	var myRho = rho;
@@ -628,9 +624,24 @@ function load_NTetHelix(am,helix,tets,pvec,hparams) {
             quat.set( 0, 0, 0, 1 );
 
 	    var diff = ((b_a.rail - b_z.rail)+3) % 3;
+	    var cmat;
+	    var tcolor;
+	    if (diff != 0) {
+		if (diff == 2) {
+		    tcolor = new THREE.Color(0x9400D3);
+		    cmat  = memo_color_mat(tcolor);
+		}
+		if (diff== 1) {
+		    tcolor = new THREE.Color(0x008000);
+		    cmat  = memo_color_mat(tcolor);	
+		}
+	    } else {
+		var cm = smats[b_a.rail]
+		cmat = new THREE.MeshPhongMaterial( {color : cm } );
+	    }
 	    var member_color = (diff != 0) ? dcolor[diff] : colors[b_a.rail];
 
-	    var mesh = create_actuator(dist,v_a,v_z,pos,member_color);
+	    var mesh = create_actuator(dist,v_a,v_z,pos,cmat);
 	    if (b_a.name > b_z.name) {
 		var t = b_a;
 		b_a = b_z;
@@ -825,8 +836,8 @@ function initGraphics() {
     am.scene = new THREE.Scene();
     am.scene.fog = new THREE.Fog( 0x000000, 500, 10000 );    
 
-    am.camera.position.x = 0;
-    am.camera.position.y = 0.5;
+    am.camera.position.x = -0.25;
+    am.camera.position.y = 1.5;
     am.camera.position.z =  2;
 
     am.controls = new THREE.OrbitControls( am.camera, am.container );
@@ -1075,7 +1086,7 @@ var r0 = (2/3)*Math.sqrt(2/3);
 // var r0 = Math.sqrt(35/9)/4;
 var trial = 0;
 var num = 4;
-// var pvec0 = new THREE.Vector3((i - 1)*2*am.INITIAL_EDGE_LENGTH,am.INITIAL_HEIGHT,-3);
+
 //add_equitetrabeam_helix_lambda(am, 1.0, pvec0, len);
 
 
@@ -1114,9 +1125,16 @@ function draw_new(pvec) {
 			    HELIX_RADIUS,pvec,TET_DISTANCE);
 }
 
+function draw_many() {
+    for(var i = 0; i < 6; i++) {
+	var rho = (i / 5.0) *  RAIL_ANGLE_RHO_d*Math.PI/180;
+	var pvec0 = new THREE.Vector3(((5 - i)/ 2.0)*2 + -3,HELIX_RADIUS*3,-3);	
+	add_equitetrabeam_helix(am,CHIRALITY_CCW,null,rho,HELIX_RADIUS,pvec0,TET_DISTANCE);
+    }
+}
+
 function build_central() {
     var pvec0 = new THREE.Vector3(0,0,0);    
-    add_equitetrabeam_helix(am,CHIRALITY_CCW,null,RAIL_ANGLE_RHO_d*Math.PI/180,HELIX_RADIUS,pvec0,TET_DISTANCE);
 
     // I can't figure out if HELIX_RADIUS is wrong, if
     // my formula is wrong, or if the CylinderGeometry is wrong....
@@ -1145,6 +1163,7 @@ function build_central() {
 
 
 draw_and_register();
+// draw_many();
 
 for(var i = 0; i < am.helices.length; i++) {
     console.log(am.helix_params[i]);

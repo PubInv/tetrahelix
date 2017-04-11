@@ -133,7 +133,7 @@ the figures below are taken.
 
 \begin{figure}
   \centering
-     \includegraphics[width=0.95\textwidth]{figures/TetrahelixSeries.png}
+     \includegraphics[width=1.0\textwidth]{figures/TetrahelixSeries2.png}
      \caption{A Series of Tetrahelices}
   \label{fig:series}
 \end{figure}
@@ -240,7 +240,7 @@ coordinates. Allowing $n$ to take non-integer values defines a continuous
 helix in space which is close to the segmented polyline of the outer tetrahedra edges, and equals them at integer
 values.
 
-The quantity $ (3 \theta_{bc} - 2 \pi) \approx 35.43 \degree $  is the angular shift between $V(3n+c)=H_{BCcolored}(n,c)$ and
+The quantity $ (3 \theta_{bc} - 2 \pi) \approx 35.43 \degree $  is the angular shift between $V(3n + c)=H_{BCcolored}(n,c)$ and
 $V(3(n+1)+c)=H_{BCcolored}(n+1,c)$.
 This quantity appears so often that we call it the ``rail angle $\rho$''. For the BC helix, $\rho_{bc} = (3 \theta_{bc} - 2 \pi)$.
 
@@ -532,7 +532,7 @@ curvature is $0$, an important special case. The radius or the axial
 distance between two nodes on the same rail are possible choices, but
 perhaps the clearest choice is to build formulae that takes as thier
 input the ``rail angle'' $\rho$. We define $\rho$ to be the angle
-formed in the X,Y plane $\angle A O B$ projecting out the $z$
+formed in the X,Y plane $\angle H(0,0) O H(0,1)$ projecting out the $z$
 axis and sighting along the positive $z$ axis. In other words, $\rho$
 controls how far a rail edge of a tetrahelix deviates from being
 parallel with the axis, or the ``twistiness'' of the tetrahelix. We use
@@ -689,7 +689,7 @@ Thus, by computing $r_{opt}$  and $d_{opt}$ as a function of $\rho$ from this eq
 \begin{figure}[H]
      \centering
      \includegraphics[width=0.4\textwidth]{figures/AxialView.png}
-     \caption{Loking Down a BC-Helix}
+     \caption{Axial view of a BC-Helix}
   \label{axialview}     
 \end{figure}
 
@@ -717,7 +717,7 @@ connecting four sequentially numbered vertices:
      
 \end{figure}
 
-From this equation with the help of symbolic computation we observe that inradius of the BC helix of unit rail length is $i_{\rho_{bc}} = \frac{3}{10\sqrt{2}} \approx 0.21213$.
+From this equation with the help of symbolic computation we observe that inradius of the BC helix of unit rail length is $r_{in(\rho_{bc})} = \frac{3}{10\sqrt{2}} \approx 0.21$.
 
 \section{The Equitetrabeam}
 \label{sec:equitetrabeam}
@@ -842,7 +842,7 @@ including deployable and moving trusses\cite{claypool2012readily}.
 \section{Utility for Robotics}
 
 Starting twenty years ago, Sanderson\cite{sanderson1996modular},
-Hamlin,cite{TetrobotBook}, Lee\cite{lee2002dynamic}, and others
+Hamlin,\cite{TetrobotBook}, Lee\cite{lee2002dynamic}, and others
  created a style of robotics based on changing
 the lengths of members joined at the center of a joint, thereby
 creating a connection to pure geometry. More recently NASA has
