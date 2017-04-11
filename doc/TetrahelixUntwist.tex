@@ -1,40 +1,41 @@
-\documentclass[11pt]{article}
-\usepackage{geometry} % see geometry.pdf on how to lay out the page. There's lots.
-\usepackage{hyperref}
-\usepackage{graphicx}
+\documentclass[review]{siamonline1116}
+% \usepackage{geometry} % see geometry.pdf on how to lay out the page. There's lots.
+% \usepackage{hyperref}
+% \usepackage{graphicx}
 \usepackage{gensymb}
-\usepackage[affil-it]{authblk}
-\usepackage[toc,page]{appendix}
-\usepackage{pifont}
+% \usepackage[affil-it]{authblk}
+% \usepackage[toc,page]{appendix}
+% \usepackage{pifont}
 \usepackage{amsmath}
-\usepackage{amsthm}
+% \usepackage{amsthm}
 \usepackage{amsfonts}
-\usepackage{hyperref}
+% \usepackage{hyperref}
 
-\usepackage{float}
+% \usepackage{float}
 
-\newtheorem{theorem}{Theorem}
-\newtheorem{corollary}{Corollary}
+% \newtheorem{theorem}{Theorem}
+% \newtheorem{corollary}{Corollary}
 
 \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
 
 
-\usepackage{draftwatermark}
+% \usepackage{draftwatermark}
 
 
 
-\SetWatermarkText{DRAFT}
-\SetWatermarkScale{6}
-\SetWatermarkLightness{0.95}
+% \SetWatermarkText{DRAFT}
+% \SetWatermarkScale{6}
+% \SetWatermarkLightness{0.95}
 
 % \geometry{letter} % or letter or a5paper or ... etc
 % \geometry{landscape} % rotated page geometry
 
 % See the ``Article customise'' template for come common customisations
 
-\title{Untwisting the Tetrahelix (v0.13)}
-\author{Robert L. Read \texttt{read.robert@gmail.com}
+\title{Untwisting the Tetrahelix}
+\author{Robert L. Read \email{read.robert@gmail.com}
 }
+
 
 
 \date{\today}
@@ -68,6 +69,13 @@
   truss/space frame design and robotics is discussed.
 \end{abstract}
 
+\begin{keywords}
+  Boedijk--Coxeter helix, tetrahelix, robotics, tetrobot, unconventional robots,
+  structural engineering, mechanical engineering, tensegrity, variable-geometry truss
+\end{keywords}
+\begin{AMS}
+  51M15
+\end{AMS}
 
 \section{Introduction}
 
@@ -81,8 +89,8 @@ where we relax regularity.
 
 
 The vertices of the tetrahedra lie upon
-three helices about the central axis.  The
-Tetrobot/Glussbot\cite{TetrobotBook} project uses the regularity of
+three helices about the central axis.
+The glussbot\cite{readglussbot} (or Tetrobot)\cite{TetrobotBook} uses the regularity of
 this geometry to make a tentacle-like robot that can crawl like a slug
 or mollusc.  The Tetrobot concept is to use mechanical members, called
 actuators, which can change their length, connected by special joints,
@@ -110,12 +118,12 @@ to any structure isomorphic to the BC helix.
 
 
 
-Imagining Figure \ref{fig:closeup} as a static mechanical structure,
+Imagining \cref{fig:closeup} as a static mechanical structure,
 we observe that it is useful to the mechanical engineer or
 robotocist because the structure remains an inherently rigid,
 omni-triangulated space frame, which is
 somewhat mechanically strong.
-Imagine further in Figure \ref{fig:closeup}, that each static edge was replaced with an
+Imagine further in \cref{fig:closeup}, that each static edge was replaced with an
 actuator that could dynamically become shorter or longer in response to electronic control,
 and the vertices were a joint that supported sufficient angular displacement
 for this to be possible. Such a machine is a Tetrobot\cite{TetrobotBook}.
@@ -128,27 +136,27 @@ and has, for example, an equilateral triangular profile. This paper
 develops the equations needed to untwist the tetrahelix. All math
 developed here is available in JavaScript and demonstrated by an interactive
 design website \url{https://pubinv.github.io/tetrahelix/}\cite{readtetrahelix},
-from which Figure \ref{fig:closeup} and
+from which \cref{fig:closeup} and
 the figures below are taken.
 
 \begin{figure}
   \centering
      \includegraphics[width=1.0\textwidth]{figures/TetrahelixSeries2.png}
-     \caption{A Series of Tetrahelices}
+     \caption{A Continuum of Tetrahelices}
   \label{fig:series}
 \end{figure}
 
 
-Figure \ref{fig:series} displays a continuum of tetrahelices optimal in a certain sense, which is the result of this
+\Cref{fig:series} displays a continuum of tetrahelices optimal in a certain sense, which is the result of this
 paper. The closest helix is the BC helix, and the furthest
-is the equitetrabeam, defined in Section \ref{sec:equitetrabeam}.
+is the equitetrabeam, defined in \cref{sec:equitetrabeam}.
 
 \section{A Designer's Formulation of the BC Helix}
 
 We would like to design nearly regular tetrahelices with a formula that
 gives the vertices in space. Eventually we would like to design nearly regular
 tetrahelices by choosing the lengths of a small set of members.
-In a space frame, this is a static design choice; in a robot, it is a
+In a space frame, this is a static design choice; in a tetrobot, it is a
 dynamic choice that can be used to twist\footnote{The formal definition of twistiness, or \emph{torsion},
 is not useful or used in the paper. The formal \emph{curvature} and \emph{torsion} of the helices defined here
 may be easily computed from the formualae if desired.} the robot and/or exert linear or
@@ -171,7 +179,7 @@ h_{bc} = 1/\sqrt{10}
 \]
 
 $\theta_{bc}$ is approximately $0.37 \cdot 2 \pi$ radians or  $131.81$ degrees.
-The angle $\theta_{bc}$ is the rotation of \emph{each} tetrahedron, not the tetraheda along a rail.  In Figure \ref{fig:closeup},
+The angle $\theta_{bc}$ is the rotation of \emph{each} tetrahedron, not the tetraheda along a rail.  In \cref{fig:closeup},
 each tetrahedron has either a yellow, blue, or red outer edge or rail.
 That is, a blue-rail tetrahedron is rotated slightly more than a $1/3$ of a revolution to match the face of the yellow tetrahedra.
 
@@ -251,7 +259,7 @@ This quantity appears so often that we call it the ``rail angle $\rho$''. For th
   \label{railanglefig}
 \end{figure}
 
-Note in Figure \ref{railanglefig} the $z$-axis travel for one rail edge is denoted by $d$. In \eqref{graycoxeter} and \eqref{eq:colored}, the variable
+Note in \cref{railanglefig} the $z$-axis travel for one rail edge is denoted by $d$. In \eqref{graycoxeter} and \eqref{eq:colored}, the variable
 $h$ is used for one third of the distance we name $d$. We will later justify that $d = 3h$.
 In this paper we assume the length of a rail
 is always $1$ as a simplification. (We make the rail length a parameter in our JavaScript code in \texttt{tetrahelixmath.js} \cite{readtetrahelix}.)
@@ -358,7 +366,7 @@ Since all three rails have the same rail length, no matter how we
 move the rails in the $xy$ plane if we shorten the $xy$ distance between
 vertices we shorten the total distance.
 Our tool for thinking about this is to collapse the $z$ dimension to form
-a two-dimensional figure of nodes and non-rail edges (see Figure \ref{untouchingrailfig}.)
+a two-dimensional figure of nodes and non-rail edges (see \cref{untouchingrailfig}.)
 Consider the projection along the $z$ axis of all vertices and non-rail edges into the $xy$ plane, which will be
 a figure of dots and connecting segments in the $xy$ plane. The convex
 hull for any one helix projection will be a circle (if its pitch is
@@ -394,12 +402,12 @@ of rails.
   \label{untouchingrailfig}
 \end{figure}
 
-Figure \ref{untouchingrailfig} depicts a projection of
+\Cref{untouchingrailfig} depicts a projection of
 only the point $P$, the point $P'$ which is an adjacent vertex on the same rail,
 and the intermediary points $R$ and $Q$ on the other two rails.
 
 Supoose there is a rail $P$ which does not have a segment touching the incircle
-at all in the projection, as depicted in Figure \ref{untouchingrailfig}.
+at all in the projection, as depicted in \cref{untouchingrailfig}.
 Then a segment connecting the other two $Q$ and $R$ is a longest
 rail, because any chord touching an incircle is longer than any which does not.
 These two rails ($Q$ and $R$) can be moved closer to each other, and further away from $P$, to form a better minimax solution
@@ -418,7 +426,7 @@ on a cylinder.
 
 \end{proof}
 
-Theorem \ref{thm:cylinder} is not true when $\rho$ is an odd integer multiple of $\pi$.
+\Cref{thm:cylinder} is not true when $\rho$ is an odd integer multiple of $\pi$.
 
 Now that we have shown that any optimal tetrahelix vertices
 are on helices of the same axes and pitch, we see that the vertices 
@@ -461,7 +469,7 @@ Now that we have coincident axes, the same pitch, and the same radius, we can go
   \label{equitetrabeam}
 \end{figure}
 
-Figure \ref{equitetrabeam} shows the equitetrabeam, which is defined in Section \ref{sec:equitetrabeam},
+\Cref{equitetrabeam} shows the equitetrabeam, which is defined in \cref{sec:equitetrabeam},
 but illustrates the one-hop and two-hop edge defintions.
 The green edges are the two-hop edges and the purple edges are the one-hop edges. Note that the green
 edges are slightly longer than the purple edges.
@@ -496,11 +504,11 @@ edges are slightly longer than the purple edges.
     $d/3$ from each other.
 \end{proof}
 
- Note that based on Theorem \ref{eventhirds}, there are only 3 possible lengths in an optimal tethrahelix,
+ Note that based on \cref{eventhirds}, there are only 3 possible lengths in an optimal tethrahelix,
  and we are justified in classifying edge lengths as \emph{rail}, \emph{one-hop}, or
 \emph{two-hop}. The one-hop edges are the edges between rails that are closest on the $z$-axis, and the two-hop edges are those that skip over a vertex.
 
-By Theorem \ref{eventhirds} every optimal tetrahelix has vertices lying on helices expressible in the form:
+By \cref{eventhirds} every optimal tetrahelix has vertices lying on helices expressible in the form:
 \[
 V_{optimal}(n,c) =
 \left [
@@ -526,7 +534,7 @@ we have the equitetrabeam.
 
 We seek a formula to generate optimal tetrahelices that accepts a
 parameter that allows us to design the tetrahelix conveniently.
-Please refer back to Figure \ref{railanglefig}.
+Please refer back to \cref{railanglefig}.
 The pitch of the helix is an obvious choice, but is not defined when the
 curvature is $0$, an important special case. The radius or the axial
 distance between two nodes on the same rail are possible choices, but
@@ -561,29 +569,28 @@ In choosing $\rho$, one greatly constrains $r$ and $d$, but does not completely
 determine both of them together, so we treat both as parameters.
 
 Rewriting our formulation in terms of $\rho$:
-\begin{equation}
-  \label{eq:general}
-H_{general}(\chi,n,c,\rho,d_{\rho},r_{\rho}) =
-\left [
+\begin{align*}
+\numberthis  \label{eq:general}  
+H_{general}(\chi,n,c,\rho,d_{\rho},r_{\rho}) &= 
+ \left [
   \begin{tabular}{c}
    $ r_{\rho} \cos(\chi \cdot (n \rho + c(\rho +  2 \pi) /3)) $\\
    $ r_{\rho}  \sin(\chi \cdot (n \rho + c(\rho +  2 \pi) /3)) $\\
    $ d_{\rho} (n + c /3) $
   \end{tabular}
-  \right ],
-\text{where:}
+  \right ] \\
+\text{where: } &
 \begin{tabular}{c}
   $   1 = d_{\rho}^2 + 4 r_{\rho}^2 (\sin{ \rho / 2})^2 $ \\
-%%  $\kappa = n + c/3$ \\
     $\chi \in \{-1,1\}$ \\  
-  \end{tabular}      
-\end{equation}
+\end{tabular}
+\end{align*} 
 
 
 $H_{general}$ forces the user to select three values: $\rho$, $r_{\rho}$, and $d_{\rho}$ satisfying \eqref{railangle}.
 
 Note that when $\rho = 0$ then $h_{\rho} = 1$, but $r_{\rho}$ is not determined by
-Equation \ref{railangle}.
+\cref{railangle}.
 
 \begin{theorem}
   \label{generalformulaoptimal}
@@ -595,7 +602,7 @@ Equation \ref{railangle}.
 \begin{proof}
 This is proved by a minimax argument.
 
-By Theoerm \ref{eventhirds}, we can compute the (at most) three edge-lengths of an optimal
+By \cref{eventhirds}, we can compute the (at most) three edge-lengths of an optimal
 tetrahelix by formula universally quantified by $n$ and $c$:
 \begin{align*}
   \text{rail} &= dist(H_{general}(n,c,\rho,d_{\rho},r_{\rho}),H_{general}(n+1,c,\rho,d_{\rho}),r_{\rho})) = 1 \\
@@ -630,19 +637,19 @@ We would really like to know the partial derivative of the two-hop - one-hop wit
 to the radius to be able to understand how to choose the radius to form the minimimax optimum.
 
 Let:
-\begin{equation}
+\begin{equation*}
   f_{\rho} = -\frac{4 (\sin^2( \rho / 2))}{9}
-  \end{equation}
-\begin{equation}
+  \end{equation*}
+\begin{equation*}
   g_{\rho} = -\frac{16 (\sin^2( \rho / 2))}{9} 
-\end{equation}
+\end{equation*}
 
-\begin{equation}
+\begin{equation*}
   j_{\rho} = \sin^2(\rho/3+ \frac{2\pi}{3})  + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2)
-\end{equation}
-\begin{equation}
+\end{equation*}
+\begin{equation*}
   k_{\rho} = (\sin^2(2\rho/3 + \frac{4\pi}{3})  + (1 - \cos(2\rho/3 + \frac{4\pi}{3}))^2)
-\end{equation}
+\end{equation*}
 
 Then:
 \begin{align*}
@@ -674,7 +681,7 @@ we equate one-hop to $1$ to find the optimum radius:
 We can now give a formula for $ d_{opt} $ computed from $\rho, r_{opt}$ via the rail angle equation \eqref{railangle}:
 
 \begin{align*}
-  d_{opt}^2 &= 1 - 4 \frac{2}{\sqrt{\frac{9}{2} \cdot ( \sqrt{3} \sin(\rho/3) + \cos(\rho/3)) + \cos(\rho)+ 8 }}^2 (\sin{ \rho / 2})^2   \\
+  d_{opt}^2 &= 1 - 4 (\frac{2}{\sqrt{\frac{9}{2} \cdot ( \sqrt{3} \sin(\rho/3) + \cos(\rho/3)) + \cos(\rho)+ 8 }})^2 (\sin{ \rho / 2})^2   \\
 %%  d_{opt}^2 &= 1 - 4 \frac{4(\sin{ \rho / 2})^2}{\frac{9}{2} \cdot ( \sqrt{3} \sin(\rho/3) + \cos(\rho/3)) + \cos(\rho)+ 8 }    \\
   d_{opt}^2 &= 1 - \frac{16(\sin{ \rho / 2})^2}{9 ( \sqrt{3} \sin(\rho/3) + \cos(\rho/3)) + \cos(\rho)+ 8 }    \\
 %%  d_{opt}^2 &= 1 - \frac{16 \sin^2(\rho / 2) }{ \cos(\rho) + 9( \sqrt{3} \sin(\rho/3) + \cos(\rho/3)) + 8 }   \\
@@ -694,7 +701,7 @@ Thus, by computing $r_{opt}$  and $d_{opt}$ as a function of $\rho$ from this eq
 \end{figure}
 
 
-If we look down the axis of an optimal tetrahelix as shown in Figure \ref{axialview}, it happens that only one of the one-hop edges
+If we look down the axis of an optimal tetrahelix as shown in \cref{axialview}, it happens that only one of the one-hop edges
 (rendered in purpple in our software)
 comes closest to the axis. In other words, they define the radius of the incircle of the
 projection, or the radius of a cylinder that would just fit inside the tetrahelix.
@@ -727,14 +734,14 @@ which is an important
 special case due to its regularity, it constructs an additional special
 (degenerate) case when the rail angle $\rho = 0$
 and $d = 1$ (the edgelength), where the cross sectional area is
-an equilateral triangle of unchanging orientation, as shown in Figure \ref{equitetrabeam} and at the rear of Figure \ref{fig:series}.
+an equilateral triangle of unchanging orientation, as shown in \cref{equitetrabeam} and at the rear of \cref{fig:series}.
 We call this the \emph{equitetrabeam}.
 
 
 
 \begin{corollary}
   The equitetrabeam with minimal maximal edge difference is produced
-  by $H_{general}$ when $ r = \sqrt{\frac{8}{27}} $.
+  \newline by $H_{general}$ when $ r = \sqrt{\frac{8}{27}} $.
 \end{corollary}
 
 \begin{proof}
@@ -763,7 +770,7 @@ rail length from both Equation \eqref{eq:inradius} and the fact that the inradiu
 an equilateral triangle is half the circumradius is $\sqrt{\frac{8}{27}}/2$, or $\frac{\sqrt{6}}{9}$.
 
 
-In Figure \ref{fig:series}, the furthest tetrahelix is the optimal equitetrabeam.
+In \cref{fig:series}, the furthest tetrahelix is the optimal equitetrabeam.
 Note that folding the outer edges of the paper upward or downward effectively
 chooses the chirality of the equitetrabeam.
 
@@ -872,9 +879,9 @@ for creating the equitetrabream.
 
 \begin{figure}[H] %float with two figures
   \centering
-     \includegraphics[width=0.4\textwidth]{figures/GlussBotBC.jpg}
+     \includegraphics[width=0.9\textwidth]{figures/GlussBotBC.jpg}
      \caption{Glussbot in relaxed, or BC helix configuration}
-     \includegraphics[width=0.4\textwidth]{figures/GlussBotEquitetrabeamCropped.jpg}
+     \includegraphics[width=0.9\textwidth]{figures/GlussBotEquitetrabeamCropped.jpg}
      \caption{The Equitetrabream: Fully Untwisted Glussbot}
 \end{figure}
 
@@ -897,12 +904,12 @@ a rotation angle and member lengths to obtain any desired pitch.
 
 \section{Contact and Getting Involved}
 
-The Gluss Project \url{http://pubinv.github.io/gluss/} is part of Public Invention,
+The Gluss Project \url{http://pubinv.github.io/gluss/} is part of Public Invention \url{https://pubinv.github.io/PubInv/},
 a free-libre, open-source research, hardware, and software project that welcomes volunteers.
 It is our goal to organize projects for the benefit of all humanity without seeking profit or intellectual property.
-To assist, contact \href{mailto:read.robert@gmail.com}{$<$read.robert@gmail.com$>$}.
+To assist, contact \email{read.robert@gmail.com}.
 
-\bibliographystyle{IEEEtran}
+\bibliographystyle{siamplain}
 \bibliography{IEEEabrv,gluss}
 
 \end{document}
