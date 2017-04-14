@@ -229,6 +229,9 @@ mocha
     <script>
     var tm = UGLY_GLOBAL_SINCE_I_CANT_GET_MY_MODULE_INTO_THE_BROWSER;
 
+
+var OPERATION = "normal"; // "normal" or "helices"
+
 $( "input[type='radio']" ).checkboxradio();
 
 var OPTIMALITY = true;
@@ -560,7 +563,7 @@ function alphabetic_name(n) {
 var scolors = [ d3.color("DarkRed"), d3.color("DarkOrange"), d3.color("Indigo") ];
 var smats = [ new THREE.Color(0x8B0000),
 	      new THREE.Color(0xFF8C00),
-	      new THREE.Color(0x4B0082)];
+	      new THREE.Color(0x000082)];
 function load_NTetHelix(am,helix,tets,pvec,hparams) {
     var len = hparams.len;
     var rho = hparams.rho;
@@ -570,7 +573,7 @@ function load_NTetHelix(am,helix,tets,pvec,hparams) {
     var chi = hparams.chirality;
     var n = tets+3;    
 
-    var colors = [ d3.color("DarkRed"), d3.color("DarkOrange"), d3.color("Indigo") ];
+    var colors = [ d3.color("DarkRed"), d3.color("DarkOrange"), d3.color("Blue") ];
     var darkgreen = d3.color("#008000");
     var dcolor = [null,darkgreen,d3.color("purple")];
     for(var i = 0; i < n; i++) {
@@ -627,6 +630,12 @@ function load_NTetHelix(am,helix,tets,pvec,hparams) {
 	    var cmat;
 	    var tcolor;
 	    if (diff != 0) {
+		if (OPERATION == "helices") {
+		    // What we really want to do here is to interpolate the
+		    // color of the end nodes!
+		    tcolor = new THREE.Color(0x008800);
+		    cmat  = memo_color_mat(tcolor);	
+		} else {
 		if (diff == 2) {
 		    tcolor = new THREE.Color(0x9400D3);
 		    cmat  = memo_color_mat(tcolor);
@@ -634,6 +643,7 @@ function load_NTetHelix(am,helix,tets,pvec,hparams) {
 		if (diff== 1) {
 		    tcolor = new THREE.Color(0x008000);
 		    cmat  = memo_color_mat(tcolor);	
+		}
 		}
 	    } else {
 		var cm = smats[b_a.rail]
@@ -824,9 +834,17 @@ function initGraphics() {
     am.container = document.getElementById( 'threecontainer' );
 
     var PERSPECTIVE_NEAR = 0.3;
-    am.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / (window.innerHeight * am.window_height_factor), PERSPECTIVE_NEAR, 2000 );
 
-    am.camera.aspect = window.innerWidth / (window.innerHeight * am.window_height_factor);
+
+    if (OPERATION == "helices") { 
+	var width = 10;
+	var height = width * (window.innerHeight *am.window_height_factor) / window.innerWidth;
+	am.camera = new THREE.OrthographicCamera( width / - 2, width / 2, height / 2, height / - 2, 1, 1000 );
+    } else {
+        am.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / (window.innerHeight * am.window_height_factor), PERSPECTIVE_NEAR, 2000 );
+    }
+    
+ //   am.camera.aspect = window.innerWidth / (window.innerHeight * am.window_height_factor);
 
     var origin = new THREE.Vector3(0,0,0);
     am.camera.lookAt(origin);
@@ -870,7 +888,12 @@ function initGraphics() {
 
     // GROUND
     var groundGeo = new THREE.PlaneBufferGeometry( 10000, 10000 );
-    var groundMat = new THREE.MeshPhongMaterial( { color: 0x777777, specular: 0x050505 } );
+    var groundMat;
+    if (OPERATION == "normal") {
+	groundMat = new THREE.MeshPhongMaterial( { color: 0x777777, specular: 0x050505 } );
+    } else {
+	groundMat = new THREE.MeshPhongMaterial( { color: 0xfffffff, specular: 0x050505 } );
+    }
     //    groundMat.color.setHSL( 0.095, 1, 0.75 );
 
     var ground = new THREE.Mesh( groundGeo, groundMat );
@@ -999,7 +1022,9 @@ function render() {
     // note this....
     //    am.renderer.autoClear = true;        
     am.renderer.render( am.scene, am.camera );
-    am.renderer.render( am.grid_scene, am.camera);
+    if (OPERATION == "normal") {
+	am.renderer.render( am.grid_scene, am.camera);
+    }
     am.renderer.autoClear = false;        
     am.renderer.render(am.sceneOrtho, am.cameraOrtho);
 }
@@ -1104,6 +1129,48 @@ function draw_central() {
     draw_and_register();
 }
 
+// function draw_helix(pvec,rail,hparams) {
+//     var lineGeometry = new THREE.Geometry();
+//     var path = new THREE.Group();
+
+//     var material = new THREE.MeshBasicMaterial( {color: 0x000000} );
+    
+//     am.scene.add(path);
+//     var currentPosition = new THREE.Vector3(0, 0, 0); 
+//     var lastPosition = new THREE.Vector3(0, 0, 0);
+    
+//     var tets = 20;
+
+//     var len = hparams.len;
+//     var rho = hparams.rho;
+//     var d = hparams.d;
+//     var fudge = 1.05;
+//     var radius = hparams.radius*fudge;
+//     var lambda = hparams.lambda;
+
+//     var big = tets*d;
+    
+//     var limit = 1000.0;
+//     var geometry = new THREE.Geometry();
+//     for(var i = 0; i < limit; i++) {
+// 	var chi = hparams.chirality;
+// 	// This is clearly an issue...n is not right!
+// 	var n = i * (big / limit);
+// 	console.log(n);
+// 	var q = tm.H_general(chi,n,rail,rho,d,radius);
+// 	var v = new THREE.Vector3(q[0], q[1], q[2]);
+// 	v = v.add(pvec);
+// 	currentPosition = v;
+// 	lineGeometry.vertices.push(lastPosition, currentPosition);
+// 	var line = new THREE.LineSegments(lineGeometry, material);
+// 	lastPosition = currentPosition;
+// //	path.add(line);	
+//     }
+//     var line = new MeshLine();
+//     line.setGeometry(geometry);
+//     line.setGeometry( geometry, function( p ) { return 2; } ); // makes width 2 * lineWidth
+// }
+
 function draw_and_register() {
     var pvec0 = new THREE.Vector3(0,HELIX_RADIUS*3,-3);
     var hp = draw_new(pvec0);
@@ -1162,15 +1229,105 @@ function build_central() {
 }
 
 
-draw_and_register();
-// draw_many();
 
-for(var i = 0; i < am.helices.length; i++) {
-    console.log(am.helix_params[i]);
-    compute_helix_minimax(am.helices[i]);
-    console.log(am.helix_params[i]);    
+function draw_helices() {
+    var pvec0 = new THREE.Vector3(0,HELIX_RADIUS*2.1,-1.0);
+    var hp = draw_new(pvec0);
+    var h = am.helices.slice(-1)[0];
+    var score = compute_helix_minimax(h)[2];
+    hp.score = score;
+    hp.inradius = tm.inradius_assumption1(hp.rho,hp.radius);
+    register_trials(trial++,OPTIMALITY,RAIL_ANGLE_RHO_d,HELIX_RADIUS,hp.d,TET_DISTANCE,
+		    hp.onehop,
+		    hp.twohop,
+		    hp.pitch,
+		    hp.inradius,
+		    hp.score);
+
+    var factor =  3*tm.BCtheta/tm.BCrho;    
+    draw_helix(pvec0,0,hp,factor,"black",1.0,0.003);
+    
+    draw_helix(pvec0,0,hp,1,"red",1.2,0.005);
+    draw_helix(pvec0,1,hp,1,"orange",1.2,0.005);
+    draw_helix(pvec0,2,hp,1,"blue",1.2,0.005);        
 }
 
+function draw_helix(pvec,rail,hparams,factor,color,fudge,lw) {
+    var lineGeometry = new THREE.Geometry();
+    var path = new THREE.Group();
+
+    // var material = new THREE.LineBasicMaterial( {
+    // 	color: color.toString(),
+    // 	// Sadly, linewidth doesn't work with the WebGLRenderer
+    // 	linewidth: 10,
+    // 	linecap: 'round', //ignored by WebGLRenderer
+    // 	linejoin:  'round' //ignored by WebGLRenderer
+    // } );
+    
+    
+  //  am.scene.add(path);
+    var currentPosition = new THREE.Vector3(0, 0, 0); 
+    var lastPosition = null;
+
+    
+    var tets = am.NUMBER_OF_TETRAHEDRA;
+
+    var len = hparams.len;
+    var rho = hparams.rho;
+    var d = hparams.d;
+    var radius = hparams.radius*fudge;
+    var lambda = hparams.lambda;
+
+    var big = (tets+1)*d;
+    
+    //    var limit = 1000.0;
+    var limit = 1000.0;
+    for(var i = 0; i < limit; i++) {
+	var chi = hparams.chirality;
+	var n = i * (big / limit);
+	var q = tm.H_general_factor(chi,n,rail,rho,d,radius,factor);
+	var v = new THREE.Vector3(q[0], q[1], q[2]);
+	v = v.add(pvec);
+	currentPosition = v;
+	if (!lastPosition) lastPosition = currentPosition;
+
+	lineGeometry.vertices.push(currentPosition);
+	
+	lastPosition = currentPosition;
+    }
+    
+    var line = new MeshLine();
+    line.setGeometry(lineGeometry);
+
+    var material = new MeshLineMaterial({
+	color: new THREE.Color(color),
+	lineWidth: lw
+    }
+    );
+//    material.color = new THREE.Color("red");
+    
+    var mesh = new THREE.Mesh( line.geometry, material ); 
+    am.scene.add( mesh );
+}
+
+
+
+if (OPERATION == "normal") {
+    draw_and_register();
+    // draw_many();
+
+    for(var i = 0; i < am.helices.length; i++) {
+	console.log(am.helix_params[i]);
+	compute_helix_minimax(am.helices[i]);
+	console.log(am.helix_params[i]);    
+    }
+} else if (OPERATION == "helices") {
+    am.NUMBER_OF_TETRAHEDRA  = 7;
+    am.INITIAL_EDGE_WIDTH /= 0.5;
+    am.JOINT_RADIUS /= 1;
+//    this.jointGeo = new THREE.SphereGeometry( this.JOINT_RADIUS,32,32);
+    draw_helices();
+}
 
     </script>
 
