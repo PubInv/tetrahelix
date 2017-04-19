@@ -32,7 +32,7 @@
 
 % See the ``Article customise'' template for come common customisations
 
-\title{Untwisting the Boerdijk--Coxeter}
+\title{Untwisting the Boerdijk--Coxeter Helix}
 \author{Robert L. Read \email{read.robert@gmail.com}
 }
 
@@ -258,10 +258,15 @@ values.
   \label{fig:helixcomparison}  
 \end{figure}
 
-\Cref{fig:helixcomparison} illustrates this difference. Although the nodes conincide, \cref{graycoxeter} evaluated
-at real values generates the black helix, and \cref{eq:colored} defines the red, yellow, and blue helices. (In this figure
-these rail helices have been rendered at a slightly higher radius than the nodes; in actuality the helices are much close
-to the edges between the nodes that they nearly match.)
+\Cref{fig:helixcomparison} illustrates this difference with a 7-tetrahedra BC helix, which is
+in fact the same geometry as the robot illustrated in \cref{fig:glussbot}.
+Although the nodes conincide,
+\cref{graycoxeter} evaluated
+at real values generates the black helix which runs through every node, and \cref{eq:colored} defines
+the red, yellow, and blue helices. (In this figure
+these rail helices have been rendered at a slightly higher radius than the nodes for clarity;
+in actuality the maximum distance between the continuous, curved helix and the
+straight edges between nodes is much smaller than can be clearly rendered.)
 
 The quantity $ (3 \theta_{bc} - 2 \pi) \approx 35.43 \degree $  is the angular shift between $V(3n + c)=H_{BCcolored}(n,c)$ and
 $V(3(n+1)+c)=H_{BCcolored}(n+1,c)$.
@@ -288,7 +293,7 @@ the expressions $\theta_{bc}$ and $\rho_{bc}$ in \eqref{eq:colored} and seek to 
  c \theta_{bc}  &=   \text{\{we aim for 3 in denominator, so we split...\}} \\
     (c/3)  (3 \theta_{bc})  &=   \text{\{we want $2\pi$ in numerator, so add canceling terms...\}} \\
  (c/ 3) ((3 \theta_{bc} - 2 \pi)  + 2 \pi) &= \text{\{definition of $\rho_{bc}$\}...} \\  
-  (c / 3) \rho_{bc}  + c 2 \pi /3 &=  \text{algebra...} \\  
+  (c / 3) \rho_{bc}  + c 2 \pi /3 &=  \text{\{algebra...\}} \\  
 c  ( \rho_{bc} +  2 \pi) /3  \\
 \end{align*}
 
@@ -323,7 +328,7 @@ moves us $\rho_{bc}$ radians around a circle. Since:
 \]
 we can see that there are approximately $10.16$ red, blue or yellow tetrahedra on one rail in a single revolution.
 
-The \emph{pitch} of any tetrahelix, defined as the length of a complete revolution
+The \emph{pitch} of any tetrahelix, defined as the axial length of a complete revolution
 where $\rho \neq 0$ is:
 \begin{equation}
   \label{pitcheqn}
@@ -362,16 +367,25 @@ vertices and edges in the two tetrahelices.
 One could consider various definitions of optimality for a
 tetrahelix, but the most useful to us as robotocists working with the Tetrobot
 concept is to minimize the
-maximum difference between any two edges, because the Tetrobot uses
+maximum ratio between any two edge lengths, because the Tetrobot uses
 mechanical linear acutators with
 limited range of extension.
 
 A \emph{triple helix} is three congruent helices that share an axis. We show that
-optimal tetrahelices are triple helices.
+optimal tetrahelices are in fact triple helices with the same radius, so that all
+vertices are on a cylinder. In, stages, we demonstrate that optimal tetrahelices:
+\begin{enumerate}
+\item have the same pitch,
+\item have parallel axes,
+\item share the same axis,
+\item have the same radius.
+\end{enumerate}
 
 
-Suppose that all three rails do not have the same pitch. Starting at any shortest edge, as we move
-from node to node away from our start node edge lengths between rails must always lengthen without bound,
+Suppose that all three rails do not have the same pitch. Starting at any shortest edge between
+two rails, as we move
+from node to node away from our start edge the edge lengths
+between rails must always lengthen without bound,
 which cannot be optimal.
 So we are justified in talking about the
 \emph{pitch} of 
@@ -383,17 +397,16 @@ unbounded length in the structure, so we do not consider such cases.
 
 Since the axes are parallel, we may define the \emph{inradius}, represented by the letter $i$, of a
 tetrahelix to be the radius of the largest
-cylinder parallel to this axis contained within the circumscribing cylinder
-which is penetrated by no edge.
+cylinder parallel to this axis that is surrounded by each tetrahelix and pentrated by no edge.
 Define a \emph{minimax edge-length optimal tetrahelix} or just an
 \emph{optimal tetrahelix} to be a tetrahelix for which there exists
 no other tetrahelix of the same inradius and pitch with a lower maximum
-difference between its edge lengths. 
+ratio between its edge lengths. 
 
 We wish to show that in an optimal tetrahelix, all vertices lie on the cylinder
 of radius $r$, regardless of where they lie on the $z$-axis.
 
-Since all three rails have the same rail length, no matter how we
+Since all three rails have the same rail edge length, no matter how we
 move the rails in the $xy$ plane if we shorten the $xy$ distance between
 vertices we shorten the total distance.
 Our tool for thinking about this is to collapse the $z$ dimension to form
@@ -405,59 +418,88 @@ irrational) or a polygon if rational, or a point if the helix has
 zero curvature. Each of these figures by definition lies outside the
 circle of inradius $r_{in}$ in the $xy$ plane.
 
+As a little lemma for the proof below, observe that a tetrahelix of zero radius, where
+all points lie on the same line,
+is not as optimal as a tetrahelix of a small radius. The edges between rails will be
+shorter than the rail edges, and moving them apart slightly lengthens the between-edge
+rails.
+
 \begin{theorem}
-  \label{thm:cylinder}
-  Any optimal tetrahelix with a rail angle less than $\pi$ has all vertices on a single cylinder.
+  Any optimal tetrahelix with a rail angle of magnitude less than $\pi$ has all three
+  axes conincident.
+  \label{thm:conincident}
 \end{theorem}
-
 \begin{proof}
-
-Case 1: Suppose that $\rho$ is zero. Then for any given inradius, an equilateral
-triangle is the minimax solution for all non-rail edges. Since there is only
-one rail-edge length, this is the minimax solution for the entire set. Since
-the vertices of an equilateral triangle lies on a circle, all points lie on
+  Case 1: Suppose that $\rho$ is zero. Then for any given inradius, the
+  figure in the $XY$-plane of an equilateral
+  triangle is the minimax solution for all non-rail edges. Since all
+  rail edges are of length 1, this is the minimax solution for the entire set. Since
+the vertices of an equilateral triangle lie on a circle, all points in three-space lie on
 a cylinder.
 
 Case 2: Suppose that $\rho$ is positive but less than $\pi$.
 In this case each rail helix has
-curavature and places points on both sides of any line through the origin
-of the $xy$ plane (or both coincident on such a line.)
+curavature. The projection of points in the $XY$ plane creates a figure
+guaranteed to have point on either side of any line through the axis of such
+a helix, because the figure is either an $n$-gon or a circle.
+We show that the three helices share a common axis.
 
-We first show that the inradius is touched by one segment from each pair
-of rails.
+  Without loss of generality define the Red helix to have its axis on the $z$-axis.
+  Without loss of generatlity define the Blue helix to be a helix that
+  has an edge connection to the Red helix that is either a maximum or a minimum.
+  Let $B'$ be the blue helix translated in the $XY$-plane so that its axis is the $z$-axis and
+  condicent with the red helix $R$. Let $D$ be the distance between the axis of the Blue helix
+  $B$ and $B'$. We will show that if $D>0$ then $B$ ``wobbles'' in a way that cannot be optimal.
+  Define a wobble vector by:
+  \begin{equation*}
+    W(n) = B(n) - B'(n)
+  \end{equation*}
+  where $B(n)$ is the cartesian vector
+  $\begin{bmatrix}
+           x \\
+           y 
+  \end{bmatrix}$
+  for the projection of the $n$th blue vertex.
+  Note that $|| R(n) - B'(n+k)||$ is a constant for any $k$, because $R$ and $B'$ have the
+  same pitch and the same axis, even if they do not have the same radius
+  (which we are currently proving.)
 
-\begin{figure}[H]
+  \begin{figure}[H]
      \centering
-     \includegraphics[width=0.7\textwidth]{figures/UntouchingRail.png}
-     \caption{Untouching Rail}
-  \label{untouchingrailfig}
+     \includegraphics[width=0.7\textwidth]{figures/WobbleDiagram.png}
+     \caption{Wobble Vectors from Non-Coincident Axes}
+  \label{fig:wobble}
 \end{figure}
+  
+  Since $-\pi<\rho<\pi$, each rail helix rotates about its axis as a function of $n$ and
+  defines at least 3 unique points when projected onto the $XY$-plane around its axis.
+  If $2\pi/\rho$ is irrational, it defines a circle. If $2\pi/\rho$ is rational it defines
+  an n-gon in the $XY$-plane, where $n$ is at least 3 (when $\rho = 2\pi/3$).
+  The set of wobbles $\{W(n) | \text{for any n}\}$ thus contains at least three vectors,
+  pointing in different directions.
+  For any point not at the origin, at least one of these vectors moves closer to the
+  point and at least one moves further away.
 
-\Cref{untouchingrailfig} depicts a projection of
-only the point $P$, the point $P'$ which is an adjacent vertex on the same rail,
-and the intermediary points $R$ and $Q$ on the other two rails.
+    The set of all lengths in the tetrahelix is a superset of:
+    $L = \{|| R(n) - B(n)||\}$, which by our choice has at least one longest or shortest
+    length.
+    $L = \{|| R(n) - (B'(n) + W(n))||\}$ and so
+    $L = \{|| (R(n) - B'(n)) - W(n)||\}$.
+    But $R(n) - B'(n)$ is a constant, so the minimax value of $L$ is improved as $||W(n)||$
+    decreases.  
+    By our choice, this improves the minimax value of the total tetrahelix.
+    
+    This process can be carried out on both the Blue and Yellow helices
+    (perhaps simultaneously) until $W(n)$ is
+    zero for both, finding a tetrahelix of improved overall minimax value at each step.
+    So a tetrahelix is optimal only when $W(n) = 0$, and therefore when $D=0$
+    $B(n) = B'(n)$, all three axes are conincident.
+  \end{proof}
 
-Supoose there is a rail $P$ which does not have a segment touching the incircle
-at all in the projection, as depicted in \cref{untouchingrailfig}.
-Then a segment connecting the other two $Q$ and $R$ is a longest
-rail, because any chord touching an incircle is longer than any which does not.
-These two rails ($Q$ and $R$) can be moved closer to each other, and further away from $P$, to form a better minimax solution
-by shortening the longest rail, until one of the segments from $P$ the previously
-untouching rail touches one of the incircle. By induction, then all rails have
-at least one segement touching each vertex on the rail that is tangent to the
-incircle in an optimal tetrahelix.
-
-Now suppose that you attempt to move the axis of one of the rails. Because
-$\rho > 0 $ and $\rho$ is not a multiple of $\pi$, there is some vertex on the two sides of any diameter
-halving our circle. Moving the axis of a tetrahelix lengthens a longest line while ``pinching'' the
-inradius on the other side, so it is not optimal. Since the axes of these helices are the
-same and they have the same curvature and pitch, the points defined by the helices all lie
-on a cylinder.
-
-
-\end{proof}
 
 Note that \cref{thm:cylinder} is not true when $\rho$ is an odd integer multiple of $\pi$.
+
+Note: This is not a proof that they have the same radius, I will have to add that.
 
 Now that we have shown that any optimal tetrahelix vertices
 are on helices of the same axes and pitch, we see that the vertices 
@@ -508,7 +550,7 @@ edges are slightly longer than the purple edges.
 
 \begin{theorem}
   \label{eventhirds}
-  An optimal tetrahelix of any rail angle $\rho < \pi$ is a triple helix all nodes evenly spaced at $d/3$ intervals on the $z$ axis.
+  An optimal tetrahelix of any rail angle $\rho < \pi$ is a triple helix with all vertices evenly spaced at $d/3$ intervals on the $z$ axis.
   Any one tetrahedron in a tetrahelix has $1$ rail edge, $2$ one-hop edges connected to the rail and $2$ two-hop edges connected to the rail.
   The edge opposite of the rail edge is a one-hop edge.
 \end{theorem}
@@ -630,7 +672,7 @@ Note that when $\rho = 0$ then $d_{\rho} = 1$, but $r_{\rho}$ is not determined 
 
 \begin{theorem}
   \label{generalformulaoptimal}
-  The tetrahelices generated by $H_{general}$ are optimal in terms of minimum maximum member length when $r_{\rho}$ is chosen so that
+  The tetrahelices generated by $H_{general}$ are optimal in terms of minimum maximum ratio of member length when $r_{\rho}$ is chosen so that
   the length of the one-hop edge is equal to the rail length.
 \end{theorem}
 
@@ -741,7 +783,7 @@ If we look down the axis of an optimal tetrahelix as shown in \cref{axialview}, 
 (rendered in purple in our software)
 comes closest to the axis. In other words, they define the radius of the incircle of the
 projection, or the radius of a cylinder that would just fit inside the tetrahelix.
-A formula for the inradious of the tetrahelix is useful if you are designing it as a structure that bears something internally,
+A formula for the inradius of the tetrahelix is useful if you are designing it as a structure that bears something internally,
 such as a firehose, a pipe, or
 a ladder for a human. The inradius $r_{in}(\rho)$ of
 an optimal tetrahelix is a remarkably simple function of the radius $r$ and the rail angle $\rho$:
@@ -777,7 +819,7 @@ without the split into three rails introduced by \cref{eq:colored} and completed
 
 
 \begin{corollary}
-  The equitetrabeam with minimal maximal edge difference is produced
+  The equitetrabeam with minimal maximal edge ratio is produced
   \newline by $H_{general}$ when $ r = \sqrt{\frac{8}{27}} $.
 \end{corollary}
 
@@ -862,7 +904,7 @@ In this way a rail angle can be chosen for any desired (sufficiently large) pitc
 the optimum radius, one-hop, and two-hop lengths an engineer needs to
 construct a physical structure.
 
-The curvature of a rail helix is given by:
+The curvature of a rail helix is foramlly given by:
 \begin{equation}
   \frac{|r_{\rho}|}{r_{\rho}^2 + (d_{\rho}/\rho)^2}
 \end{equation}
@@ -889,7 +931,7 @@ used as a beam, an engineer might start with the optimal tetrabeam and
 dilate it in one dimension to ``deepen'' the beam. Similarly, simple
 length changes curve the equitetrabeam into an ``arch''.
 The ``colored'' approach of \cref{eq:general} exposes these possibilities
-more than the approach of \cref{eq:coxetergraygeneral}.
+more than the approach of \cref{graycoxeter}.
 
 Trusses and space frames remain an important design field in
 mechanical and structural engineering\cite{mikulas1985sequentially},
@@ -949,14 +991,14 @@ The BC Helix is the end point of a continuum of tetrahelices, the
 other end point being an untwisted tetrahelix with equilateral cross
 section, constructed by changing the length of only those members
 crossing the outside rails after hopping over the nearest
-vertex. Under the condition of miminum maximum length difference of
+vertex. Under the condition of miminum maximum length ratios of
 all members in the system, all such tetrahelices have vertices evenly
-spaced along the axis generated by a simple equation.  A mechanical
-machine, such as a robot or a variable-geometry truss, that can change
-the length of its members, can thus twist and untwist itself by
+spaced along the axis generated by a simple equation and are in fact triple helices.
+A machine, such as a robot or a variable-geometry truss, that can change
+the length of its members can thus twist and untwist itself by
 changing the length of the appropriate members to achieve any point in
-the continuum optimally. With a numeric solution, a design may choose
-a rotation angle and member lengths to obtain any desired pitch.
+the continuum. With a numeric solution, a design may choose
+a rotation angle and member lengths to obtain a desired pitch.
 
 \section{Contact and Getting Involved}
 
@@ -972,12 +1014,67 @@ To assist, contact \email{read.robert@gmail.com}.
 
 TODO:
 
+** Try to show that rotation must be symmetric over possible rotation.
+
+** Try to show 2-hop > rail for any optimal.
+
+
+
+
 http://epubs.siam.org/toc/sjaabq/1/1
-
-Improve the helix comparison by constructing by hand in the Inkscape.
-
-Check the math on V_{general}.
 
 Reread everything, especially the new parts.
 
+
+
+\begin{theorem}
+  \label{thm:cylinder}
+  Any optimal tetrahelix with a rail angle less than $\pi$ has all vertices on a single cylinder.
+\end{theorem}
+
+\begin{proof}
+
+Case 1: Suppose that $\rho$ is zero. Then for any given inradius, an equilateral
+triangle is the minimax solution for all non-rail edges. Since there is only
+one rail-edge length, this is the minimax solution for the entire set. Since
+the vertices of an equilateral triangle lie on a circle, all points lie on
+a cylinder.
+
+Case 2: Suppose that $\rho$ is positive but less than $\pi$.
+In this case each rail helix has
+curavature and places points on both sides of any line through its axis.
+
+We first show that the inradius is touched by one segment from each pair
+of rails.
+
+\begin{figure}[H]
+     \centering
+     \includegraphics[width=0.7\textwidth]{figures/UntouchingRail.png}
+     \caption{Untouching Rail}
+  \label{untouchingrailfig}
+\end{figure}
+
+\Cref{untouchingrailfig} depicts a projection of
+only the point $P$, the point $P'$ which is an adjacent vertex on the same rail,
+and the intermediary points $R$ and $Q$ on the other two rails.
+
+Supoose there is a rail $P$ which does not have a segment touching the incircle
+at all in the projection, as depicted in \cref{untouchingrailfig}.
+Then a segment connecting the other two $Q$ and $R$ is a longest
+rail, because any chord touching an incircle is longer than any which does not.
+These two rails ($Q$ and $R$) can be moved closer to each other, and further away from $P$,
+to form a better minimax solution
+by shortening the longest rail, until one of the segments from $P$, the previously
+untouching rail, touches the incircle. By induction, then all rails have
+at least one segement touching each vertex on the rail that is tangent to the
+incircle in an optimal tetrahelix.
+
+Now suppose that you attempt to move the axis of one of the rails away from the center
+for our circle. Because
+$\rho > 0 $ and $\rho$ is not a multiple of $\pi$, there is some vertex on the two sides of any diameter
+halving our circle. Moving the axis of a tetrahelix lengthens a longest line while ``pinching'' the
+inradius on the other side, so it is not optimal. Since the axes of these helices are the
+same and they have the same curvature and pitch, the points defined by the helices all lie
+on a cylinder.
+\end{proof}
 
