@@ -378,9 +378,11 @@ vertices are on a cylinder. In, stages, we demonstrate that optimal tetrahelices
 \item have the same pitch,
 \item have parallel axes,
 \item share the same axis,
-\item have the same radius.
+\item have the same radius,
+  \item have the same rail lengths,
+  \item have axialy equidistant nodes, and therefore
+  \item are in fact triple helices.
 \end{enumerate}
-
 
 Suppose that all three rails do not have the same pitch. Starting at any shortest edge between
 two rails, as we move
@@ -406,17 +408,17 @@ ratio between its edge lengths.
 We wish to show that in an optimal tetrahelix, all vertices lie on the cylinder
 of radius $r$, regardless of where they lie on the $z$-axis.
 
-Since all three rails have the same rail edge length, no matter how we
-move the rails in the $xy$ plane if we shorten the $xy$ distance between
-vertices we shorten the total distance.
-Our tool for thinking about this is to collapse the $z$ dimension to form
-a two-dimensional figure of nodes and non-rail edges (see \cref{untouchingrailfig}.)
-Consider the projection along the $z$ axis of all vertices and non-rail edges into the $xy$ plane, which will be
-a figure of dots and connecting segments in the $xy$ plane. The convex
-hull for any one helix projection will be a circle (if its pitch is
-irrational) or a polygon if rational, or a point if the helix has
-zero curvature. Each of these figures by definition lies outside the
-circle of inradius $r_{in}$ in the $xy$ plane.
+%% Since all three rails have the same rail edge length, no matter how we
+%% move the rails in the $xy$ plane if we shorten the $xy$ distance between
+%% vertices we shorten the total distance.
+%% Our tool for thinking about this is to collapse the $z$ dimension to form
+%% a two-dimensional figure of nodes and non-rail edges (see \cref{fig:wobble}.)
+%% Consider the projection along the $z$ axis of all vertices and non-rail edges into the $xy$ plane, which will be
+%% a figure of dots and connecting segments in the $xy$ plane. The convex
+%% hull for any one helix projection will be a circle (if its pitch is
+%% irrational) or a polygon if rational, or a point if the helix has
+%% zero curvature. Each of these figures by definition lies outside the
+%% circle of inradius $r_{in}$ in the $xy$ plane.
 
 As a little lemma for the proof below, observe that a tetrahelix of zero radius, where
 all points lie on the same line,
@@ -494,12 +496,115 @@ We show that the three helices share a common axis.
     zero for both, finding a tetrahelix of improved overall minimax value at each step.
     So a tetrahelix is optimal only when $W(n) = 0$, and therefore when $D=0$
     $B(n) = B'(n)$, all three axes are conincident.
-  \end{proof}
+\end{proof}
 
 
-Note that \cref{thm:cylinder} is not true when $\rho$ is an odd integer multiple of $\pi$.
+Now we show that an optimal tetrahelix has the same radii for all three helices.
+To do this exhibit a symmetric tetrahelix (not yet shown to be optimal) which
+happens to be a tetrahelix, that has
+the property that all rail edges are equal to all one-hop edges and all two-hop
+edges are equal. Observe that although we have not get given the formula for the
+radii of such a triple helix, we observe there are some values for $r$ and $\alpha$
+for which this is true from this generic formula for a triple helix:
+\[
+\label{eq:triple}
+V_{triple}(n,c) =
+\left [
+  \begin{tabular}{c}
+   $ r \cos(n \alpha +  c 2 \pi /3)$\\
+   $ r \sin(n \alpha +  c 2 \pi /3) $\\
+   $ \frac{d(n +c / 3)}{3}   $
+  \end{tabular}
+  \right ],
+\text{where:}
+\begin{tabular}{c}
+  $c \in \{0,1,2\}$
+  \end{tabular}      
+\]
+In \cref{sec:parameterizing} we show how to find $r$ and $\alpha$.
 
-Note: This is not a proof that they have the same radius, I will have to add that.
+In principle in any 3 helices with the same axis of the same radius
+having any relative
+displacement along the $z$ axis there are 9 distinct edge classes.
+If when projecting all vertices on the the $z$-axis, the interval
+defined by the $z$ axis value of its endpoints contains no other vertices,
+we call it a \emph{one-hop} edge, and if it does contain another vertex we
+call it a \emph{two-hop} edge.
+Then there are 
+3 rail edges, 3 one-hop lengths between each pair of 3 rails, and 3 two hop
+lengths between each pair of 3 rails, where the two-hop length is at least
+the one-hop length.
+However, if we generate the three helices symmetrically with \cref{eq:triple},
+many of these lengths will be the same.
+
+Now consider a tetrahelix in which the radius of one of the helices is different.
+By the connections made in a tetrahelix, any increase to a radius increases both
+a one-hop and two-hop distance, and any decrease likewise decreases two.
+Since there exists a tetrahelix which has only two distinct classes of edge lengths,
+(the smaller being one-hop = rail, the larger being the two-hop distance), the helix
+with a larger radius increases a longest edge without increasing a shortest edges.
+Likewise, a helix with a smaller radius decreases a one-hop edge without decreasing
+a two-hop edge.  Therefore, a tetrahelix with different radii is not as some
+tetrahelix generated by \cref{eq:triple}, and so it not optimal. (Note however,
+that we have not yet exhibited a truly optimal tetrahelix, nor proven that such
+a tetrahelix occurs when the one-hop edge, length is equal to the rail edge length,
+which we do in \cref{sec:parameterizing}.)
+
+Because an optimal tetrhelix has equivalent radii for all three helices,
+it has equivalent rail edge lengths.
+
+%% \begin{theorem}
+%%   \label{thm:cylinder}
+%%   Any optimal tetrahelix with a rail angle less than $\pi$ has all vertices on a single cylinder.
+%% \end{theorem}
+
+%% \begin{proof}
+
+%% Case 1: Suppose that $\rho$ is zero. Then for any given inradius, an equilateral
+%% triangle is the minimax solution for all non-rail edges. Since there is only
+%% one rail-edge length, this is the minimax solution for the entire set. Since
+%% the vertices of an equilateral triangle lie on a circle, all points lie on
+%% a cylinder.
+
+%% Case 2: Suppose that $\rho$ is positive but less than $\pi$.
+%% In this case each rail helix has
+%% curavature and places points on both sides of any line through its axis.
+
+%% We first show that the inradius is touched by one segment from each pair
+%% of rails.
+
+%% \begin{figure}[H]
+%%      \centering
+%%      \includegraphics[width=0.7\textwidth]{figures/UntouchingRail.png}
+%%      \caption{Untouching Rail}
+%%   \label{untouchingrailfig}
+%% \end{figure}
+
+%% \Cref{untouchingrailfig} depicts a projection of
+%% only the point $P$, the point $P'$ which is an adjacent vertex on the same rail,
+%% and the intermediary points $R$ and $Q$ on the other two rails.
+
+%% Supoose there is a rail $P$ which does not have a segment touching the incircle
+%% at all in the projection, as depicted in \cref{untouchingrailfig}.
+%% Then a segment connecting the other two $Q$ and $R$ is a longest
+%% rail, because any chord touching an incircle is longer than any which does not.
+%% These two rails ($Q$ and $R$) can be moved closer to each other, and further away from $P$,
+%% to form a better minimax solution
+%% by shortening the longest rail, until one of the segments from $P$, the previously
+%% untouching rail, touches the incircle. By induction, then all rails have
+%% at least one segement touching each vertex on the rail that is tangent to the
+%% incircle in an optimal tetrahelix.
+
+%% Now suppose that you attempt to move the axis of one of the rails away from the center
+%% for our circle. Because
+%% $\rho > 0 $ and $\rho$ is not a multiple of $\pi$, there is some vertex on the two sides of any diameter
+%% halving our circle. Moving the axis of a tetrahelix lengthens a longest line while ``pinching'' the
+%% inradius on the other side, so it is not optimal. Since the axes of these helices are the
+%% same and they have the same curvature and pitch, the points defined by the helices all lie
+%% on a cylinder.
+%% \end{proof}
+
+%% Note: This is not a proof that they have the same radius, I will have to add that.
 
 Now that we have shown that any optimal tetrahelix vertices
 are on helices of the same axes and pitch, we see that the vertices 
@@ -521,17 +626,6 @@ Now that we have coincident axes, the same pitch, and the same radius, we can go
  in a complicated way depending on where it is relative to the
  ellipse.
 
- In principle in any 3 helices with the same axis of the same radius
- having any relative
- displacement along the $z$ axis there are 9 distinct edge classes.
- If when projecting all vertices on the the $z$-axis, the interval
- defined by the $z$ axis value of its endpoints contains no other vertices,
- we call it a \emph{one-hop} edge, and if it does contain another vertex we
- call it a \emph{two-hop} edge.
- Then there are 
- 3 rail edges, 3 one-hop lengths between each pair of 3 rails, and 3 two hop
- lengths between each pair of 3 rails, where the two-hop length is at least
- the one-hop length.
  However, we have already shown the rail
  lengths are equal in any optimal tetrahelix.
 
@@ -584,7 +678,7 @@ edges are slightly longer than the purple edges.
  and we are justified in classifying edge lengths as \emph{rail}, \emph{one-hop}, or
 \emph{two-hop}. The one-hop edges are the edges between rails that are closest on the $z$-axis, and the two-hop edges are those that skip over a vertex.
 
-By \cref{eventhirds} every optimal tetrahelix has vertices lying on helices expressible in the form:
+By \cref{eventhirds} we are justified renaming \cref{eq:triple} ``optimal'':
 \[
 V_{optimal}(n,c) =
 \left [
@@ -599,14 +693,14 @@ V_{optimal}(n,c) =
   $c \in \{0,1,2\}$
   \end{tabular}      
 \]
-where we have not yet investigated in the general case the relationships beteween $\alpha$, $r$, and $d$ in this formulation.
+where we have not yet investigated in the general case the relationships beteween
+$\alpha$, $r$, and $d$ in this formulation.
 However, we understand that when $\alpha = 0$, the helices are degenerate, having curvature of $0$, and
 we have the equitetrabeam.
 
 
-
-
 \section{Parameterizing Tetrahelices via Rail Angle}
+\label{sec:parameterizing}
 
 We seek a formula to generate optimal tetrahelices that accepts a
 parameter that allows us to design the tetrahelix conveniently.
@@ -1027,54 +1121,242 @@ Reread everything, especially the new parts.
 
 
 
-\begin{theorem}
-  \label{thm:cylinder}
-  Any optimal tetrahelix with a rail angle less than $\pi$ has all vertices on a single cylinder.
-\end{theorem}
+Proof Ideas:
 
-\begin{proof}
+Now that we have shown parallel and conincident, we can definie ``one-hop'' and ``two-hop''
+clearly.
 
-Case 1: Suppose that $\rho$ is zero. Then for any given inradius, an equilateral
-triangle is the minimax solution for all non-rail edges. Since there is only
-one rail-edge length, this is the minimax solution for the entire set. Since
-the vertices of an equilateral triangle lie on a circle, all points lie on
-a cylinder.
+Can we show that one-hop < two-hop in an optimal tetrahelix?
 
-Case 2: Suppose that $\rho$ is positive but less than $\pi$.
-In this case each rail helix has
-curavature and places points on both sides of any line through its axis.
+This is true by definition, but we potentially have 6 such differences.
+If all are less than the maximum rail edge, we are not optimal, as a lower rail edge
+is better.
+If all are > than the minimum rail edge, we are not opitimal, as we can raise that
+rail edge.
 
-We first show that the inradius is touched by one segment from each pair
-of rails.
+So MAX(non-rail) >= MIN(rail-edge).
+also: MIN(non-rail) <= MAX(rail).
 
-\begin{figure}[H]
-     \centering
-     \includegraphics[width=0.7\textwidth]{figures/UntouchingRail.png}
-     \caption{Untouching Rail}
-  \label{untouchingrailfig}
-\end{figure}
+Conjecture: Increasing Radius increases length of all attached nodes.
+Lemma: If a line is drawn between a point P on one circule and a point Q on a nother circle,
+and the circles are parallel in space,
+increasing the radius of eitehr circle increases the length, no matter where the circles are,
+and no matter where the points are on the circle.
 
-\Cref{untouchingrailfig} depicts a projection of
-only the point $P$, the point $P'$ which is an adjacent vertex on the same rail,
-and the intermediary points $R$ and $Q$ on the other two rails.
+Therefore if there is a single maximum radius and it has a longest edge coming to it,
+the minimax is made better by decreasing that radius until equal with the next radius.
 
-Supoose there is a rail $P$ which does not have a segment touching the incircle
-at all in the projection, as depicted in \cref{untouchingrailfig}.
-Then a segment connecting the other two $Q$ and $R$ is a longest
-rail, because any chord touching an incircle is longer than any which does not.
-These two rails ($Q$ and $R$) can be moved closer to each other, and further away from $P$,
-to form a better minimax solution
-by shortening the longest rail, until one of the segments from $P$, the previously
-untouching rail, touches the incircle. By induction, then all rails have
-at least one segement touching each vertex on the rail that is tangent to the
-incircle in an optimal tetrahelix.
+If a single radius is a shortest radius, the minimax is made better by
+increasing it.
 
-Now suppose that you attempt to move the axis of one of the rails away from the center
-for our circle. Because
-$\rho > 0 $ and $\rho$ is not a multiple of $\pi$, there is some vertex on the two sides of any diameter
-halving our circle. Moving the axis of a tetrahelix lengthens a longest line while ``pinching'' the
-inradius on the other side, so it is not optimal. Since the axes of these helices are the
-same and they have the same curvature and pitch, the points defined by the helices all lie
-on a cylinder.
-\end{proof}
+Can we proe this rigourously?
+
+Does a single large radius necessarily have a longest edge?
+A Rail edge would be longest if we allow any rotation, but we can severely
+limit rail angle to \rho_{bc}.
+
+New Idea:
+
+Suppose Red is a largest radius.  Blue and Yellow must be symmetrically distributed
+ccw and cw from Red.
+
+Proof sketch: if Red is a largest radius, the two-hop edges to Yellow and Blue
+are the longest two in the system.  Is one is longer than that other, rotating it
+is more optimum.
+
+Proof Idea:
+
+If two-hop edges are always longest and one-hop always shortest, then they
+should be equalized.
+
+
+* * *
+
+Proof idea.
+
+Thm: An optimal tetrahelix has a longest edge which is a two-hop edge.
+
+Proof:
+
+Case 1: If the longest edge is a rail edge, construct a better minimax optimal
+tetrahelix by increasing the radius of every helix, which does not change the
+rail length, until a non-rail edge is equal to the rail edge.  This increases
+the length of every non-rail edge, therefore it is a better helix.
+
+Case 2: The longest edge is a non-rail edge.
+
+WOLOG, this is an edge from Red to Blue. By assumption, at least one
+of three things must be true:
+1) The RED-BLUE 2-hop axial distance is longer than the other two 2-hop axial distances.
+2) One rail (call it Red) has a larger radius.
+3) The Red-Blue rails can be rotated closer together to decrease the
+RED-BLUE distance. (If the angle between RED and BLUE is zero, then one
+of the other must be true.)
+
+In case 1), construct a better tetrahelix axially shifting the BLUE rails to decrease
+the RED-BLUE 2-hop axial distance (and increase the 2-hop axial distance.) The effects
+our classes by:
+RR not affected
+BB not affected
+YY not affected
+RB- increased
+RB+ decreased
+BY- decreased
+BY+ increased
+RY- not affected
+RY+ not affected
+
+So if the set of shortest edges does not include BY-, this tetrahelix is better.
+If it does include BY-, we must show that RB+/BY- decreases as we move the rail.
+We could show the actual derivative of this.  Informally, the angle is more direct,
+so the change in RB+ should be greater. This may require comparison to the cylindrical
+solution.  If we assume this is true for the cylindrical solution, then we have shown
+a better solution exists. So case one is not optimal.
+
+So we must show that if a shortest edge is in RY-, RY+, RB-, we have to
+RB+ of these edges decreases. RY+ cannot be a shortest edge.
+Idea: if RY-, RB- are shortest, increase Y, B radius.
+So what does the derivative of RB+/RY- and RB+/RB- tell us? The further away it is,
+the straighter the push, so it is likely that the RB+ edge changes faster than the RY- edge
+decreases. If R has a bigger radius, can RY- be smaller than BY-? Seems like we will
+have to use the algebraic formula to do this---but I have no proof yet that it is an triple helix.
+
+Note, that if we could prove just this case, our equidistance proof would complete everything we need!
+So I need to show that RB+/RY- decreases as we shrink the radius---in other words, the RB+ line
+is more central than the RY- line.
+
+In case 3), if we rotate blue towards red:
+
+RR not affected
+BB not affected
+YY not affected
+RB- decreases
+RB+ decreases
+BY- increases
+BY+ increases
+RY- not affected
+RY+ not affected
+
+
+Attempt to create Proof of Equal Radius:
+
+Suppose that Red Radius is largest.
+
+Case RB+ is longest:
+We can understand the change of decreasing the Red Radius:
+
+RR decreases
+BB not affected
+YY not affected
+RB- decreases
+RB+ decreases
+BY- not affected
+BY+ not affected
+RY- decreases
+RY+ decreases
+
+Sub Case split:
+Case RB- is smallest:
+Increase B radius.
+Case RY- is smallest:
+Increase Y radius.
+Case RR is smallest:
+This is not possible if Red is has the largest Readius!
+Case: RB- = RY-  are smallest.  In increase both B and Y.
+
+Done case RB+ is longest.
+
+Case YB+ is longest:
+
+This can occur only if YB is not even 1/3rds.
+
+Case:
+YB- is the worst. Then we need to move the bar.
+
+Case:
+Rail BB is smallest.  Then  we are making better.
+
+Case:
+RB- is smallest (need to move blue.)
+RY- is smallest (need to move yellow.)
+
+(I think this is a combined proof.)
+
+Case RB+ amd YB+ are both longest.
+
+RR decreases
+BB not affected
+YY not affected
+RB- decreases
+RB+ decreases
+BY- not affected
+BY+ not affected
+RY- decreases
+RY+ decreases
+
+Decrease R and simultaneously rotate Y towards B
+to decrease YB+.
+
+Done with case YB+ is longest.
+
+Case RR is longest:
+
+Decrease radius improves.
+
+Now suppose the Red and Blue Radiii are equual and larger than yellow.
+
+Case split RB+ is longest.
+
+Increase Y does:
+RR not affected
+BB not affected
+YY increases
+RB- not affected
+RB+ not affected
+BY- increases
+BY+ increases
+RY- increases
+RY+ increases
+
+Sub case split: Shortest not RR,BB, or RB- or RB+, then we improve.
+If it is a rail, decrease all radii until this is not true.
+
+RB-, then we need to move Red relative to Blue. If we are already
+at even thirds and proper rotation is this possible? This might require
+going down the algebra level to prove.
+
+
+Case split YB+ or YR+ is longest.
+
+New Proof Idea:
+
+Prove optimality of equal one-hop edges from simple diagram.
+From that, show optimality of equidistance and radius.
+
+
+
+New Proof Idea:
+
+Proof that all radii are the same.
+
+Lemma: There is a solution with all one-hop edges equal to all rail edges
+and all two-hop edges longer.
+
+Assume that the solution with all one-hop and rail distances the same
+is optimal.  Assume that all two-hop edges are the same.
+
+Any change to a radii either increases both or decreases both for
+one set, thereby harming the optimum.  Y cannot be rotated
+toward both Red and Blue. Y cannot be shifted toward both Red and Blue.
+(We need a lemma here that Red and Blue are on the opposite side or the
+line through the circle of Red.)
+Therefore any different radius has a longer two-hop edge, and is not optimal.
+
+If we have all radii the same, then our existing proof works for
+equidistance.
+
+
+
+
+
 
