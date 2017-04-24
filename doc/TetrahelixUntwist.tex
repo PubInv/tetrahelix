@@ -397,13 +397,9 @@ three such helices of equivalent pitch.
 Similarly, if the axes are not parallel, there is an edge of
 unbounded length in the structure, so we do not consider such cases.
 
-Since the axes are parallel, we may define the \emph{inradius}, represented by the letter $i$, of a
-tetrahelix to be the radius of the largest
-cylinder parallel to this axis that is surrounded by each tetrahelix and pentrated by no edge.
 Define a \emph{minimax edge-length optimal tetrahelix} or just an
 \emph{optimal tetrahelix} to be a tetrahelix for which there exists
-no other tetrahelix of the same inradius and pitch with a lower maximum
-ratio between its edge lengths. 
+no other tetrahelix with lower ratio of longest edge length to shortest edge length.
 
 We wish to show that in an optimal tetrahelix, all vertices lie on the cylinder
 of radius $r$, regardless of where they lie on the $z$-axis.
@@ -436,15 +432,15 @@ rails.
   figure in the $XY$-plane of an equilateral
   triangle is the minimax solution for all non-rail edges. Since all
   rail edges are of length 1, this is the minimax solution for the entire set. Since
-the vertices of an equilateral triangle lie on a circle, all points in three-space lie on
-a cylinder.
+  the vertices of an equilateral triangle lie on a circle, all points in three-space lie on
+  a cylinder.
 
-Case 2: Suppose that $\rho$ is positive but less than $\pi$.
-In this case each rail helix has
-curavature. The projection of points in the $XY$ plane creates a figure
-guaranteed to have point on either side of any line through the axis of such
-a helix, because the figure is either an $n$-gon or a circle.
-We show that the three helices share a common axis.
+  Case 2: Suppose that $\rho$ is positive but less than $\pi$.
+  In this case each rail helix has
+  curavature. The projection of points in the $XY$ plane creates a figure
+  guaranteed to have point on either side of any line through the axis of such
+  a helix, because the figure is either an $n$-gon or a circle.
+  We show that the three helices share a common axis.
 
   Without loss of generality define the Red helix to have its axis on the $z$-axis.
   Without loss of generatlity define the Blue helix to be a helix that
@@ -458,13 +454,18 @@ We show that the three helices share a common axis.
   \end{equation*}
   where $B(n)$ is the cartesian vector
   $\begin{bmatrix}
-           x \\
-           y 
+    x \\
+    y 
   \end{bmatrix}$
   for the projection of the $n$th blue vertex.
   Note that $|| R(n) - B'(n+k)||$ is a constant for any $k$, because $R$ and $B'$ have the
   same pitch and the same axis, even if they do not have the same radius
   (which we are currently proving.)
+
+  \Cref{fig:wobble} demonstrates illustrates this situation. Like most diagrams, it is
+  over specific, in that the two circles are drawn of the same radius but we do not
+  depend upon that in this proof.  The diagram represents the projection along the
+  $z$ axis of points into the $XY$-plane.
 
   \begin{figure}[H]
      \centering
@@ -498,21 +499,16 @@ We show that the three helices share a common axis.
     $B(n) = B'(n)$, all three axes are conincident.
 \end{proof}
 
-
-Now we show that an optimal tetrahelix has the same radii for all three helices.
-To do this exhibit a symmetric tetrahelix (not yet shown to be optimal) which
-happens to be a tetrahelix, that has
-the property that all rail edges are equal to all one-hop edges and all two-hop
-edges are equal. Observe that although we have not get given the formula for the
-radii of such a triple helix, we observe there are some values for $r$ and $\alpha$
-for which this is true from this generic formula for a triple helix:
-\[
+Now that we have show that axes are conincident and parallel and that the pitches
+are the same for all helices, we can assert that any optimum tetrahelix can
+be generated with an equation for helices:
+\begin{equation}
 \label{eq:triple}
 V_{triple}(n,c) =
 \left [
   \begin{tabular}{c}
-   $ r \cos(n \alpha +  c 2 \pi /3)$\\
-   $ r \sin(n \alpha +  c 2 \pi /3) $\\
+   $ r_c \cos(n \alpha +  c 2 \pi /3 + \phi_c)$\\
+   $ r_c \sin(n \alpha +  c 2 \pi /3 + \phi_c) $\\
    $ \frac{d(n +c / 3)}{3}   $
   \end{tabular}
   \right ],
@@ -520,22 +516,43 @@ V_{triple}(n,c) =
 \begin{tabular}{c}
   $c \in \{0,1,2\}$
   \end{tabular}      
-\]
-In \cref{sec:parameterizing} we show how to find $r$ and $\alpha$.
+\end{equation}
+Note that we have not yet show that the relationships of the radius $r$ or
+the phase $\phi$ for the three helies, so we denoted them with a $c$ subscript to show
+they are dependent on the color.
+In \cref{sec:parameterizing} we give a more specific version of this formula which
+is optimal.
 
-In principle in any 3 helices with the same axis of the same radius
-having any relative
-displacement along the $z$ axis there are 9 distinct edge classes.
+In principle in any three helices generated with $\cref{eq:triple}
+has at most nine distinct edge length classes. Each edge that connects
+two rails potentially has a longer length and shorter length we donote with
+a $+$ or $-$. So the classes are $\{$ RR, BB, YY, RB_+, RB_-, BY_+, BY_-, RY_+, RY_- \}$.
 If when projecting all vertices on the the $z$-axis, the interval
 defined by the $z$ axis value of its endpoints contains no other vertices,
 we call it a \emph{one-hop} edge, and if it does contain another vertex we
 call it a \emph{two-hop} edge.
 Then there are 
-3 rail edges, 3 one-hop lengths between each pair of 3 rails, and 3 two hop
-lengths between each pair of 3 rails, where the two-hop length is at least
-the one-hop length.
+3 rail edges $\{$ RR, BB, YY\}$,
+3 one-hop lengths $\{$ RB_-, BY_-, RY_- \}$ between each pair of 3 rails,
+and 3 two-hop
+lengths $\{$ RB_+, BY_+, RY_+, \}$ between each pair of 3 rails,
+where the two-hop length is at least the one-hop length.
 However, if we generate the three helices symmetrically with \cref{eq:triple},
 many of these lengths will be the same.
+In fact, it is possible that there
+will be only two distinct such classes.
+
+Now we show that an optimal tetrahelix has the same radii for all three helices.
+To do this exhibit a symmetric tetrahelix (not yet shown to be optimal) which
+happens to be a triple helix, that has
+the property that all rail edges are equal to all one-hop edges and all two-hop
+edges are equal. 
+Observe that although we have not get given the formula for the
+radii of such a triple helix, we observe there are some values for $r$ and $\alpha$, and $\phi$
+for which all the three helices are symmetrically and evenly spaced. Furthermore,
+we can choose these values such that the three rail edges are of length unity and
+so that the one-hop lengths are also all of length unity, and the two-hop lengths
+are slightly longer. We call such a tetrahelix a two-class tetrahelix. 
 
 Now consider a tetrahelix in which the radius of one of the helices is different.
 By the connections made in a tetrahelix, any increase to a radius increases both
@@ -544,14 +561,16 @@ Since there exists a tetrahelix which has only two distinct classes of edge leng
 (the smaller being one-hop = rail, the larger being the two-hop distance), the helix
 with a larger radius increases a longest edge without increasing a shortest edges.
 Likewise, a helix with a smaller radius decreases a one-hop edge without decreasing
-a two-hop edge.  Therefore, a tetrahelix with different radii is not as some
-tetrahelix generated by \cref{eq:triple}, and so it not optimal. (Note however,
-that we have not yet exhibited a truly optimal tetrahelix, nor proven that such
-a tetrahelix occurs when the one-hop edge, length is equal to the rail edge length,
-which we do in \cref{sec:parameterizing}.)
+a two-hop edge.  Therefore, a tetrahelix with different radii is not optimal as some two-class 
+tetrahelix generated by \cref{eq:triple}, and so it not optimal. We have not yet
+proved that a two-class tetrahelix is optimal, but it suffices to show that there
+exist such a better tetrahelix to show that different radii imply a suboptimal
+tetrahelix.
 
-Because an optimal tetrhelix has equivalent radii for all three helices,
-it has equivalent rail edge lengths.
+Because an optimal tetrhelix has equivalent radii and equivalent pitch for all three helices,
+it has equivalent rail edge lengths. Likewise, there is a single rail angle $\rho$ that
+represents the rotation of two nodes connected by a single rail edge, and it is the same
+for all three rails.
 
 %% \begin{theorem}
 %%   \label{thm:cylinder}
@@ -609,11 +628,10 @@ it has equivalent rail edge lengths.
 Now that we have shown that any optimal tetrahelix vertices
 are on helices of the same axes and pitch, we see that the vertices 
 of any optimal tetrahelix will lie on a cylinder, or a circle when axis dimension
-is projected out. Therefore it is reasonable to now speak of the \emph{radius} $r$
-of a tetrahelix as the radius of the cylinder, as distinct from the inradius $r_{in}$.
-
-Now that we have coincident axes, the same pitch, and the same radius, we can go on to
- the harder proof about where vertices occur along the $z$-axis.
+is projected out. Therefore it is reasonable to now speak of the singular \emph{radius} $r$
+of a tetrahelix as the radius of the cylinder.
+We can now go on to
+the harder proof about where vertices occur along the $z$-axis.
 
  We show that in fact the nodes must be distributed in even thirds
  along the $z$-axis, as in fact they are in the regular BC helix.
@@ -670,34 +688,21 @@ edges are slightly longer than the purple edges.
     all two-hop edges equal to each other, and the $z$ distances between rails equal, and therefore
     $d/3$ from each other.
 
-    As each helix is congruent to the others and shares an axis and are evenly spaced,
-    an optimal tetrahelix is a \emph{triple helix}.
 \end{proof}
 
  Note that based on \cref{eventhirds}, there are only 3 possible lengths in an optimal tethrahelix,
  and we are justified in classifying edge lengths as \emph{rail}, \emph{one-hop}, or
 \emph{two-hop}. The one-hop edges are the edges between rails that are closest on the $z$-axis, and the two-hop edges are those that skip over a vertex.
 
-By \cref{eventhirds} we are justified renaming \cref{eq:triple} ``optimal'':
-\[
-V_{optimal}(n,c) =
-\left [
-  \begin{tabular}{c}
-   $ r \cos(n \alpha +  c 2 \pi /3)$\\
-   $ r \sin(n \alpha +  c 2 \pi /3) $\\
-   $ \frac{d(n +c / 3)}{3}   $
-  \end{tabular}
-  \right ],
-\text{where:}
-\begin{tabular}{c}
-  $c \in \{0,1,2\}$
-  \end{tabular}      
-\]
-where we have not yet investigated in the general case the relationships beteween
-$\alpha$, $r$, and $d$ in this formulation.
-However, we understand that when $\alpha = 0$, the helices are degenerate, having curvature of $0$, and
+In \cref{sec:parameterizing} have not yet investigated in the general case the relationships beteween
+$\alpha$, $r$, $\phi$ and $d$ in \cref{eq:triple}.
+However, we observe that when $\alpha = 0$, the helices are degenerate, having curvature of $0$, and
 we have the equitetrabeam.
 
+Taking all of these results together, 
+each helix in an optimal tetrahelix is congruent to the others, shares an axis, is the same radius, and are evenly spaced
+axially.
+An optimal tetrahelix is therefore a \emph{triple helix}.
 
 \section{Parameterizing Tetrahelices via Rail Angle}
 \label{sec:parameterizing}
@@ -717,9 +722,7 @@ parallel with the axis, or the ``twistiness'' of the tetrahelix. We use
 the parameter $\chi = 1$ to indicate a chirality of counter-clockwise,
 and $\chi = -1$ for clockwise.
 
-
-
- The quantities $\rho,r,d$ are related by the expression:
+The quantities $\rho,r,d$ are related by the expression:
 
 \begin{align*}
   1^2 &= d^2 + (2 r \sin{ \rho / 2})^2 \\
@@ -871,6 +874,10 @@ Thus, by computing $r_{opt}$  and $d_{opt}$ as a function of $\rho$ from this eq
      \caption{Axial view of a BC-Helix}
   \label{axialview}     
 \end{figure}
+
+Since the axes are parallel, we may define the \emph{inradius}, represented by the letter $i$, of a
+tetrahelix to be the radius of the largest
+cylinder parallel to this axis that is surrounded by each tetrahelix and pentrated by no edge.
 
 
 If we look down the axis of an optimal tetrahelix as shown in \cref{axialview}, it happens that only one of the one-hop edges
