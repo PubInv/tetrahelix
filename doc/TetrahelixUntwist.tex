@@ -32,7 +32,7 @@
 
 % See the ``Article customise'' template for come common customisations
 
-\title{Untwisting the Boerdijk--Coxeter Helix}
+\title{Untwisting the Boerdijk-Coxeter Helix}
 \author{Robert L. Read \email{read.robert@gmail.com}
 }
 
@@ -48,7 +48,7 @@
 %% \tableofcontents
 
 \begin{abstract}
-  The Boerdijk--Coxeter helix (BC helix, or tetrahelix) is a
+  The Boerdijk-Coxeter helix (BC helix, or tetrahelix) is a
   face-to-face stack of regular tetrahedra forming a helical column.  Considering the edges of
   these tetrahedra as structural members, the resulting structure is attractive and
   inherently rigid, and therefore interesting to architects,
@@ -70,16 +70,18 @@
 \end{abstract}
 
 \begin{keywords}
-  Boedijk--Coxeter helix, tetrahelix, robotics, tetrobot, unconventional robots,
+  Boedijk-Coxeter helix, tetrahelix, robotics, tetrobot, unconventional robots,
   structural engineering, mechanical engineering, tensegrity, variable-geometry truss
 \end{keywords}
 \begin{AMS}
   51M15
 \end{AMS}
 
+
+
 \section{Introduction}
 
-The Boerdijk--Coxeter helix\cite{coxeter1985simplicial} (BC helix), is
+The Boerdijk-Coxeter helix\cite{coxeter1985simplicial} (BC helix), is
 a face-to-face stack of tetrahedra that winds about a straight axis.
 Because architects, structural engineers, and robotocists are inspired
 by and follow such regular mathematical models but can also build structures and
@@ -186,7 +188,7 @@ R.W. Gray's site\cite{graytetrahelix}, repeating a formula by Coxeter\cite{coxet
            y \\
            z
          \end{bmatrix}$
-for a counter-clockwise BC Helix:
+for a counter-clockwise BC Helix in a right-handed coordinate system:
 \begin{equation}
   \label{graycoxeter}
 V(n) =
@@ -337,7 +339,7 @@ where $\rho \neq 0$ is:
 p(\rho) = \frac{2 \pi  \cdot d}{\rho}
 \end{equation}
 
-The pitch of the Boerdijk--Coxeter helix of edge length $1$ is the length of three tetrahedra times this number:
+The pitch of the Boerdijk-Coxeter helix of edge length $1$ is the length of three tetrahedra times this number:
 \begin{align*}
    \frac{3 h_{bc}\cdot  2 \pi }{\rho_{bc}} 
   &= \frac{6 \pi}{\sqrt{10}\rho_{bc}} 
@@ -382,7 +384,7 @@ vertices are on a cylinder. In, stages, we demonstrate that optimal tetrahelices
 \item share the same axis,
 \item have the same radius,
   \item have the same rail lengths,
-  \item have axialy equidistant nodes, and therefore
+  \item have axially equidistant nodes, and therefore
   \item are in fact triple helices.
 \end{enumerate}
 
@@ -498,7 +500,7 @@ rails.
     (perhaps simultaneously) until $W(n)$ is
     zero for both, finding a tetrahelix of improved overall minimax value at each step.
     So a tetrahelix is optimal only when $W(n) = 0$, and therefore when $D=0$
-    $B(n) = B'(n)$, all three axes are conincident.
+    $B(n) = B'(n)$, and all three axes are conincident.
 \end{proof}
 
 Now that we have show that axes are conincident and parallel and that the pitches
@@ -523,8 +525,20 @@ which would not be much more complicated if the axes where not coincident.
 Note that we have not yet show that the relationships of the radius $r$ or
 the phase $\phi$ for the three helies, so we denoted them with a $c$ subscript to show
 they are dependent on the color.
+We have not yet investigated in the general case the relationships beteween
+$\alpha$, $r$, $\phi$ and $d$ in \cref{eq:triple}.
 In \cref{sec:parameterizing} we give a more specific version of this formula which
-is optimal.
+generates optimal tetrahelices.
+However, we observe that when $\alpha = 0$, the helices are degenerate, having curvature of $0$,
+but because of the $\phi_c$ term, they are not collinear.
+
+
+\begin{figure}[H]
+  \centering
+     \includegraphics[width=0.95\textwidth]{figures/edge-diagram.png}
+     \caption{Edge Naming}
+  \label{fig:naming}
+\end{figure}
 
 In principle in any three helices generated with \cref{eq:triple}
 has at most nine distinct edge length classes. Each edge that connects
@@ -533,7 +547,7 @@ a $+$ or $-$. So the classes are $\{ RR, BB, YY, RB_+, RB_-, BY_+, BY_-, RY_+, R
 If when projecting all vertices onto (dropping the $x$ and $y$ coordinates) the $z$-axis, the interval
 defined by the $z$ axis value of its endpoints contains no other vertices,
 we call it a \emph{one-hop} edge, and if it does contain another vertex we
-call it a \emph{two-hop} edge.
+call it a \emph{two-hop} edge, as illustrated in \cref{fig:naming}.
 Then there are 
 3 rail edges $\{ RR, BB, YY\}$,
 3 one-hop lengths $\{ RB_-, BY_-, RY_- \}$ between each pair of 3 rails,
@@ -546,12 +560,13 @@ In fact, it is possible that there
 will be only two distinct such classes.
 
 Now we show that an optimal tetrahelix has the same radii for all three helices.
-To do this exhibit a symmetric tetrahelix (not yet shown to be optimal) which
+To do this we exhibit a symmetric tetrahelix (not yet shown to be optimal) which
 happens to be a triple helix, that has
 the property that all rail edges are equal to all one-hop edges and all two-hop
 edges are equal. 
 Observe that although we have not get given the formula for the
 radii of such a triple helix, we observe there are some values for $r$ and $\alpha$, and $\phi$
+in \cref{eq:triple}
 for which all the three helices are symmetrically and evenly spaced. Furthermore,
 we can choose these values such that the three rail edges are of length unity and
 so that the one-hop lengths are also all of length unity, and the two-hop lengths
@@ -564,7 +579,7 @@ Since there exists a tetrahelix which has only two distinct classes of edge leng
 (the smaller being one-hop = rail, the larger being the two-hop distance), the helix
 with a larger radius increases a longest edge without increasing a shortest edges.
 Likewise, a helix with a smaller radius decreases a one-hop edge without decreasing
-a two-hop edge.  Therefore, a tetrahelix with different radii is not optimal as some two-class 
+a two-hop edge.  Therefore, a tetrahelix with different radii is not as good as some two-class 
 tetrahelix generated by \cref{eq:triple}, and so it not optimal. We have not yet
 proved that a two-class tetrahelix is optimal, but it suffices to show that there
 exist such a better tetrahelix to show that different radii imply a suboptimal
@@ -690,17 +705,12 @@ edges are slightly longer than the purple edges.
     Therefore, any optimal tetrahelix has all one-hop edges between all rails equal to each other, and
     all two-hop edges equal to each other, and the $z$ distances between rails equal, and therefore
     $d/3$ from each other.
-
 \end{proof}
 
  Note that based on \cref{eventhirds}, there are only 3 possible lengths in an optimal tethrahelix,
  and we are justified in classifying edge lengths as \emph{rail}, \emph{one-hop}, or
 \emph{two-hop}. The one-hop edges are the edges between rails that are closest on the $z$-axis, and the two-hop edges are those that skip over a vertex.
 
-In \cref{sec:parameterizing} have not yet investigated in the general case the relationships beteween
-$\alpha$, $r$, $\phi$ and $d$ in \cref{eq:triple}.
-However, we observe that when $\alpha = 0$, the helices are degenerate, having curvature of $0$, and
-we have the equitetrabeam.
 
 Taking all of these results together, 
 each helix in an optimal tetrahelix is congruent to the others, shares an axis, is the same radius, and are evenly spaced
@@ -723,8 +733,9 @@ axis and sighting along the positive $z$ axis. In other words, $\rho$
 controls how far a rail edge of a tetrahelix deviates from being
 parallel with the axis, or the ``twistiness'' of the tetrahelix. We use
 the parameter $\chi = 1$ to indicate a chirality of counter-clockwise,
-and $\chi = -1$ for clockwise.
-%% I have to add here whether I am using a left-handed or right-handed coordinate
+and $\chi = -1$ for clockwise. We take our coordinate system to be right-handed,
+following the convention of Three.js, our rendering software.
+%% TODO: I have to add here whether I am using a left-handed or right-handed coordinate
 %% system.
 
 The quantities $\rho,r,d$ are related by the expression:
@@ -774,7 +785,7 @@ Note that when $\rho = 0$ then $d_{\rho} = 1$, but $r_{\rho}$ is not determined 
 
 \begin{theorem}
   \label{generalformulaoptimal}
-  The tetrahelices generated by $H_{general}$ are optimal in terms of minimum maximum ratio of member length when $r_{\rho}$ is chosen so that
+  For rail angles of magnitude at most $\rho_{bc}$, tetrahelices generated by $H_{general}$ are optimal in terms of minimum maximum ratio of member length when radius is chosen so that
   the length of the one-hop edge is equal to the rail length.
 \end{theorem}
 
@@ -785,32 +796,33 @@ This is proved by a minimax argument.
 By \cref{eventhirds}, we can compute the (at most) three edge-lengths of an optimal
 tetrahelix by formula universally quantified by $n$ and $c$:
 \begin{align*}
-  \text{rail} &= dist(H_{general}(n,c,\rho,d_{\rho},r_{\rho}),H_{general}(n+1,c,\rho,d_{\rho}),r_{\rho})) = 1 \\
-  \text{one-hop} &= dist(H_{general}(n,c,\rho,d_{\rho},r_{\rho}),H_{general}(n,c+1,\rho,d_{\rho},r_{\rho}))  \\
-  \text{two-hop} &= dist(H_{general}(n,c,\rho,d_{\rho},r_{\rho}),H_{general}(n,c+2,\rho,d_{\rho},r_{\rho}))  \\  
+  \text{rail} &= dist(H_{general}(n,c,\rho,d_{\rho},r),H_{general}(n+1,c,\rho,d_{\rho}),r)) = 1 \\
+  \text{one-hop} &= dist(H_{general}(n,c,\rho,d_{\rho},r),H_{general}(n,c+1,\rho,d_{\rho},r))  \\
+  \text{two-hop} &= dist(H_{general}(n,c,\rho,d_{\rho},r),H_{general}(n,c+2,\rho,d_{\rho},r))  \\  
 \end{align*}
 where $dist$ is the Cartesian distance function.
 
+
 \begin{align*}
-  \text{one-hop} &= dist(H_{general}(n,c,\rho,d_{\rho}),H_{general}(n,c+1,\rho,d_{\rho}),r_{\rho})  \\
-%%  \text{one-hop} &= dist(H_{general}(0,0,\rho,d_{\rho}),H_{general}(0,1,\rho,d_{\rho},r_{\rho}))  \\  
-%%  \text{one-hop}  &= \sqrt{\frac{d_{\rho}^2}{9} + (r_{\rho}\sin(0) - r_{\rho}\sin(\rho/3+1\cdot\frac{2\pi}{3}))^2  +
-%%    (r_{\rho}\cos(0) - r_{\rho}\cos(\rho/3 + 1\cdot\frac{2\pi}{3}))^2} \\
-%%  \text{one-hop}  &= \sqrt{\frac{d_{\rho}^2}{9} + (0  - r_{\rho}\sin(\rho/3 + \frac{2\pi}{3}))^2  +
-%%    (r_{\rho} - r_{\rho}\cos(\rho/3 + \frac{2\pi}{3}))^2} \\
-%%  \text{one-hop}  &= \sqrt{\frac{d_{\rho}^2}{9} + r_{\rho}^2\sin^2(\rho/3 + \frac{2\pi}{3})  +
-%%    r_{\rho}^2(1 - \cos(\rho/3 + \frac{2\pi}{3}))^2} \\
+  \text{one-hop} &= dist(H_{general}(n,c,\rho,d_{\rho}),H_{general}(n,c+1,\rho,d_{\rho}),r)  \\
+%%  \text{one-hop} &= dist(H_{general}(0,0,\rho,d_{\rho}),H_{general}(0,1,\rho,d_{\rho},r))  \\  
+%%  \text{one-hop}  &= \sqrt{\frac{d_{\rho}^2}{9} + (r\sin(0) - r\sin(\rho/3+1\cdot\frac{2\pi}{3}))^2  +
+%%    (r\cos(0) - r\cos(\rho/3 + 1\cdot\frac{2\pi}{3}))^2} \\
+%%  \text{one-hop}  &= \sqrt{\frac{d_{\rho}^2}{9} + (0  - r\sin(\rho/3 + \frac{2\pi}{3}))^2  +
+%%    (r - r\cos(\rho/3 + \frac{2\pi}{3}))^2} \\
+%%  \text{one-hop}  &= \sqrt{\frac{d_{\rho}^2}{9} + r^2\sin^2(\rho/3 + \frac{2\pi}{3})  +
+%%    r^2(1 - \cos(\rho/3 + \frac{2\pi}{3}))^2} \\
   %% Formula above checks at sqrt(8/27), 1, 0, and rho_bc, h_bc, r_bc.
-  \text{one-hop}  &= \sqrt{\frac{d_{\rho}^2}{9} + r_{\rho}^2(\sin^2(\rho/3 + \frac{2\pi}{3})  + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2)} \\
-  \text{but: }  d_{\rho}^2 &= 1 - 4 r_{\rho}^2 (\sin( \rho / 2)^2 \text{ ...so we substitute:}\\
+  \text{one-hop}  &= \sqrt{\frac{d_{\rho}^2}{9} + r^2(\sin^2(\rho/3 + \frac{2\pi}{3})  + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2)} \\
+  \text{but: }  d_{\rho}^2 &= 1 - 4 r^2 (\sin( \rho / 2)^2 \text{ ...so we substitute:}\\
   %% Formula above checks at sqrt(8/27), 1, 0, and rho_bc, h_bc, r_bc.  
-  \text{one-hop}  &= \sqrt{\frac{1}{9}  + r_{\rho}^2(-\frac{4 (\sin^2( \rho / 2))}{9} + \sin^2(\rho/3+ \frac{2\pi}{3})  + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2)} \\
+  \text{one-hop}  &= \sqrt{\frac{1}{9}  + r^2(-\frac{4 (\sin^2( \rho / 2))}{9} + \sin^2(\rho/3+ \frac{2\pi}{3})  + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2)} \\
   %% Formula above checks at sqrt(8/27), 1, 0, and rho_bc, h_bc, r_bc.    
 \end{align*}
 
 By similar algebra and trigonometry:
 \begin{align*}
-  \text{two-hop}  &= \sqrt{\frac{4}{9} + r_{\rho}^2 (-\frac{16 (\sin^2( \rho / 2))}{9} + \sin^2(2\rho/3 + \frac{4\pi}{3})  + (1 - \cos(2\rho/3 + \frac{4\pi}{3}))^2)} \\
+  \text{two-hop}  &= \sqrt{\frac{4}{9} + r^2 (-\frac{16 (\sin^2( \rho / 2))}{9} + \sin^2(2\rho/3 + \frac{4\pi}{3})  + (1 - \cos(2\rho/3 + \frac{4\pi}{3}))^2)} \\
 \end{align*}
 
 
@@ -818,20 +830,22 @@ By definition of minimax edge length optimality, we are trying to minimize:
 \[
 \frac{\max{\{1,\text{one-hop}(r),\text{two-hop}(r)}\}}{\min{\{1,\text{one-hop}(r),\text{two-hop}(r)}\}}
 \]
-But since $\text{two-hop}(r) >= \text{one-hop}(r)$, this is equivalent to:
+But since $\text{two-hop}(r) \geq \text{one-hop}(r)$, this is equivalent to:
 \[
  \frac{   \max \{1,\text{two-hop}(r)\}}
       {   \min \{1,\text{one-hop}(r)\}}
 \]
 This quantity will be equal to one of:
-\[ \frac{\text{two-hop}(r)}{1},
+\begin{equation}
+  \frac{\text{two-hop}(r)}{1},
 \frac{1}{\text{one-hop}(r)},
 \frac{\text{two-hop}(r)}{\text{one-hop}(r)}
-\]
+\label{eq:ratioset}
+\end{equation}
 
 We know that both one-hop($r$) and two-hop($r$) increase monotonically and continuously with increasing $r$.
-By inspection it seems likely that we will minize this set by equating $\text{one-hop}(r)$ or $\text{two-hop}(r)$
-to 1, but to be absolutely sure we must examine the partial derivative of the ratio
+By inspection it seems likely that we will minimize this set by equating $\text{one-hop}(r)$ or $\text{two-hop}(r)$
+to 1, but to be absolutely sure and to decide which one, we must examine the partial derivative of the ratio
  $\frac{\text{two-hop}(r)}{\text{one-hop}(r)}$ in this range.
 
 Although complicated, we can use Mathematica to investigate
@@ -855,20 +869,24 @@ Let:
 
 Then:
 \begin{align*}
-  \frac{\text{two-hop}}{ \text{one-hop}}  &=
-  \frac{\sqrt{\frac{4}{9}  + r_{\rho}^2(g_{\rho}+ j_{\rho})}}
-       {\sqrt{\frac{1}{9} +r_{\rho}^2(f_{\rho}+k_{\rho}) }}
+  \frac{\text{two-hop}(r_{\rho})}{ \text{one-hop}(r_{\rho})}  &=
+  \frac{\sqrt{\frac{4}{9}  + r^2(g_{\rho}+ j_{\rho})}}
+       {\sqrt{\frac{1}{9} +r^2(f_{\rho}+k_{\rho}) }}
 \end{align*}
 
 
 
 By graph inspection using Mathematica, we see the partial derivative of this with respect to
-radius $r_{\rho}$ is always negative.
-Since the partial derivative of $\text{two-hop} / \text{one-hop}$ with respect to the
-radius $r_{\rho}$ is negative up until $\rho_{bc}$, this ratio goes down
+radius $r$ is always negative, for any $\rho \leq \rho_{bc}$. (When the rail angle approaches
+$\pi$, corresponding to going almost to the other side of the tetrahelix, this is not necessarily true, hence the
+limitation in our statement of the theorem is meaningful.)
+Since the partial derivative of $\text{two-hop}(r) / \text{one-hop}(r)$ with respect to the
+radius $r$ is negative for all $\rho$ up until $\rho_{bc}$, this ratio goes down
 as the radius goes up, and 
-we optimize the overall minimax distance by choosing the largest radius
-up until one-hop $= 1$, the rail-edge length.
+we minimize the maximum edge-length ratio by choosing the largest radius
+up until one-hop $= 1$, the rail-edge length. If we attempted to increase the radius further
+we would not be optimal, because the ratio $\frac{\text{two-hop}(r)}{1}$ would because the
+largest ratio in our set of ratios \cref{eq:ratioset}.
 
 Therefore we decrease the minimax length
 of the whole system as we increase the radius
@@ -1087,7 +1105,7 @@ As suggested by Buckminster Fuller, the most convenient geometries to
 consider are those that have regular member lengths, in order to
 facilitate the inexpensive manufacture and construction of the robot.
 In a plane, the octet truss\cite{richard1961synergetic} is such a geometry, but in a line, the
-Boerdijk--Coxeter helix is a regular structure.
+Boerdijk-Coxeter helix is a regular structure.
 
 However, a robot must move, and so it is interesting to consider the
 transmutations of these geometries, which was in fact the motivation
@@ -1147,10 +1165,13 @@ To assist, contact \email{read.robert@gmail.com}.
 
 TODO:
 
-** Try to show that rotation must be symmetric over possible rotation.
+** Add a better diagram that explains the ``two-hop'', ``one-hop'' process.  - done
 
-** Try to show 2-hop > rail for any optimal.
+** TODO: should I use vector notation for my formulae?  (yes!)
 
+** Improve rail geometry diagram by making bolder.
+
+** Add the Mathematica notebook to the github repo (after cleaning up) and reference.
 
 
 
