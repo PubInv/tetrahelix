@@ -90,10 +90,11 @@ where we relax regularity.
 
 The vertices of the tetrahedra lie upon
 three helices about the central axis.
-The glussbot\cite{readglussbot} (or Tetrobot)\cite{TetrobotBook} uses the regularity of
+The \\
+Glussbot\cite{readglussbot} (or Tetrobot)\cite{TetrobotBook} uses the regularity of
 this geometry to make a tentacle-like robot that can crawl like a slug
-or mollusc.  The Tetrobot uses mechanical actuators which can change their length, connected by special joints,
-such as the 3D printable Song-Kwon-Kim\cite{song2003spherical} joint, or the CMS joint\cite{HamlinSandersonCMS}
+or mollusc.  These modular robot systems uses mechanical actuators which can change their length, connected by special joints,
+such as the 3D printable Song-Kwon-Kim\cite{song2003spherical} joint in the case of the Glussbot, or the CMS joint\cite{HamlinSandersonCMS}, in the case of the Tetrobot,
 which allow many members to meet in a single point.
 Such machines can
 follow purely regular mathematical models such as the Boerdijk–-Coxeter
@@ -529,7 +530,7 @@ In principle in any three helices generated with \cref{eq:triple}
 has at most nine distinct edge length classes. Each edge that connects
 two rails potentially has a longer length and shorter length we donote with
 a $+$ or $-$. So the classes are $\{ RR, BB, YY, RB_+, RB_-, BY_+, BY_-, RY_+, RY_- \}$.
-If when projecting all vertices on the the $z$-axis, the interval
+If when projecting all vertices onto (dropping the $x$ and $y$ coordinates) the $z$-axis, the interval
 defined by the $z$ axis value of its endpoints contains no other vertices,
 we call it a \emph{one-hop} edge, and if it does contain another vertex we
 call it a \emph{two-hop} edge.
@@ -723,6 +724,8 @@ controls how far a rail edge of a tetrahelix deviates from being
 parallel with the axis, or the ``twistiness'' of the tetrahelix. We use
 the parameter $\chi = 1$ to indicate a chirality of counter-clockwise,
 and $\chi = -1$ for clockwise.
+%% I have to add here whether I am using a left-handed or right-handed coordinate
+%% system.
 
 The quantities $\rho,r,d$ are related by the expression:
 
@@ -810,8 +813,30 @@ By similar algebra and trigonometry:
   \text{two-hop}  &= \sqrt{\frac{4}{9} + r_{\rho}^2 (-\frac{16 (\sin^2( \rho / 2))}{9} + \sin^2(2\rho/3 + \frac{4\pi}{3})  + (1 - \cos(2\rho/3 + \frac{4\pi}{3}))^2)} \\
 \end{align*}
 
-We would really like to know the partial derivative of the two-hop - one-hop with respect
-to the radius to be able to understand how to choose the radius to form the minimimax optimum.
+
+By definition of minimax edge length optimality, we are trying to minimize:
+\[
+\frac{\max{\{1,\text{one-hop}(r),\text{two-hop}(r)}\}}{\min{\{1,\text{one-hop}(r),\text{two-hop}(r)}\}}
+\]
+But since $\text{two-hop}(r) >= \text{one-hop}(r)$, this is equivalent to:
+\[
+ \frac{   \max \{1,\text{two-hop}(r)\}}
+      {   \min \{1,\text{one-hop}(r)\}}
+\]
+This quantity will be equal to one of:
+\[ \frac{\text{two-hop}(r)}{1},
+\frac{1}{\text{one-hop}(r)},
+\frac{\text{two-hop}(r)}{\text{one-hop}(r)}
+\]
+
+We know that both one-hop($r$) and two-hop($r$) increase monotonically and continuously with increasing $r$.
+By inspection it seems likely that we will minize this set by equating $\text{one-hop}(r)$ or $\text{two-hop}(r)$
+to 1, but to be absolutely sure we must examine the partial derivative of the ratio
+ $\frac{\text{two-hop}(r)}{\text{one-hop}(r)}$ in this range.
+
+Although complicated, we can use Mathematica to investigate
+the partial derivative of the $\text{two-hop}(r) - \text{one-hop}(r)$ with respect
+to the radius to be able to understand how to choose the radius to form the minimax optimum.
 
 Let:
 \begin{equation*}
@@ -830,22 +855,24 @@ Let:
 
 Then:
 \begin{align*}
-  \text{two-hop} - \text{one-hop}  &= \sqrt{\frac{4}{9}  + r_{\rho}^2(g_{\rho}+ j_{\rho})}
-  - \sqrt{\frac{1}{9} +r_{\rho}^2(f_{\rho}+k_{\rho}) }
+  \frac{\text{two-hop}}{ \text{one-hop}}  &=
+  \frac{\sqrt{\frac{4}{9}  + r_{\rho}^2(g_{\rho}+ j_{\rho})}}
+       {\sqrt{\frac{1}{9} +r_{\rho}^2(f_{\rho}+k_{\rho}) }}
 \end{align*}
 
 
 
 By graph inspection using Mathematica, we see the partial derivative of this with respect to
 radius $r_{\rho}$ is always negative.
-Since the partial derivative of $\text{two-hop} - \text{one-hop}$ with respect to the
-radius $r_{\rho}$ is negative up until $\rho_{bc}$ where it is $0$, 
-we opitmize the overall minimax distance by choosing the largest radius
+Since the partial derivative of $\text{two-hop} / \text{one-hop}$ with respect to the
+radius $r_{\rho}$ is negative up until $\rho_{bc}$, this ratio goes down
+as the radius goes up, and 
+we optimize the overall minimax distance by choosing the largest radius
 up until one-hop $= 1$, the rail-edge length.
 
 Therefore we decrease the minimax length
 of the whole system as we increase the radius
-up to the point that the shorter, one-hop distance is equal to the rail-length ($1$).
+up to the point that the shorter, one-hop distance is equal to the rail-length, $1$.
 Therefore, to optimize the whole system so long as $\rho \leq \rho_{bc}$,
 we equate one-hop to $1$ to find the optimum radius:
 
@@ -866,6 +893,7 @@ We can now give a formula for $ d_{opt} $ computed from $\rho, r_{opt}$ via the 
 \end{align*}
 
 Thus, by computing $r_{opt}$  and $d_{opt}$ as a function of $\rho$ from this equation, we can construct minimax optimal tetrahelix for an $0 \leq \rho \leq \rho_{bc}$.
+%% Add here references to these equations.
 \end{proof}
 
 \section{The Inradius}
@@ -882,7 +910,8 @@ tetrahelix to be the radius of the largest
 cylinder parallel to this axis that is surrounded by each tetrahelix and pentrated by no edge.
 
 
-If we look down the axis of an optimal tetrahelix as shown in \cref{axialview}, it happens that only one of the one-hop edges
+If we look down the axis of an optimal tetrahelix as shown in \cref{axialview}, it happens that only
+the one-hop edges
 (rendered in purple in our software)
 comes closest to the axis. In other words, they define the radius of the incircle of the
 projection, or the radius of a cylinder that would just fit inside the tetrahelix.
@@ -1016,7 +1045,8 @@ As $\rho$ increase up to $\rho_{bc}$ the curvature increases smoothly until the 
 
 Perhaps surprisingly, the optimal untwisting is accomplished only by
 changing the length of the two-hop member, leaving the one-hop member
-and rail length equivalent within this continuum.\footnote{Before deriving Equation \eqref{eqrhoopt}, we created a continuum by
+and rail length equivalent within this continuum.\footnote{Before
+deriving Equation \eqref{eqrhoopt}, we created a continuum by
 using a linear interpolation between the optimal radius for the
 Equitetrabeam and the BC Helix. This minimax optimum of this simpler
 approach was at most 1\% worse than the optimum computed by
