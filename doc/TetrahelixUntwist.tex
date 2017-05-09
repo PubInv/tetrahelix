@@ -18,6 +18,7 @@
 
 \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
 
+\renewcommand{\vec}[1]{\mathbf{#1}}
 
 % \usepackage{draftwatermark}
 
@@ -191,7 +192,7 @@ R.W. Gray's site\cite{graytetrahelix}, repeating a formula by Coxeter\cite{coxet
 for a counter-clockwise BC Helix in a right-handed coordinate system:
 \begin{equation}
   \label{graycoxeter}
-V(n) =
+\vec{V}(n) =
 \left [
   \begin{tabular}{c}
    $ r_{bc} \cos{n \theta_{bc}} $\\
@@ -208,7 +209,7 @@ V(n) =
 \end{equation}
 where $n$ represents each integer numbered node in succession on every colored rail.
 
-The apparent rotation of a vertex an outer-edge, $V(n)$ relative from $V(n+3)$ for any integer $n$
+The apparent rotation of a vertex an outer-edge, $\vec{V}(n)$ relative from $\vec{V}(n+3)$ for any integer $n$
 in \eqref{graycoxeter}, is $3 \theta_{bc} - 2\pi$).
 
 This formula defines a helix, but it is not any of the apparent helices, or \emph{rail} helices, of the
@@ -227,13 +228,13 @@ In order to develop the continuum of slightly irregular tetrahelices described i
 we need a formula that gives us the nodes of just
 one rail helix, denoted by color $c$ and integer node number $n$:
 \[
-(\forall n \in \mathbb{Z}, \forall c \in \{0,1,2\} : H_{BCcolored}(n,c) = V(3n +c))
+(\forall n \in \mathbb{Z}, \forall c \in \{0,1,2\} : \vec{H}_{BCcolored}(n,c) = \vec{V}(3n +c))
 \]
 
 Such a helix can be written:
 \begin{equation}
   \label{eq:colored}
-H_{BCcolored}(n,c) =
+ \vec{H}_{BCcolored}(n,c) =
 \left [
   \begin{tabular}{c}
    $ r_{bc}  \cos{((3 \theta_{bc} - 2 \pi)n + c  \theta_{bc})}  $\\
@@ -271,8 +272,9 @@ these rail helices have been rendered at a slightly higher radius than the nodes
 in actuality the maximum distance between the continuous, curved helix and the
 straight edges between nodes is much smaller than can be clearly rendered.)
 
-The quantity $ (3 \theta_{bc} - 2 \pi) \approx 35.43 \degree $  is the angular shift between $V(3n + c)=H_{BCcolored}(n,c)$ and
-$V(3(n+1)+c)=H_{BCcolored}(n+1,c)$.
+The quantity $ (3 \theta_{bc} - 2 \pi) \approx 35.43 \degree $  is the angular shift between
+$ \vec{V}(3n + c)= \vec{H}_{BCcolored}(n,c)$ and
+$ \vec{V}(3(n+1)+c)= \vec{H}_{BCcolored}(n+1,c)$.
 This quantity appears so often that we call it the ``rail angle $\rho$''. For the BC helix, $\rho_{bc} = (3 \theta_{bc} - 2 \pi)$.
 
 \begin{figure}[H]
@@ -289,7 +291,7 @@ is always $1$ as a simplification, except in proofs concenring rail length.
 (We make the rail length a parameter in our JavaScript code in
 \url{https://github.com/PubInv/tetrahelix/blob/master/js/tetrahelix_math.js} \cite{readtetrahelix}.)
 
-The $H_{BCcolored}(n,c)$ formulation can be further clarified by rewriting directly in terms of the rail angle $\rho_{bc}$ rather than $\theta_{bc}$.
+The $\vec{H}_{BCcolored}(n,c)$ formulation can be further clarified by rewriting directly in terms of the rail angle $\rho_{bc}$ rather than $\theta_{bc}$.
 Intuitively we seek an expression where $c/3$ is multiplied by a $1/3$ rotation plus the rail angle $\rho$.
 We expand 
 the expressions $\theta_{bc}$ and $\rho_{bc}$ in \eqref{eq:colored} and seek to isolate the term $c2\pi/3 $.
@@ -305,7 +307,7 @@ This allows us to redefine:
 
 %% Actually, I am not sure if this is a clearer formulation...it might be, and need to put it in general!!!
 \begin{equation}
-H_{BCcolored}(n,c) =
+\vec{H}_{BCcolored}(n,c) =
 \left [
   \begin{tabular}{c}
     $ r  \cos{\rho_{bc} n + c (\rho_{bc} +  2 \pi) /3} $\\
@@ -326,7 +328,7 @@ We can now assert that in \cref{fig:helixcomparison} the black helix winds at
 $\frac{3 \theta_{bc}}{\rho_{bc}} \approx 11.16 $ times the rate of a rail helix.
 
 From this formulation it is easy to see that moving one vertex on a rail
-($H_{BCcolored}(n,c)$ to $H_{BCcolored}(n+1,c)$ for any $n$ and $c$)
+($\vec{H}_{BCcolored}(n,c)$ to $\vec{H}_{BCcolored}(n+1,c)$ for any $n$ and $c$)
 moves us $\rho_{bc}$ radians around a circle. Since:
 \[ \frac{2 \pi}{\rho_{bc}} \approx 10.16
 \]
@@ -449,20 +451,20 @@ rails.
   Without loss of generality define the Red helix to have its axis on the $z$-axis.
   Without loss of generatlity define the Blue helix to be a helix that
   has an edge connection to the Red helix that is either a maximum or a minimum.
-  Let $B'$ be the blue helix translated in the $XY$-plane so that its axis is the $z$-axis and
+  Let $\vec{B'}$ be the blue helix $\vec{B}$ translated in the $XY$-plane so that its axis is the $z$-axis and
   condicent with the red helix $R$. Let $D$ be the distance between the axis of the Blue helix
-  $B$ and $B'$. We will show that if $D>0$ then $B$ ``wobbles'' in a way that cannot be optimal.
+  $\vec{B}$ and $\vec{B'}$. We will show that if $D>0$ then $\vec{B}$ ``wobbles'' in a way that cannot be optimal.
   Define a wobble vector by:
   \begin{equation*}
-    W(n) = B(n) - B'(n)
+    \vec{W}(n) = \vec{B}(n) - \vec{B}'(n)
   \end{equation*}
-  where $B(n)$ is the cartesian vector
+  where $\vec{B}(n)$ is the cartesian vector
   $\begin{bmatrix}
     x \\
     y 
   \end{bmatrix}$
   for the projection of the $n$th blue vertex.
-  Note that $|| R(n) - B'(n+k)||$ is a constant for any $k$, because $R$ and $B'$ have the
+  Note that $|| \vec{R}(n) - \vec{B'}(n+k)||$ is a constant for any $k$, because $R$ and $B'$ have the
   same pitch and the same axis, even if they do not have the same radius
   (which we are currently proving.)
 
@@ -482,25 +484,25 @@ rails.
   defines at least 3 unique points when projected onto the $XY$-plane around its axis.
   If $2\pi/\rho$ is irrational, it defines a circle. If $2\pi/\rho$ is rational it defines
   an n-gon in the $XY$-plane, where $n$ is at least 3 (when $\rho = 2\pi/3$).
-  The set of wobbles $\{W(n) | \text{for any n}\}$ thus contains at least three vectors,
+  The set of wobbles $\{\vec{W}(n) | \text{for any n}\}$ thus contains at least three vectors,
   pointing in different directions.
   For any point not at the origin, at least one of these vectors moves closer to the
   point and at least one moves further away.
 
     The set of all lengths in the tetrahelix is a superset of:
-    $L = \{|| R(n) - B(n)||\}$, which by our choice has at least one longest or shortest
+    $L = \{|| \vec{R}(n) - \vec{B}(n)||\}$, which by our choice has at least one longest or shortest
     length.
-    $L = \{|| R(n) - (B'(n) + W(n))||\}$ and so
-    $L = \{|| (R(n) - B'(n)) - W(n)||\}$.
-    But $R(n) - B'(n)$ is a constant, so the minimax value of $L$ is improved as $||W(n)||$
+    $L = \{|| \vec{R}(n) - (\vec{B'}(n) + \vec{W}(n))||\}$ and so
+    $L = \{|| (\vec{R}(n) - \vec{B'}(n)) - \vec{W}(n)||\}$.
+    But $\vec{R}(n) - \vec{B'}(n)$ is a constant, so the minimax value of $L$ is improved as $||\vec{W}(n)||$
     decreases.  
     By our choice, this improves the minimax value of the total tetrahelix.
     
     This process can be carried out on both the Blue and Yellow helices
-    (perhaps simultaneously) until $W(n)$ is
+    (perhaps simultaneously) until $\vec{W}(n)$ is
     zero for both, finding a tetrahelix of improved overall minimax value at each step.
-    So a tetrahelix is optimal only when $W(n) = 0$, and therefore when $D=0$
-    $B(n) = B'(n)$, and all three axes are conincident.
+    So a tetrahelix is optimal only when $\vec{W}(n) = 0$, and therefore when $D=0$
+    $\vec{B}(n) = \vec{B'}(n)$, and all three axes are conincident.
 \end{proof}
 
 Now that we have show that axes are conincident and parallel and that the pitches
@@ -508,7 +510,7 @@ are the same for all helices, we can assert that any optimum tetrahelix can
 be generated with an equation for helices:
 \begin{equation}
 \label{eq:triple}
-V_{triple}(n,c) =
+\vec{V}_{triple}(n,c) =
 \left [
   \begin{tabular}{c}
    $ r_c \cos(n \alpha +  c 2 \pi /3 + \phi_c)$\\
@@ -675,7 +677,9 @@ the harder proof about where vertices occur along the $z$-axis.
 \Cref{fig:equitetrabeam} shows the equitetrabeam, which is defined in \cref{sec:equitetrabeam},
 but also conveniently illustrates the one-hop and two-hop edge defintions.
 The green edges are the two-hop edges and the purple edges are the one-hop edges. Note that the green
-edges are slightly longer than the purple edges.
+edges are slightly longer than the purple edges. In \ref{fig:naming}, which depicts the BC helix,
+the two-hop and one-hop edges are of equal length (but the projection onto the $z$-axis, the
+axial length, of the two-hop edge is longer than the axial one-hop length.)
 
 
 \begin{theorem}
@@ -728,7 +732,7 @@ curvature is $0$, an important special case. The radius or the axial
 distance between two nodes on the same rail are possible choices, but
 perhaps the clearest choice is to build formulae that takes as their
 input the ``rail angle'' $\rho$. We define $\rho$ to be the angle
-formed in the X,Y plane $\angle H(0,0) O H(0,1)$ projecting out the $z$
+formed in the X,Y plane $\angle \vec{H}(0,0) O \vec{H}(0,1)$ projecting out the $z$
 axis and sighting along the positive $z$ axis. In other words, $\rho$
 controls how far a rail edge of a tetrahelix deviates from being
 parallel with the axis, or the ``twistiness'' of the tetrahelix. We use
@@ -762,7 +766,7 @@ determine both of them together, so we treat both as parameters.
 Rewriting our formulation in terms of $\rho$:
 \begin{align*}
 \numberthis  \label{eq:general}  
-H_{general}(\chi,n,c,\rho,d_{\rho},r_{\rho}) &= 
+\vec{H}_{general}(\chi,n,c,\rho,d_{\rho},r_{\rho}) &= 
  \left [
   \begin{tabular}{c}
    $ r_{\rho} \cos(\chi \cdot (n \rho + c(\rho +  2 \pi) /3)) $\\
@@ -778,14 +782,14 @@ H_{general}(\chi,n,c,\rho,d_{\rho},r_{\rho}) &=
 \end{align*} 
 
 
-$H_{general}$ forces the user to select three values: $\rho$, $r_{\rho}$, and $d_{\rho}$ satisfying \eqref{railangle}.
+$\vec{H}_{general}$ forces the user to select three values: $\rho$, $r_{\rho}$, and $d_{\rho}$ satisfying \eqref{railangle}.
 
 Note that when $\rho = 0$ then $d_{\rho} = 1$, but $r_{\rho}$ is not determined by
 \cref{railangle}.
 
 \begin{theorem}
   \label{generalformulaoptimal}
-  For rail angles of magnitude at most $\rho_{bc}$, tetrahelices generated by $H_{general}$ are optimal in terms of minimum maximum ratio of member length when radius is chosen so that
+  For rail angles of magnitude at most $\rho_{bc}$, tetrahelices generated by $\vec{H}_{general}$ are optimal in terms of minimum maximum ratio of member length when radius is chosen so that
   the length of the one-hop edge is equal to the rail length.
 \end{theorem}
 
@@ -796,16 +800,16 @@ This is proved by a minimax argument.
 By \cref{eventhirds}, we can compute the (at most) three edge-lengths of an optimal
 tetrahelix by formula universally quantified by $n$ and $c$:
 \begin{align*}
-  \text{rail} &= dist(H_{general}(n,c,\rho,d_{\rho},r),H_{general}(n+1,c,\rho,d_{\rho}),r)) = 1 \\
-  \text{one-hop} &= dist(H_{general}(n,c,\rho,d_{\rho},r),H_{general}(n,c+1,\rho,d_{\rho},r))  \\
-  \text{two-hop} &= dist(H_{general}(n,c,\rho,d_{\rho},r),H_{general}(n,c+2,\rho,d_{\rho},r))  \\  
+  \text{rail} &= dist(\vec{H}_{general}(n,c,\rho,d_{\rho},r),\vec{H}_{general}(n+1,c,\rho,d_{\rho}),r)) = 1 \\
+  \text{one-hop} &= dist(\vec{H}_{general}(n,c,\rho,d_{\rho},r),\vec{H}_{general}(n,c+1,\rho,d_{\rho},r))  \\
+  \text{two-hop} &= dist(\vec{H}_{general}(n,c,\rho,d_{\rho},r),\vec{H}_{general}(n,c+2,\rho,d_{\rho},r))  \\  
 \end{align*}
 where $dist$ is the Cartesian distance function.
 
 
 \begin{align*}
-  \text{one-hop} &= dist(H_{general}(n,c,\rho,d_{\rho}),H_{general}(n,c+1,\rho,d_{\rho}),r)  \\
-%%  \text{one-hop} &= dist(H_{general}(0,0,\rho,d_{\rho}),H_{general}(0,1,\rho,d_{\rho},r))  \\  
+  \text{one-hop} &= dist(\vec{H}_{general}(n,c,\rho,d_{\rho}),\vec{H}_{general}(n,c+1,\rho,d_{\rho}),r)  \\
+%%  \text{one-hop} &= dist(\vec{H}_{general}(0,0,\rho,d_{\rho}),\vec{H}_{general}(0,1,\rho,d_{\rho},r))  \\  
 %%  \text{one-hop}  &= \sqrt{\frac{d_{\rho}^2}{9} + (r\sin(0) - r\sin(\rho/3+1\cdot\frac{2\pi}{3}))^2  +
 %%    (r\cos(0) - r\cos(\rho/3 + 1\cdot\frac{2\pi}{3}))^2} \\
 %%  \text{one-hop}  &= \sqrt{\frac{d_{\rho}^2}{9} + (0  - r\sin(\rho/3 + \frac{2\pi}{3}))^2  +
@@ -876,7 +880,7 @@ Then:
 
 
 
-By graph inspection using Mathematica, we see the partial derivative of this with respect to
+By graph inspection using Mathematica (\url{https://github.com/PubInv/tetrahelix/blob/master/tetrahelix.nb}), we see the partial derivative of this with respect to
 radius $r$ is always negative, for any $\rho \leq \rho_{bc}$. (When the rail angle approaches
 $\pi$, corresponding to going almost to the other side of the tetrahelix, this is not necessarily true, hence the
 limitation in our statement of the theorem is meaningful.)
@@ -957,7 +961,7 @@ From this equation with the help of symbolic computation we observe that inradiu
 \section{The Equitetrabeam}
 \label{sec:equitetrabeam}
 
-Just as $H_{general}$ constructs the BC helix (with careful and non-obvious choices of parameters)
+Just as $\vec{H}_{general}$ constructs the BC helix (with careful and non-obvious choices of parameters)
 which is an important
 special case due to its regularity, it constructs an additional special
 (degenerate) case when the rail angle $\rho = 0$
@@ -970,7 +974,7 @@ without the split into three rails introduced by \cref{eq:colored} and completed
 
 \begin{corollary}
   The equitetrabeam with minimal maximal edge ratio is produced
-  \newline by $H_{general}$ when $ r = \sqrt{\frac{8}{27}} $.
+  \newline by $\vec{H}_{general}$ when $ r = \sqrt{\frac{8}{27}} $.
 \end{corollary}
 
 \begin{proof}
@@ -1004,9 +1008,9 @@ In \cref{fig:series}, the furthest tetrahelix is the optimal equitetrabeam.
 
 To the extent that we value tetrabeams (that is, tetrahelices with a rail angle of $0$,
 and therefore zero curvature and curvature) as mathematical or engineering objects,
-we have motivated the development of $H_{general}$ as a transformation of $V(n)$ defined by
+we have motivated the development of $\vec{H}_{general}$ as a transformation of $\vec{V}(n)$ defined by
 Equation \eqref{graycoxeter} from Gray and Coxeter. It is difficult to see how
-the $V(n)$ 
+the $\vec{V}(n)$ 
 formulation could ever give rise to a continuum producing the tetrabeam,
 since setting the angle in that equation to zero can produce only collinear points.
 
@@ -1032,13 +1036,13 @@ $\rho_{bc} \approx 35.43 \degree$, which gives the BC helix.
  chirality, that is, one still must decide to connect the one-hop edge to
  the clockwise or the counter-clockwise node, it is not possible to build
  a smooth continuum where $\rho$ transitions from positive to negative
- which remains optimal. One can use a negative $\rho$ in $H_{general}$
+ which remains optimal. One can use a negative $\rho$ in $\vec{H}_{general}$
  but it does not produce minimax optimal tetrahelices. In other words,
  untwisting a counter-clockwise tetrahelix to rail angle $0$ and then going
 even further does produce a clockwise tetrahelix, but one in which the
  one-hop and two-hop lengths in the wrong places (that is, two-hop
  becomes shorter than one-hop.) Likewise, $\rho > \rho_{bc}$ generates
- a tetrahelix, but minimax optimality is not guaranteed by $H_{general}$.
+ a tetrahelix, but minimax optimality is not guaranteed by $\vec{H}_{general}$.
  
  The pitch of a helix (see \cref{pitcheqn}, for a fixed $z$-axis travel $d$,
  is trivial.
@@ -1070,7 +1074,7 @@ Equitetrabeam and the BC Helix. This minimax optimum of this simpler
 approach was at most 1\% worse than the optimum computed by
 \eqref{eqrhoopt}.}
  However, it should
-be noted that an engineer or architect may also use $H_{general}$
+be noted that an engineer or architect may also use $\vec{H}_{general}$
 directly and interactively, and that minimax length optimality is a
 mathematical starting point rather than the final word on the beauty and utility of
 physical structures. For example, a structural engineer might increase
@@ -1088,6 +1092,14 @@ Trusses and space frames remain an important design field in
 mechanical and structural engineering\cite{mikulas1985sequentially},
 including deployable and moving trusses\cite{claypool2012readily}.
 
+\begin{figure}[H] %float with two figures
+  \centering
+     \includegraphics[width=0.9\textwidth]{figures/MedCantedCropped.png}
+     \caption{Glussbot in relaxed, or BC helix configuration}
+     \includegraphics[width=0.9\textwidth]{figures/EquitetrabeamCropped.png}
+     \caption{The Equitetrabream: Fully Untwisted Glussbot in Hexapod Configuration}
+     \label{fig:glussbot}
+\end{figure}
 
 \section{Utility for Robotics}
 
@@ -1120,14 +1132,6 @@ for creating the equitetrabream.
   Proof by our computer program that does this using Equation \eqref{eq:general} applied to the
   7-tet Tetrobot/Glussbot.
 
-\begin{figure}[H] %float with two figures
-  \centering
-     \includegraphics[width=0.9\textwidth]{figures/MedCantedCropped.png}
-     \caption{Glussbot in relaxed, or BC helix configuration}
-     \includegraphics[width=0.9\textwidth]{figures/EquitetrabeamCropped.png}
-     \caption{The Equitetrabream: Fully Untwisted Glussbot in Hexapod Configuration}
-     \label{fig:glussbot}
-\end{figure}
 
 By untwisting the tetrahelix so that is has a planar surface resting on the ground,
 we may consider each vertex touching the ground a foot or pseudopod. A robot can thus
@@ -1164,12 +1168,6 @@ To assist, contact \email{read.robert@gmail.com}.
 \end{document}
 
 TODO:
-
-** Add a better diagram that explains the ``two-hop'', ``one-hop'' process.  - done
-
-** TODO: should I use vector notation for my formulae?  (yes!)
-
-** Improve rail geometry diagram by making bolder.
 
 ** Add the Mathematica notebook to the github repo (after cleaning up) and reference.
 
