@@ -439,7 +439,8 @@ of a tetrahelix onto the $XY$-plane. \Cref{fig:projectiondiagram} is an example 
   If and only if $2\pi/\rho$ is rational, the projection onto
   the $XY$-plane will contain a finite number of points.
   Because $\pi$ is transcendental and irrational,
-  $2\pi/\rho$ is rational if and only $\rho = a\pi/b$, where $a$ and $b$ are integers.
+  $2\pi/\rho$ is rational if and only $\rho = a\pi/b$, where $a$ and $b$ are integers
+  and without loss of generality $a$ and $b$ are comprime.
   Since $\rho < \pi$, $a < b$, and since $\rho > 0$, $a > 0$.
   The number of points in the projection is $2b$ if $a$ is odd, and $b$ if $a$ is even.
   This polygon has at least 3 sides, since either either $\rho$ is irrational or $b > a$, and therefore
@@ -1136,3 +1137,21 @@ http://epubs.siam.org/toc/sjaabq/1/1
 Reread everything, especially the new parts.
 
 
+Note:
+
+I do not believe it is worth providing a proof of (b or 2b) result of lemma ngon.
+However, here are my notes if it becomes important:
+
+Basically by using the distributive nature of mod and the definiton of a helix,
+the cardinality of the set can remove the PI factor in the sin(x) = sin(x mod 2PI).
+Then we know that a, b, and 2 are integers.  We can provide the cardinality is
+the residue of [n*a mod 2b], which becomes an integer modulus operation.
+if a = k2, you can factor out 2, which has no bearing on cardinality. the
+cardinality is the | { nk mod b } | = b.
+
+If a is odd, it is | { n(2k+1) mod 2b) | = 2b.  How do we know we can
+  reach each integer < 2b?  By Bezout's Identity there exists x,y, nax + yc = gcd(a,c).
+  Take c = 2b.
+  But gcd(a,c) = 1, because they are relatively prime. Take but
+  So we have ax + y2b = 1.  But (ax + y2b) mod 2b = ax mod 2b. Now  (nax) mod 2b = n,
+  up until y = 2b -1.
