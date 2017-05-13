@@ -82,7 +82,7 @@
 
 \section{Introduction}
 
-The Boerdijk-Coxeter helix\cite{coxeter1985simplicial} (BC helix) (see \cref{fig:closeup,fig:closuporthog}, is
+The Boerdijk-Coxeter helix\cite{coxeter1985simplicial} (BC helix) (see \cref{fig:closeup,fig:closeuporthog}, is
 a face-to-face stack of tetrahedra that winds about a straight axis.
 Because architects, structural engineers, and roboticists are inspired
 by and follow such regular mathematical models but can also build structures and
@@ -93,11 +93,10 @@ where we relax regularity.
 
 The vertices of the tetrahedra lie upon
 three helices about the central axis.
-The \\
-Glussbot\cite{readglussbot} (or Tetrobot)\cite{TetrobotBook} uses the regularity of
+The Tetrobot\cite{readglussbot,TetrobotBook} uses the regularity of
 this geometry to make a tentacle-like robot that can crawl like a slug
 or mollusc.  These modular robotic systems use mechanical actuators which can change their length, connected by special joints,
-such as the 3D printable Song-Kwon-Kim\cite{song2003spherical} joint in the case of the Glussbot, or the CMS joint\cite{HamlinSandersonCMS}, in the case of the Tetrobot,
+such as the 3D printable Song-Kwon-Kim\cite{song2003spherical} joint or the CMS joint\cite{HamlinSandersonCMS} used in the original Tetrobot,
 which allow many members to meet in a single point.
 Such machines can
 follow purely regular mathematical models such as the Boerdijk–-Coxeter
@@ -132,7 +131,8 @@ mechanically strong.
 Then we can imagine that each static edge is replaced with an
 actuator that can dynamically become shorter or longer in response to electronic control,
 and the vertices are a joint that supported sufficient angular displacement
-for this to be possible. An example of such a machine is a glussbot, shown in \cref{fig:glussbot}.
+for this to be possible. An example of such a machine is a Tetrobot,
+shown in \cref{fig:tetrobot}.
 
 A BC helix does not rest stably on a plane. It is convenient to
 be able to ``untwist'' it and to form a tetrahelix space frame that has a
@@ -270,7 +270,7 @@ values.
 \end{figure}
 
 \Cref{fig:helixcomparison} illustrates this difference with a 7-tetrahedra BC helix, which is
-in fact the same geometry as the robot illustrated in \cref{fig:glussbot}.
+in fact the same geometry as the robot illustrated in \cref{fig:tetrobot}.
 Although the nodes coincide,
 \cref{graycoxeter} evaluated
 at real values generates the black helix which runs through every node, and \cref{eq:colored} defines
@@ -1054,10 +1054,10 @@ including deployable and moving trusses\cite{claypool2012readily}.
 \begin{figure}[H] %float with two figures
   \centering
      \includegraphics[width=0.9\textwidth]{figures/MedCantedCropped.png}
-     \caption{Glussbot in relaxed, or BC helix configuration}
+     \caption{7-Tet Tetrobot in relaxed, or BC helix configuration}
      \includegraphics[width=0.9\textwidth]{figures/EquitetrabeamCropped.png}
-     \caption{The Equitetrabeam: Fully Untwisted Glussbot in Hexapod Configuration}
-     \label{fig:glussbot}
+     \caption{The Equitetrabeam: Fully Untwisted 7-Tet Tetrobot in Hexapod Configuration}
+     \label{fig:tetrobot}
 \end{figure}
 
 \section{Utility for Robotics}
@@ -1081,13 +1081,13 @@ transmutations of these geometries, which was in fact the motivation
 for creating the equitetrabeam.
 
 \begin{theorem}
-  By changing only the length of the longer members that connect two distinct rails (the two-hop members), we can dynamically untwist a glussbot
+  By changing only the length of the longer members that connect two distinct rails (the two-hop members), we can dynamically untwist a tetrobot
   forming the Boerdijk-Coxeter configuration into the equitetrabeam which rests flat on the plane.
 \end{theorem}
 
 \begin{proof}
   Proof by our computer program that does this using Equation \eqref{eq:general} applied to the
-  7-tet Tetrobot/Glussbot.
+  7-tet Tetrobot.
 
 
 By untwisting the tetrahelix so that is has a planar surface resting on the ground,
@@ -1114,7 +1114,7 @@ a rotation angle and member lengths to obtain a desired pitch.
 
 \section{Contact and Getting Involved}
 
-The Gluss Project \url{http://pubinv.github.io/gluss/} is part of Public Invention \url{https://pubinv.github.io/PubInv/},
+The Tetrobot Project \url{http://pubinv.github.io/gluss/} is part of Public Invention \url{https://pubinv.github.io/PubInv/},
 a free-libre, open-source research, hardware, and software project that welcomes volunteers.
 It is our goal to organize projects for the benefit of all humanity without seeking profit or intellectual property.
 To assist, contact \email{read.robert@gmail.com}.
