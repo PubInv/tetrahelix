@@ -82,7 +82,7 @@
 
 \section{Introduction}
 
-The Boerdijk-Coxeter helix\cite{coxeter1985simplicial} (BC helix) (see \cref{fig:closeup,fig:closeuporthog}, is
+The Boerdijk-Coxeter helix\cite{coxeter1985simplicial} (BC helix) (see \cref{fig:closeup,fig:closeuporthog}), is
 a face-to-face stack of tetrahedra that winds about a straight axis.
 Because architects, structural engineers, and roboticists are inspired
 by and follow such regular mathematical models but can also build structures and
@@ -131,7 +131,7 @@ omni-triangulated space frame, which is
 mechanically strong.
 Then we can imagine that each static edge is replaced with an
 actuator that can dynamically become shorter or longer in response to electronic control,
-and the vertices are a joint that supported sufficient angular displacement
+and the vertices are joints that support sufficient angular displacement
 for this to be possible. An example of such a machine is a Tetrobot,
 shown in \cref{fig:tetrobot}.
 
@@ -170,18 +170,18 @@ angular force on the environment.
 
 Ideally we would have a simple formula for defining the nodes based on
 any curvature or pitch we choose. It is a goal of
-this paper to relate the Cartesian coordinate approach and the member-length approachx to
+this paper to relate the Cartesian coordinate approach and the member-length approach to
 generating a tetrahelix continuum.
 
 
-H.S.M Coxeter constructs the BC helix\cite{coxeter1985simplicial} as a repeated rotation and translation of the tetrahedra, showing the
+H.S.M Coxeter constructs the BC helix\cite{coxeter1985simplicial} as a repeated rotation and translation of the tetrahedra by showing the
 rotation is:
 \[
 \theta_{bc} = \arccos(-2/3) 
 \]
 and the translation:
 \[
-h_{bc} = 1/\sqrt{10}
+h_{bc} = 1/\sqrt{10}.
 \]
 
 $\theta_{bc}$ is approximately $0.37 \cdot 2 \pi$ radians or  $131.81$ degrees.
@@ -189,7 +189,7 @@ The angle $\theta_{bc}$ is the rotation of \emph{each} tetrahedron, not the tetr
 each tetrahedron has either a yellow, blue, or red outer edge or rail.
 That is, a blue-rail tetrahedron is rotated slightly more than a $1/3$ of a revolution to match the face of the yellow tetrahedra.
 
-R.W. Gray's website\cite{graytetrahelix}, repeating a formula by Coxeter\cite{coxeter1985simplicial} in more accessible form, gives the Cartesian coordinates $\begin{bmatrix}
+R.W. Gray's website\cite{graytetrahelix}, repeating a formula by Coxeter\cite{coxeter1985simplicial} in a more accessible form, gives the Cartesian coordinates $\begin{bmatrix}
            x \\
            y \\
            z
@@ -234,7 +234,7 @@ In order to develop the continuum of slightly irregular tetrahelices described i
 we need a formula that gives us the nodes of just
 one rail helix, denoted by color $c$ and integer node number $n$:
 \[
-(\forall n \in \mathbb{Z}, \forall c \in \{0,1,2\} : \vec{H}_{BCcolored}(n,c) = \vec{V}(3n +c))
+(\forall n \in \mathbb{Z}, \forall c \in \{0,1,2\} : \vec{H}_{BCcolored}(n,c) = \vec{V}(3n +c)) .
 \]
 
 Such a helix can be written:
@@ -327,7 +327,7 @@ This allows us to redefine:
   \begin{tabular}{c}
 %%  $\kappa = n + c/3$ \\
     $\rho_{bc} = (3 \theta_{bc} - 2 \pi)$ \\
-    $ h_{bc} = 1/\sqrt{10} $ \\    
+    $ h_{bc} = 1/\sqrt{10} $. \\    
   \end{tabular}      
 \end{equation}
 
@@ -347,14 +347,14 @@ The \emph{pitch} of any tetrahelix, defined as the axial length of a complete re
 where $\rho \neq 0$ is:
 \begin{equation}
   \label{pitcheqn}
-p(\rho) = \frac{2 \pi  \cdot d}{\rho}
+p(\rho) = \frac{2 \pi  \cdot d}{\rho} \text{ .}
 \end{equation}
 
 The pitch of the Boerdijk-Coxeter helix of edge length $1$ is the length of three tetrahedra times this number:
 \begin{align*}
    \frac{3 h_{bc}\cdot  2 \pi }{\rho_{bc}} 
   &= \frac{6 \pi}{\sqrt{10}\rho_{bc}} 
-  &\approx 9.64 
+  &\approx 9.64 \text{ .}
 \end{align*}
 
 
@@ -366,10 +366,9 @@ inconvenient to designers, who might prefer a rational pitch.
 The idea of developing a rational period by arranging solid tetrahedra by relaxing the face-to-face matching
 has been explored\cite{sadler2013periodic}. 
 We develop below slightly irregular edge lengths that support, for example, a pitch of precisely 12
-tetrahedra in one revolution which would allow an architect to design a
-column having a basis and a capital in the same relation to the
-tetrahedra they touch at the bottom and top of the column.
-
+tetrahedra in one revolution which would allow an architect to
+design a column having the top and bottom tetrahedra in the same relationship to the capital and the basis to the
+viewer.
 
 \section{Optimal Tetrahelices are Triple Helices}
 
@@ -398,7 +397,7 @@ vertices are on a cylinder. In stages, we demonstrate that optimal tetrahelices:
   \item are in fact triple helices.
 \end{enumerate}
 
-Suppose that all three rails do not have the same pitch. Starting at any shortest edge between
+Suppose that all three rails do not have the same pitch. If we start at any shortest edge between
 two rails, as we move
 from node to node away from our start edge the edge lengths
 between rails must always lengthen without bound,
@@ -441,10 +440,10 @@ of a tetrahelix onto the $XY$-plane. \Cref{fig:projectiondiagram} is an example 
   the $XY$-plane will contain a finite number of points.
   Because $\pi$ is transcendental and irrational,
   $2\pi/\rho$ is rational if and only $\rho = a\pi/b$, where $a$ and $b$ are integers
-  and without loss of generality $a$ and $b$ are comprime.
-  Since $\rho < \pi$, $a < b$, and since $\rho > 0$, $a > 0$.
+  and without loss of generality $a$ and $b$ are coprime.
+  $\rho < \pi$, therefore $a < b$. Also, $\rho > 0$, therefore $a > 0$.
   The number of points in the projection is $2b$ if $a$ is odd, and $b$ if $a$ is even.
-  This polygon has at least 3 sides, since either either $\rho$ is irrational or $b > a$, and therefore
+  This polygon has at least 3 sides, since either $\rho$ is irrational or $b > a$, and therefore
   $b >= 2$. If $a/b = 1/2$, the projection is a square, which has four sides. 
 \end{proof}
 
@@ -476,7 +475,7 @@ of a tetrahelix onto the $XY$-plane. \Cref{fig:projectiondiagram} is an example 
   $B$ and $B'$. We will show that if $D>0$ then $B$ ``wobbles'' in a way that cannot be optimal.
   Define a wobble vector by:
   \begin{equation*}
-    \vec{W}(n) = \vec{B}(n) - \vec{B}'(n)
+    \vec{W}(n) = \vec{B}(n) - \vec{B}'(n) \text{ .}
   \end{equation*}
   where $\vec{B}(n)$ and $\vec{B'}(n)$ is the cartesian vector
   $\begin{bmatrix}
@@ -524,7 +523,7 @@ of a tetrahelix onto the $XY$-plane. \Cref{fig:projectiondiagram} is an example 
     $\vec{B}(n) = \vec{B'}(n)$, and all three axes are conincident.
 \end{proof}
 
-Now that we have show that axes are conincident and parallel and that the pitches
+Now that we have shown that axes are conincident and parallel and that the pitches
 are the same for all helices, we can assert that any optimum tetrahelix can
 be generated with an equation for helices:
 \begin{equation}
@@ -543,7 +542,7 @@ be generated with an equation for helices:
   \end{tabular}      
 \end{equation}
 which would be much more complicated if the axes where not coincident.
-Note that we have not yet show that the relationships of the radius $r_c$ or
+Note that we have not yet shown that the relationships of the radius $r_c$ or
 the phase $\phi_c$ for the three helies, so we denoted them with a $c$ subscript to show
 they are dependent on the color.
 We have not yet investigated in the general case the relationships beteween
@@ -573,12 +572,12 @@ Then there are
 3 rail edges $\{ RR, BB, YY\}$,
 3 one-hop lengths $\{ RB_-, BY_-, RY_- \}$ between each pair of 3 rails,
 and 3 two-hop
-lengths $\{ RB_{+}, BY_+, RY_+, \}$ between each pair of 3 rails,
+lengths $\{ RB_{+}, BY_+, RY_+ \}$ between each pair of 3 rails,
 where the two-hop length is at least the one-hop length.
 However, if we generate the three helices symmetrically with \cref{eq:triple},
 many of these lengths will be the same.
 In fact, it is possible that there
-will be only two distinct such classes (or even one, in the purely regular BC helix.)
+will be only two distinct such classes, or even one, in the purely regular BC helix.
 
 \begin{theorem}
   Optimal tetrahelices have the same radii for all three helices.
@@ -603,7 +602,7 @@ Since there exists a tetrahelix which has only two distinct classes of edge leng
 (the smaller being one-hop = rail, the larger being the two-hop distance), the helix
 with a larger radius increases a longest edge without increasing a shortest edges.
 Likewise, a helix with a smaller radius decreases a one-hop edge without decreasing
-a two-hop edge.  Therefore, a tetrahelix with different radii is not as good as some two-class 
+a two-hop edge.  Therefore, a tetrahelix with different radii is not as optimal as some two-class 
 tetrahelix generated by \cref{eq:triple}, and so it not optimal. We have not yet
 proved that a two-class tetrahelix is optimal, but it suffices to show that there
 exist such a better tetrahelix to show that different radii imply a suboptimal
@@ -654,7 +653,7 @@ axial length, of the two-hop edge is longer than the axial one-hop length.)
 \begin{proof}
     Consider a tetrahelix in which the vertices are evenly spaced at
     $d/3$ intervals on the $z$ axis. Every edge is either a rail edge,
-    or it makes one hop, or it makes two hops. All of the one-hop
+    or it makes one hop, or two hops. All of the one-hop
     edges are equal length.  All of the two-hop edges are equal
     length.
 
@@ -669,8 +668,8 @@ axial length, of the two-hop edge is longer than the axial one-hop length.)
     perturbed tetrahelix.
     The minimax of $B$ is greater than the minimax of $A$ since there is a single rail length which cannot be both greater
     than $t'$ and $o'$ and less than $t'$ and $o'$.
-    Therefore, any optimal tetrahelix has all one-hop edges between all rails equal to each other, and
-    all two-hop edges equal to each other, and the $z$ distances between rails equal, and therefore
+    Therefore, any optimal tetrahelix has all one-hop edges between all rails equal to each other,
+    all two-hop edges equal to each other, the $z$ distances between rails equal, and therefore
     $d/3$ from each other.
 \end{proof}
 
@@ -682,7 +681,7 @@ axial length, of the two-hop edge is longer than the axial one-hop length.)
 Taking all of these results together, 
 each helix in an optimal tetrahelix is congruent to the others, shares an axis, is the same radius, and are evenly spaced
 axially.
-An optimal tetrahelix is therefore a \emph{triple helix}, (of a radius we have not yet demonstrated.)
+An optimal tetrahelix is therefore a \emph{triple helix}, of a radius we have not yet demonstrated.
 
 \section{Parameterizing Tetrahelices via Rail Angle}
 \label{sec:parameterizing}
@@ -711,7 +710,7 @@ The quantities $\rho,r,d$ (see \cref{railanglefig}) are related by the expressio
 \end{align*}
 
 Checking the important special case of the BC helix, we find that this equation
-indeed holds true (treating $d$ in this equation as $3 h_{bc}$ as defined by
+indeed holds true, treating $d$ in this equation as $3 h_{bc}$ as defined by
 Gray and Coxeter, that is, $d_{bc} = 3h_{bc}$, where they are using
 $h$ for the axial height from one node to
 the next of a different color, but we use $d$ to mean distance between nodes of
@@ -849,13 +848,13 @@ radius $r$ is negative for all $\rho$ up until $\rho_{bc}$, this ratio goes down
 as the radius goes up, and 
 we minimize the maximum edge-length ratio by choosing the largest radius
 up until one-hop $= 1$, the rail-edge length. If we attempted to increase the radius further
-we would not be optimal, because the ratio $\frac{\text{two-hop}(r)}{1}$ would because the
+we would not be optimal, because the ratio $\frac{\text{two-hop}(r)}{1}$ would become the
 largest ratio in our set of ratios \cref{eq:ratioset}.
 
 Therefore we decrease the minimax length
 of the whole system as we increase the radius
 up to the point that the shorter, one-hop distance is equal to the rail-length, $1$.
-Therefore, to optimize the whole system so long as $\rho \leq \rho_{bc}$,
+In order to optimize the whole system so long as $\rho \leq \rho_{bc}$,
 we equate one-hop to $1$ to find the optimum radius:
 
 
@@ -903,9 +902,9 @@ a ladder for a human. The inradius $r_{in}(\rho)$ of
 an optimal tetrahelix is a remarkably simple function of the radius $r$ and the rail angle $\rho$:
 \begin{equation}
   \label{eq:inradius}
-  r_{in}(\rho) = r \sin{\frac{\pi - \rho}{6}}
+  r_{in}(\rho) = r \sin{\frac{\pi - \rho}{6}} \text{ ,}
 \end{equation}
-Which can be seen from the trigonometry of a diagram of the projected one-hop edges
+which can be seen from the trigonometry of a diagram of the projected one-hop edges
 connecting four sequentially numbered vertices:
 
 \begin{figure}[H]
@@ -999,27 +998,28 @@ $\rho_{bc} \approx 35.43 \degree$, which gives the BC helix.
  but it does not produce minimax optimal tetrahelices. In other words,
  untwisting a counter-clockwise tetrahelix to rail angle $0$ and then going
 even further does produce a clockwise tetrahelix, but one in which the
- one-hop and two-hop lengths in the wrong places (that is, two-hop
- becomes shorter than one-hop.) Likewise, $\rho > \rho_{bc}$ generates
+ one-hop and two-hop lengths in the wrong places, that is, two-hop
+ becomes shorter than one-hop.
+ Likewise, $\rho > \rho_{bc}$ generates
  a tetrahelix, but minimax optimality is not guaranteed by $\vec{H}_{general}$.
  
- The pitch of a helix (see \cref{pitcheqn}, for a fixed $z$-axis travel $d$,
- is trivial.
+ The pitch of a helix for a fixed $z$-axis travel $d$
+ is trivial (see \cref{pitcheqn}).
 However, if one is computing 
-$z$-axis travel from \eqref{dopt} the pitch is not simple.
+$z$-axis travel from \cref{dopt} the pitch is not simple.
 It increases monotonically and smoothly with decreasing $\rho$, so
-Equation \eqref{pitcheqn} can be easily solved numerically with a Newton-Raphson
+\cref{pitcheqn} can be easily solved numerically with a Newton-Raphson
 solver, as we do on our website.
 For a pitch at least $ p \geq \frac{3  \sqrt{2}  \pi}{\sqrt{5}\rho_{bc}} \approx 9.64 $,
 using \cref{dopt} produces minimax optimal tetrahelices.
 
-In this way a rail angle can be chosen for any desired (sufficiently large) pitch, yield
-the optimum radius, one-hop, and two-hop lengths an engineer needs to
+In this way a rail angle can be chosen for any desired (sufficiently large) pitch, yielding
+the optimum radius, the one-hop length, and the two-hop length an engineer needs to
 construct a physical structure.
 
 The curvature of a rail helix is formally given by:
 \begin{equation}
-  \frac{|r_{\rho}|}{r_{\rho}^2 + (d_{\rho}/\rho)^2}
+  \frac{|r_{\rho}|}{r_{\rho}^2 + (d_{\rho}/\rho)^2} \text{ .}
 \end{equation}
 which goes to $0$ as $\rho$ approaches $0$ (the equitetrabeam.)
 As $\rho$ increase up to $\rho_{bc}$ the curvature increases smoothly until the BC Helix is reached.
