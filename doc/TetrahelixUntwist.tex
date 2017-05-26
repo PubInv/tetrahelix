@@ -209,7 +209,7 @@ for a counter-clockwise BC Helix in a right-handed coordinate system:
   \begin{tabular}{c}
  $ r_{bc} = \frac{3\sqrt{3}}{10} \approx 0.5196 $\\
  $ h_{bc} = 1/\sqrt{10} \approx 0.3162 $ \\
- $ \theta_{bc} = \arccos(-2/3) $ \\
+ $ \theta_{bc} = \arccos(-2/3) $  \text{ ,}\\
   \end{tabular}      
 \end{equation}
 and where $n$ represents each integer numbered node in succession on every colored rail.
@@ -302,14 +302,39 @@ is always $1$ as a simplification, except in proofs concenring rail length.
 The $\vec{H}_{BCcolored}(n,c)$ formulation can be further clarified by rewriting directly in terms of the rail angle $\rho_{bc}$ rather than $\theta_{bc}$.
 Intuitively we seek an expression where $c/3$ is multiplied by a $1/3$ rotation plus the rail angle $\rho$.
 We expand 
-the expressions $\theta_{bc}$ and $\rho_{bc}$ in \eqref{eq:colored} and seek to isolate the term $c 2\pi/3 $. Thus:
+the expressions $\theta_{bc}$ and $\rho_{bc}$ in \eqref{eq:colored} and seek to isolate the term $c 2\pi/3 $.
+
+
+%% Thus:
+%% \begin{align*}
+%%  c \theta_{bc}  &=   \text{\{we aim for 3 in denominator, so we split...\}} \\
+%%     (c/3)  (3 \theta_{bc})  &=   \text{\{we want $2\pi$ in numerator, so add canceling terms...\}} \\
+%%  (c/ 3) ((3 \theta_{bc} - 2 \pi)  + 2 \pi) &= \text{\{definition of $\rho_{bc}$\ ...\}} \\  
+%%   (c / 3) \rho_{bc}  + c 2 \pi /3 &=  \text{\{algebra...\}} \\  
+%% c  ( \rho_{bc} +  2 \pi) /3 \text{ .} \\
+%% \end{align*}
+
+
+Thus, starting with the expression:
 \begin{align*}
- c \theta_{bc}  &=   \text{\{we aim for 3 in denominator, so we split...\}} \\
-    (c/3)  (3 \theta_{bc})  &=   \text{\{we want $2\pi$ in numerator, so add canceling terms...\}} \\
- (c/ 3) ((3 \theta_{bc} - 2 \pi)  + 2 \pi) &= \text{\{definition of $\rho_{bc}$\ ...\}} \\  
-  (c / 3) \rho_{bc}  + c 2 \pi /3 &=  \text{\{algebra...\}} \\  
-c  ( \rho_{bc} +  2 \pi) /3 \text{ .} \\
+  c \theta_{bc} 
 \end{align*}
+we introduce 3 into the denominator...
+\begin{align*}
+  (c/3)  (3 \theta_{bc}) 
+\end{align*}
+we want $2\pi$ in numerator, so add canceling terms...
+\begin{align*}
+  (c/ 3) ((3 \theta_{bc} - 2 \pi)  + 2 \pi) 
+\end{align*}
+...and then use the definition of $\rho_{bc}$
+\begin{align*}
+  (c / 3) \rho_{bc}  + c 2 \pi /3 
+\end{align*}
+finally using algebra, we obtain
+\begin{align*}
+  c  ( \rho_{bc} +  2 \pi) /3  \text{.}
+\end{align*}  
 
 This allows us to redefine:
 
@@ -354,9 +379,9 @@ The pitch of the Boerdijk-Coxeter helix of edge length $1$ is the length of thre
 \begin{align*}
    \frac{3 h_{bc}\cdot  2 \pi }{\rho_{bc}} 
   &= \frac{6 \pi}{\sqrt{10}\rho_{bc}} 
-  &\approx 9.64 \text{ .}
+ \text{ ,}
 \end{align*}
-
+which is approximately $9.64$.
 
 The pitch is less than the number of tetrahedra because the tetrahedra
 edges are not parallel to the axis of the tetrahelix.  It is a famous and interesting result
@@ -706,7 +731,7 @@ The quantities $\rho,r,d$ (see \cref{railanglefig}) are related by the expressio
 \begin{align*}
   1^2 &= d^2 + (2 r \sin{ \rho / 2})^2 , \text{ or }\\
 %%  1 &= d^2 + 4 r^2 (\sin{ \rho / 2})^2 \\
-  d^2 &= 1 - 4 r^2 (\sin{ \rho / 2})^2    \numberthis  \label{railangle} \\
+  d^2 &= 1 - 4 r^2 (\sin{ \rho / 2})^2  \text{ .}  \numberthis  \label{railangle} \\
 \end{align*}
 
 Checking the important special case of the BC helix, we find that this equation
@@ -760,14 +785,16 @@ By \cref{eventhirds}, we can compute the (at most) three edge-lengths of an opti
 tetrahelix by formula universally quantified by $n$ and $c$:
 \begin{align*}
   \text{rail} &= || \vec{H}_{general}(n,c,\rho,d_{\rho},r) - \vec{H}_{general}(n+1,c,\rho,d_{\rho}),r)) || = 1 \\
-  \text{one-hop} &= || \vec{H}_{general}(n,c,\rho,d_{\rho},r) - \vec{H}_{general}(n,c+1,\rho,d_{\rho},r)) || \\
-  \text{two-hop} &= || \vec{H}_{general}(n,c,\rho,d_{\rho},r) - \vec{H}_{general}(n,c+2,\rho,d_{\rho},r)) || \\  
+  \text{one-hop} &= || \vec{H}_{general}(n,c,\rho,d_{\rho},r) - \vec{H}_{general}(n,c+1,\rho,d_{\rho},r)) || \text{ and,} \\
+  \text{two-hop} &= || \vec{H}_{general}(n,c,\rho,d_{\rho},r) - \vec{H}_{general}(n,c+2,\rho,d_{\rho},r)) || \text{ .}\\  
 \end{align*}
-This syntax just represents the Euclidean distance formula.
-
+This syntax just represents the Euclidean distance formula. Thus:
 
 \begin{align*}
   \text{one-hop} &= || \vec{H}_{general}(n,c,\rho,d_{\rho}) - \vec{H}_{general}(n,c+1,\rho,d_{\rho}),r) || \\
+\end{align*}
+so:
+\begin{align*}
 %%  \text{one-hop} &= dist(\vec{H}_{general}(0,0,\rho,d_{\rho}),\vec{H}_{general}(0,1,\rho,d_{\rho},r))  \\  
 %%  \text{one-hop}  &= \sqrt{\frac{d_{\rho}^2}{9} + (r\sin(0) - r\sin(\rho/3+1\cdot\frac{2\pi}{3}))^2  +
 %%    (r\cos(0) - r\cos(\rho/3 + 1\cdot\frac{2\pi}{3}))^2} \\
@@ -777,32 +804,34 @@ This syntax just represents the Euclidean distance formula.
 %%    r^2(1 - \cos(\rho/3 + \frac{2\pi}{3}))^2} \\
   %% Formula above checks at sqrt(8/27), 1, 0, and rho_bc, h_bc, r_bc.
   \text{one-hop}  &= \sqrt{\frac{d_{\rho}^2}{9} + r^2(\sin^2(\rho/3 + \frac{2\pi}{3})  + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2)} \\
-  \text{but: }  d_{\rho}^2 &= 1 - 4 r^2 (\sin( \rho / 2)^2 \text{ ...so we substitute:}\\
+\end{align*}
+but: $  d_{\rho}^2 = 1 - 4 r^2 (\sin( \rho / 2)^2$, so we substitute:
+\begin{align*}
   %% Formula above checks at sqrt(8/27), 1, 0, and rho_bc, h_bc, r_bc.  
-  \text{one-hop}  &= \sqrt{\frac{1}{9}  + r^2(-\frac{4 (\sin^2( \rho / 2))}{9} + \sin^2(\rho/3+ \frac{2\pi}{3})  + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2)} \\
+  \text{one-hop}  &= \sqrt{\frac{1}{9}  + r^2(-\frac{4 (\sin^2( \rho / 2))}{9} + \sin^2(\rho/3+ \frac{2\pi}{3})  + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2)} \text{.}\\
   %% Formula above checks at sqrt(8/27), 1, 0, and rho_bc, h_bc, r_bc.    
 \end{align*}
 
 By similar algebra and trigonometry:
 \begin{align*}
-  \text{two-hop}  &= \sqrt{\frac{4}{9} + r^2 (-\frac{16 (\sin^2( \rho / 2))}{9} + \sin^2(2\rho/3 + \frac{4\pi}{3})  + (1 - \cos(2\rho/3 + \frac{4\pi}{3}))^2)} \\
+  \text{two-hop}  &= \sqrt{\frac{4}{9} + r^2 (-\frac{16 (\sin^2( \rho / 2))}{9} + \sin^2(2\rho/3 + \frac{4\pi}{3})  + (1 - \cos(2\rho/3 + \frac{4\pi}{3}))^2)} \text{.}\\
 \end{align*}
 
 
 By definition of minimax edge length optimality, we are trying to minimize:
 \[
-\frac{\max{\{1,\text{one-hop}(r),\text{two-hop}(r)}\}}{\min{\{1,\text{one-hop}(r),\text{two-hop}(r)}\}}
+\frac{\max{\{1,\text{one-hop}(r),\text{two-hop}(r)}\}}{\min{\{1,\text{one-hop}(r),\text{two-hop}(r)}\}} \text{.}
 \]
 But since $\text{two-hop}(r) \geq \text{one-hop}(r)$, this is equivalent to:
 \[
  \frac{   \max \{1,\text{two-hop}(r)\}}
-      {   \min \{1,\text{one-hop}(r)\}}
+      {   \min \{1,\text{one-hop}(r)\}} \text{.}
 \]
 This quantity will be equal to one of:
 \begin{equation}
   \frac{\text{two-hop}(r)}{1},
 \frac{1}{\text{one-hop}(r)},
-\frac{\text{two-hop}(r)}{\text{one-hop}(r)}
+\frac{\text{two-hop}(r)}{\text{one-hop}(r)} \text{.}
 \label{eq:ratioset}
 \end{equation}
 
@@ -817,24 +846,24 @@ to the radius to be able to understand how to choose the radius to form the mini
 
 Let:
 \begin{equation*}
-  f_{\rho} = -\frac{4 (\sin^2( \rho / 2))}{9}
+  f_{\rho} = -\frac{4 (\sin^2( \rho / 2))}{9} \text{,}
   \end{equation*}
 \begin{equation*}
-  g_{\rho} = -\frac{16 (\sin^2( \rho / 2))}{9} 
-\end{equation*}
-
-\begin{equation*}
-  j_{\rho} = \sin^2(\rho/3+ \frac{2\pi}{3})  + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2
+  g_{\rho} = -\frac{16 (\sin^2( \rho / 2))}{9} \text{,}
 \end{equation*}
 \begin{equation*}
-  k_{\rho} = \sin^2(2\rho/3 + \frac{4\pi}{3})  + (1 - \cos(2\rho/3 + \frac{4\pi}{3}))^2
+  j_{\rho} = \sin^2(\rho/3+ \frac{2\pi}{3})  + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2 \text{,}
+\end{equation*}
+and:
+\begin{equation*}
+  k_{\rho} = \sin^2(2\rho/3 + \frac{4\pi}{3})  + (1 - \cos(2\rho/3 + \frac{4\pi}{3}))^2 \text{.}
 \end{equation*}
 
 Then:
 \begin{align*}
   \frac{\text{two-hop}(r)}{ \text{one-hop}(r)}  &=
   \frac{\sqrt{\frac{4}{9}  + r^2(g_{\rho}+ j_{\rho})}}
-       {\sqrt{\frac{1}{9} +r^2(f_{\rho}+k_{\rho}) }}
+       {\sqrt{\frac{1}{9} +r^2(f_{\rho}+k_{\rho}) }} \text{.}
 \end{align*}
 
 
@@ -859,7 +888,7 @@ we equate one-hop to $1$ to find the optimum radius:
 
 
 \begin{align*}
-  1 &=  \sqrt{\frac{1}{9}  + r_{opt}^2(-\frac{4 (\sin^2( \rho / 2))}{9} + \sin^2(\rho/3+ \frac{2\pi}{3})  + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2)} \\
+  1 &=  \sqrt{\frac{1}{9}  + r_{opt}^2(-\frac{4 (\sin^2( \rho / 2))}{9} + \sin^2(\rho/3+ \frac{2\pi}{3})  + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2)} \text{, so...} \\
   r_{opt} &= \frac{2}{\sqrt{\frac{9}{2} \cdot ( \sqrt{3} sin(\rho/3) + \cos(\rho/3)) + \cos(\rho)+ 8 }} \text{ .} \numberthis  \label{eqrhoopt} \\
 \end{align*}
 
@@ -1117,7 +1146,8 @@ a rotation angle and member lengths to obtain a desired pitch.
 
 The Tetrobot Project \url{http://pubinv.github.io/gluss/} is part of Public Invention \url{https://pubinv.github.io/PubInv/},
 a free-libre, open-source research, hardware, and software project that welcomes volunteers.
-To assist, contact \email{read.robert@gmail.com}.
+To assist, contact\\
+\email{read.robert@gmail.com}.
 
 \bibliographystyle{siamplain}
 \bibliography{IEEEabrv,gluss}
