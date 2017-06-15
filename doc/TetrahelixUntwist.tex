@@ -1,7 +1,8 @@
-\documentclass[review]{siamonline1116}
+% \documentclass[review]{siamonline1116}
+\documentclass[twocolumn,10pt]{asme2ej}
 % \usepackage{geometry} % see geometry.pdf on how to lay out the page. There's lots.
 % \usepackage{hyperref}
-% \usepackage{graphicx}
+\usepackage{graphicx}
 \usepackage{gensymb}
 % \usepackage[affil-it]{authblk}
 % \usepackage[toc,page]{appendix}
@@ -9,12 +10,14 @@
 \usepackage{amsmath}
 % \usepackage{amsthm}
 \usepackage{amsfonts}
-% \usepackage{hyperref}
+\usepackage{hyperref}
+\usepackage{cleveref}
 
 % \usepackage{float}
 
-% \newtheorem{theorem}{Theorem}
-% \newtheorem{corollary}{Corollary}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
 
 \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
 
@@ -34,7 +37,12 @@
 % See the ``Article customise'' template for come common customisations
 
 \title{Untwisting the Boerdijk-Coxeter Helix}
-\author{Robert L. Read \email{read.robert@gmail.com}
+\author{Robert L. Read
+  \affiliation{
+    Founder, Public Invention \\
+    Austin, TX, 78704 \\
+    Email: \href{mailto:read.robert@gmail.com}{read.robert@gmail.com} 
+    }
 }
 
 
@@ -72,13 +80,15 @@
   to use standard gaits.
 \end{abstract}
 
-\begin{keywords}
-  Boerdijk-Coxeter helix, tetrahelix, robotics, tetrobot, unconventional robots,
-  structural engineering, mechanical engineering, tensegrity, variable-geometry truss
-\end{keywords}
-\begin{AMS}
-  51M15
-\end{AMS}
+
+%% \begin{keywords}
+%%   Boerdijk-Coxeter helix, tetrahelix, robotics, tetrobot, unconventional robots,
+%%   structural engineering, mechanical engineering, tensegrity, variable-geometry truss
+%% \end{keywords}
+%% \begin{AMS}
+%%   51M15
+%% \end{AMS}
+
 
 
 
@@ -86,8 +96,9 @@
 
 The Boerdijk-Coxeter helix\cite{coxeter1985simplicial} (BC helix) (see \cref{fig:closeup,fig:closeuporthog}), is
 a face-to-face stack of tetrahedra that winds about a straight axis.
-Because architects, structural engineers, and roboticists are inspired
-by and follow such regular mathematical models but can also build structures and
+Architects, structural engineers, and roboticists are inspired
+by and follow such regular mathematical models.
+However, since they can also build structures and
 machines of differing or even dynamically changing length, it is
 useful to develop the mathematics of structures formed from tetrahedra
 where we relax regularity.
@@ -101,30 +112,30 @@ this geometry to make a tentacle-like robot that can crawl like a slug
 or mollusk.  These modular robotic systems use mechanical actuators which can
 change their length, connected by special joints,
 such as the 3D printable Song-Kwon-Kim\cite{song2003spherical} joint or the CMS joint\cite{HamlinSandersonCMS}
-used in the original Tetrobot,
-which allow many members to meet in a single point.
+used in the original Tetrobot.
+This allows many members to meet in a single point.
 Such machines can
 follow purely regular mathematical models such as the Boerdijk-Coxeter
 helix or the Octet Truss\cite{richard1961synergetic}.
 
 Buckminster Fuller called the BC helix a \emph{tetrahelix}\cite{fuller1982synergetics},
-a term now commonly used. In this paper we reserve \emph{BC helix} to mean the purely regular structure and use \emph{tetrahelix} to refer
+a term now commonly used. In this paper, we reserve \emph{BC helix} to mean the purely regular structure and use \emph{tetrahelix} to refer
 to any structure isomorphic to the BC helix.
 
-\begin{figure}[H]
+\begin{figure}
   \centering
-     \includegraphics[width=0.95\textwidth]{figures/BCHelixCloseUp.png}
+     \includegraphics[width=0.45\textwidth]{figures/BCHelixCloseUp.png}
      \caption{BC Helix Close-up (partly along axis)}
   \label{fig:closeup}     
 \end{figure}
-\begin{figure}[H]
+\begin{figure}
   \centering
-     \includegraphics[width=0.95\textwidth]{figures/VerticalCloseUp.png}
+     \includegraphics[width=0.45\textwidth]{figures/VerticalCloseUp.png}
      \caption{BC Helix Close-up (orthogonal)}
   \label{fig:closeuporthog}
 \end{figure}
 
-Imagining \cref{fig:closeup,fig:closeuporthog} as a static mechanical structure,
+Imagining \cref{fig:closeup} or \cref{fig:closeuporthog} as a static mechanical structure,
 we observe that it is useful to the mechanical engineer
 because the structure is a mechanically strong, inherently rigid,
 omni-triangulated space frame.
@@ -142,12 +153,12 @@ and has, for example, an equilateral triangular profile. This paper
 develops the equations needed to untwist the tetrahelix. All math
 developed here is available in JavaScript and demonstrated by an interactive
 design website \url{https://pubinv.github.io/tetrahelix/}\cite{readtetrahelix},
-from which \cref{fig:closeup,fig:closeuporthog,fig:series,fig:naming,fig:equitetrabeam}
+from which \cref{fig:closeup,fig:closeuporthog} and later figures in this paper 
 are taken.
 
 \begin{figure}
   \centering
-     \includegraphics[width=1.0\textwidth]{figures/TetrahelixSeries2.png}
+     \includegraphics[width=0.45\textwidth]{figures/TetrahelixSeries2.png}
      \caption{A Continuum of Tetrahelices}
   \label{fig:series}
 \end{figure}
@@ -161,13 +172,13 @@ is the equitetrabeam, defined in \cref{sec:equitetrabeam} and \cref{fig:naming,f
 \section{A Designer's Formulation of the BC Helix}
 
 We would like to design nearly regular tetrahelices with a formula that
-gives the vertices in space. Eventually we would like to design them
+gives the vertices in space. Eventually, we would like to design them
 by choosing the lengths of a small set of members.
 In a space frame, this is a static design choice; in a tetrobot, it is a
 dynamic choice that can be used to twist the robot and/or exert linear or
 angular force on the environment.
 
-Ideally we would have a simple formula for defining the vertices based on
+Ideally, we would have a simple formula for defining the vertices based on
 any curvature or pitch we choose. It is a goal of
 this paper to relate the Cartesian coordinate approach and the member-length approach to
 generating a tetrahelix continuum.
@@ -184,7 +195,7 @@ h_{bc} = 1/\sqrt{10}.
 \]
 
 Note that $\theta_{bc}$ is approximately $0.37 \cdot 2 \pi$ radians or  $131.81$ degrees.
-The angle $\theta_{bc}$ is the rotation of \emph{each} tetrahedron, not the tetraheda along a rail.  In \cref{fig:closeup},
+The angle $\theta_{bc}$ is the rotation of \emph{each} tetrahedron, not the tetrahedra along a rail.  In \cref{fig:closeup},
 each tetrahedron has either a yellow, blue, or red outer edge or rail.
 That is, a blue-rail tetrahedron is rotated slightly more than a $1/3$ of a revolution to match the face of the yellow tetrahedron.
 
@@ -225,11 +236,11 @@ which are closely approximated by the outer edges or rails of
 the BC helix. We think of each of these three rails as being a different color: red, blue, or yellow.
 This situation is illustrated in \cref{fig:helixcomparison}, wherein the black helix represents that
 generated by \cref{graycoxeter},
-and the colored helices are generated by \cref{eq:colored}. 
+and the colored helices are generated by \cref{eq:colored}, below. 
 
 
 
-In order to develop the continuum of slightly irregular tetrahelices described in \cref{sec:continuum},
+In order to develop the continuum of slightly irregular tetrahelices,
 we need a formula that gives us the vertices of just
 one rail helix, denoted by color $c$ and integer vertex number $n$:
 \[
@@ -264,7 +275,7 @@ values.
 
 \begin{figure}
   \centering
-     \includegraphics[width=0.7\textwidth]{figures/Unified.png}
+     \includegraphics[width=0.45\textwidth]{figures/Unified.png}
      \caption{Rail helices (H) vs. Coxeter/Gray helix (V) }
   \label{fig:helixcomparison}  
 \end{figure}
@@ -274,33 +285,33 @@ in fact the same geometry as the robot illustrated in \cref{fig:tetrobot}.
 Although the vertices coincide,
  \cref{graycoxeter} evaluated
 at real values generates the black helix which runs through every vertex, and \cref{eq:colored} defines
-the red, yellow, and blue helices. (In this figure
+the red, yellow, and blue helices. In this figure,
 these rail helices have been rendered at a slightly higher radius than the vertices for clarity;
-in actuality the maximum distance between the continuous, curved helix and the
-straight edges between vertices is much smaller than can be clearly rendered.)
+in actuality, the maximum distance between the continuous, curved helix and the
+straight edges between vertices is much smaller than can be clearly rendered.
 
 The quantity $ (3 \theta_{bc} - 2 \pi) \approx 35.43 \degree $  is the angular shift between
 adjacent vertices on the same rail:
 $ \vec{V}(3n + c)= \vec{H}_{BCcolored}(n,c)$ and
 $ \vec{V}(3(n+1)+c)= \vec{H}_{BCcolored}(n+1,c)$.
-This quantity appears so often that we call it the ``rail angle $\rho$''. For the BC helix, $\rho_{bc} = (3 \theta_{bc} - 2 \pi)$.
+This quantity appears so often that we call it the ``rail angle, $\rho$''. For the BC helix, $\rho_{bc} = (3 \theta_{bc} - 2 \pi)$.
 
-\begin{figure}[H]
+\begin{figure}
      \centering
-     \includegraphics[width=0.7\textwidth]{figures/RailAngleGeometry.png}
+     \includegraphics[width=0.45\textwidth]{figures/RailAngleGeometry.png}
      \caption{Rail Angle Geometry}
   \label{railanglefig}
 \end{figure}
 
-Note in \cref{railanglefig} the $z$-axis travel for one rail edge is denoted by $d$. In \cref{graycoxeter} and  \cref{eq:colored}, the variable
-$h$ is used for one third of the distance we name $d$. We will later justify that $d = 3h$.
-In this paper we assume the length of a rail
-is always $1$ as a simplification, except in proofs concenring rail length.
-(We make the rail length a parameter in our JavaScript code in
-\url{https://github.com/PubInv/tetrahelix/blob/master/js/tetrahelix_math.js} \cite{readtetrahelix}.)
+Note, in \cref{railanglefig}, the $z$-axis travel for one rail edge is denoted by $d$. In \cref{graycoxeter} and  \cref{eq:colored}, the variable
+$h$ is used for one third of the distance, we name $d$. We will later justify that $d = 3h$.
+In this paper, we assume the length of a rail
+is always $1$ as a simplification, except in proofs concerning rail length.
+We make the rail length a parameter in our JavaScript code in
+\url{https://github.com/PubInv/tetrahelix/blob/master/js/tetrahelix_math.js} \cite{readtetrahelix}.
 
 The $\vec{H}_{BCcolored}(n,c)$ formulation can be further clarified by rewriting directly in terms of the rail angle $\rho_{bc}$ rather than $\theta_{bc}$.
-Intuitively we seek an expression where $c/3$ is multiplied by a $1/3$ rotation plus the rail angle $\rho$.
+Intuitively, we seek an expression where $c/3$ is multiplied by a $1/3$ rotation plus the rail angle $\rho$.
 We expand 
 the expressions $\theta_{bc}$ and $\rho_{bc}$ in \cref{eq:colored} and seek to isolate the term $c 2\pi/3 $.
 
@@ -356,7 +367,7 @@ This allows us to redefine:
   \end{tabular}      
 \end{equation}
 
-Recall that $c \in \{0,1,2\}$, but $n$ is continuous (rational or real-valued.)
+Recall that $c \in \{0,1,2\}$, but $n$ is continuous (rational or real-valued).
 We can now assert that in \cref{fig:helixcomparison} the black helix winds at
 $\frac{3 \theta_{bc}}{\rho_{bc}} \approx 11.16 $ times the rate of a rail helix.
 
@@ -377,12 +388,12 @@ p(\rho) = \frac{2 \pi  d}{\rho} \text{.}
 
 The pitch of the Boerdijk-Coxeter helix of edge length $1$ is the length of three tetrahedra times
 $p(\rho_{bc})$:
-\begin{align*}
+\begin{equation}
    \frac{3 h_{bc}  2 \pi }{\rho_{bc}} 
    = \frac{6 \pi}{\sqrt{10}\rho_{bc}}
    \approx 9.64
  \text{.}
-\end{align*}
+\end{equation}
 
 
 The pitch is less than the number of tetrahedra because the tetrahedra
@@ -392,7 +403,7 @@ precisely the same orientation around the $z$-axis. However, this is
 inconvenient to designers, who might prefer a rational pitch.
 The idea of developing a rational period by arranging solid tetrahedra by relaxing the face-to-face matching
 has been explored\cite{sadler2013periodic}. 
-We develop below slightly irregular edge lengths that support, for example, a pitch of precisely 12
+We develop, below, slightly irregular edge lengths that support, for example, a pitch of precisely 12
 tetrahedra in one revolution which would allow an architect to
 design a pleasing column having the top and bottom tetrahedra in the same relationship to the capital and the basis to the
 viewer.
@@ -413,20 +424,20 @@ limited range of extension.
 
 A \emph{triple helix} is three congruent helices that share an axis. We show that
 optimal tetrahelices are in fact triple helices with the same radius, so that all
-vertices are on a cylinder. In stages, we demonstrate that optimal tetrahelices:
+vertices are on a cylinder. In stages, we demonstrate that the helices in optimal tetrahelices:
 \begin{enumerate}
 \item have the same pitch,
 \item have parallel axes,
 \item share the same axis,
 \item have the same radius,
-  \item have the same rail lengths,
+  \item have the same rail length,
   \item have axially equidistant vertices, and therefore
   \item are in fact triple helices.
 \end{enumerate}
 
 Suppose that all three rails do not have the same pitch. If we start at any shortest edge between
 two rails, as we move
-from vertex to vertex away from our start edge the edge lengths
+from vertex to vertex away from our start edge, the edge lengths
 between rails must always lengthen without bound,
 which cannot be optimal.
 So we are justified in talking about the
@@ -450,7 +461,7 @@ is not as optimal as a tetrahelix of a small radius. The edges between rails wil
 shorter than the rail edges, and moving them apart slightly lengthens the between-edge
 rails, improving the ratios.
 
-In the proof below we find it useful to consider projection diagrams that are the axial projection
+In the proof, below, we find it useful to consider projection diagrams that are the axial projection
 of a tetrahelix onto the $XY$-plane. \Cref{fig:projectiondiagram} is an example of such a diagram.
 \begin{lemma}
   If the rail angle $0 < \rho < \pi$ is a rational multiple of $\pi$, then the projection of
@@ -466,12 +477,12 @@ of a tetrahelix onto the $XY$-plane. \Cref{fig:projectiondiagram} is an example 
   If and only if $2\pi/\rho$ is rational, the projection onto
   the $XY$-plane will contain a finite number of points.
   Because $\pi$ is transcendental and irrational,
-  $2\pi/\rho$ is rational if and only $\rho = a\pi/b$, where $a$ and $b$ are integers
-  and without loss of generality $a$ and $b$ are coprime.
+  $2\pi/\rho$ is rational if and only if $\rho = a\pi/b$, where $a$ and $b$ are integers
+  and, without loss of generality, $a$ and $b$ are coprime.
   Since $\rho < \pi$, therefore $a < b$. Also, $\rho > 0$, therefore $a > 0$.
   The number of points in the projection is $2b$ if $a$ is odd, and $b$ if $a$ is even.
   This polygon has at least 3 sides, since either $\rho$ is irrational or $b > a$, and therefore
-  $b >= 2$. If $a/b = 1/2$, the projection is a square, which has four sides. 
+  $b \geq 2$. If $a/b = 1/2$, the projection is a square, which has four sides. 
 \end{proof}
 
 \begin{theorem}
@@ -487,15 +498,15 @@ of a tetrahelix onto the $XY$-plane. \Cref{fig:projectiondiagram} is an example 
   radii must be eqivalent.
     
   Case 2: Suppose that $\rho$ is positive but less than $\pi$.
-  In this case each rail helix has
+  In this case, each rail helix has
   curvature. The projection of points in the $XY$ plane creates a figure
   guaranteed to have points on either side of any line through the axis of such
   a helix, because the figure is either an $n$-gon or a circle by \cref{lemma:ngon}.
   We show that the three helices share a common axis.
 
-  Without loss of generality define the Red helix to have its axis on the $z$-axis.
+  Without loss of generality, define the Red helix to have its axis on the $z$-axis.
   Since there must be at least one Red-to-Yellow or a Red-to-Blue edge that is either a minimum or a maximum,
-  without loss of generatlity define the Blue helix to be a helix that
+  without loss of generality, define the Blue helix to be a helix that
   has an edge connection to the Red helix that is either a maximum or a minimum.
   Let $B'$ be a translation in the $XY$-plane of the blue helix $B$  so that its axis is the $z$-axis and
   conincident with the red helix $R$. Let $D$ be the distance between the axis of the Blue helix
@@ -519,9 +530,9 @@ of a tetrahelix onto the $XY$-plane. \Cref{fig:projectiondiagram} is an example 
   depend upon that in this proof.  The diagram represents the projection along the
   $z$ axis of a few points into the $XY$-plane.
 
-  \begin{figure}[H]
+  \begin{figure}
      \centering
-     \includegraphics[width=0.7\textwidth]{figures/WobbleDiagram.png}
+     \includegraphics[width=0.45\textwidth]{figures/WobbleDiagram.png}
      \caption{Wobble Vectors from Non-Coincident Axes}
   \label{fig:wobble}
 \end{figure}
@@ -529,18 +540,19 @@ of a tetrahelix onto the $XY$-plane. \Cref{fig:projectiondiagram} is an example 
   Since $\rho < \pi$ by assumption, by $\cref{lemma:ngon}$,
   the set of wobbles $\{\vec{W}(n) | \text{for any n}\}$
   contains at least three vectors,
-  at least two of which pointing in different directions.
+  at least two of which point in different directions.
   For any point not at the origin, at least one of these vectors moves closer to the
   point and at least one moves further away.
 
     The set of all lengths in the tetrahelix is a superset of:
-    $L = \{|| \vec{R}(n) - \vec{B}(n)||\}$, which by our choice has at least one longest or shortest
+    $L = \{|| \vec{R}(n) - \vec{B}(n)||\}$, which, by our choice,
+    has at least one longest or shortest
     length.
     $L = \{|| \vec{R}(n) - (\vec{B'}(n) + \vec{W}(n))||\}$ and so
     $L = \{|| (\vec{R}(n) - \vec{B'}(n)) - \vec{W}(n)||\}$.
     But $\vec{R}(n) - \vec{B'}(n)$ is a constant, so the minimax value of $L$ is improved as $||\vec{W}(n)||$
     decreases.  
-    By our choice that their is a Blue-to-Red edge that is either a maximum or a minimum,
+    By our choice that there is a Blue-to-Red edge that is either a maximum or a minimum,
     this improves the minimax value of the total tetrahelix.
     
     This process can be carried out on both the Blue and Yellow helices
@@ -570,24 +582,24 @@ be generated with an equation for helices:
 \end{equation}
 which would be much more complicated if the axes where not coincident.
 Note that we have not yet shown that the relationships of the radius $r_c$ or
-the phase $\phi_c$ for the three helies, so we denoted them with a $c$ subscript to show
+the phase $\phi_c$ for the three helices, so we denoted them with a $c$ subscript to show
 they are dependent on the color.
 We have not yet investigated in the general case the relationships beteween
 $\alpha$, $r$, $\phi$ and $d$ in \cref{eq:triple}.
-In \cref{sec:parameterizing} we give a more specific version of this formula which
+In \cref{sec:parameterizing}, we give a more specific version of this formula which
 generates optimal tetrahelices.
 We observe that when $\alpha = 0$, the helices are degenerate, having curvature of $0$,
 but because of the $\phi_c$ term, they are not collinear.
 
 
-\begin{figure}[H]
+\begin{figure}
   \centering
-     \includegraphics[width=0.95\textwidth]{figures/edge-diagram.png}
+     \includegraphics[width=0.45\textwidth]{figures/edge-diagram.png}
      \caption{Edge Naming}
   \label{fig:naming}
 \end{figure}
 
-In principle any three helices generated with \cref{eq:triple}
+In principle, any three helices generated with \cref{eq:triple}
 has at most nine distinct edge length classes. Each edge that connects
 two rails potentially has a longer length and shorter length we denote with
 a $+$ or $-$. So the classes are $\{ RR, BB, YY, RB_+, RB_-, BY_+, BY_-, RY_+, RY_- \}$.
@@ -601,16 +613,16 @@ Then there are
 and 3 two-hop
 lengths $\{ RB_{+}, BY_+, RY_+ \}$ between each pair of 3 rails,
 where the two-hop length is at least the one-hop length.
-However, if we generate the three helices symmetrically with \cref{eq:triple},
+However, if we symmetrically generate the three helices  with \cref{eq:triple},
 many of these lengths will be the same.
 In fact, it is possible that there
 will be only two distinct such classes. In the purely regular BC helix there is only one length.
 
 \begin{theorem}
-  Optimal tetrahelices have the same radii for all three helices.
+  Optimal tetrahelices have the same radius for all three helices.
 \end{theorem}
 \begin{proof}
-To prove this we exhibit a symmetric tetrahelix (not yet shown to be optimal) which
+To prove this theorem, we exhibit a symmetric tetrahelix (not yet shown to be optimal) which
 happens to be a triple helix, that has
 the property that all rail edges are equal to all one-hop edges and all two-hop
 edges are equal to each other. 
@@ -626,13 +638,13 @@ Now consider a tetrahelix in which the radius of one of the helices is different
 By the connections made in a tetrahelix, any increase to a radius increases both
 a one-hop and two-hop distance, and any decrease likewise decreases two.
 Since there exists a tetrahelix which has only two distinct classes of edge lengths,
-(the smaller being one-hop = rail, the larger being the two-hop distance), the helix
+(he smaller being one-hop = rail, the larger being the two-hop distance, the helix
 with a larger radius increases a longest edge without increasing a shortest edges.
 Likewise, a helix with a smaller radius decreases a one-hop edge without decreasing
 a two-hop edge.  Therefore, a tetrahelix with different radii is not as optimal as some two-class 
 tetrahelix generated by \cref{eq:triple}, and so it not optimal. We have not yet
 proved that a two-class tetrahelix is optimal, but it suffices to show that there
-exist such a better tetrahelix to show that different radii imply a suboptimal
+exists such a better tetrahelix to show that different radii imply a suboptimal
 tetrahelix.
 \end{proof}
 
@@ -644,20 +656,20 @@ for all three rails.
 Now that we have shown that on any optimal tetrahelix the vertices
 are on helices of the same axes and pitch, we see that the vertices 
 of any optimal tetrahelix will lie on a cylinder, or a circle when the axis dimension
-is projected out. Therefore it is reasonable to now speak of the singular \emph{radius} $r$
+is projected out. Therefore, it is reasonable to now speak of the singular radius $r$
 of a tetrahelix as the radius of the cylinder.
 We can now go on to
 the harder proof about where vertices occur along the $z$-axis.
 
- We show that in fact the vertices must be distributed in even thirds
- along the $z$-axis, as in fact they are in the regular BC helix.
+ We show that, in fact, the vertices must be distributed in even thirds
+ along the $z$-axis as they are in the regular BC helix.
 
  However, we have already shown the rail
  lengths are equal in any optimal tetrahelix.
 
-\begin{figure}[H]
+\begin{figure}
      \centering
-     \includegraphics[width=0.8\textwidth]{figures/EquitetrabeamCloseUp.png}
+     \includegraphics[width=0.45\textwidth]{figures/EquitetrabeamCloseUp.png}
      \caption{Equitetrabeam}
   \label{fig:equitetrabeam}
 \end{figure}
@@ -673,7 +685,7 @@ axial length, of the two-hop edge is longer than the axial one-hop length.)
 \begin{theorem}
   \label{eventhirds}
   An optimal tetrahelix of any rail angle $0 \leq \rho < \pi$ is a triple helix with all vertices evenly spaced at $d/3$ intervals on the $z$ axis.
-  Any one tetrahedron in a tetrahelix has $1$ rail edge, $2$ one-hop edges connected to the rail and $2$ two-hop edges connected to the rail.
+  Any one tetrahedron in a tetrahelix has $1$ rail edge, $2$ one-hop edges connected to the rail, and $2$ two-hop edges connected to the rail.
   The sixth edge is opposite of the rail edge and is a one-hop edge.
 \end{theorem}
 
@@ -685,7 +697,7 @@ axial length, of the two-hop edge is longer than the axial one-hop length.)
     length.
 
     Every vertex is connected to 4 non-rail edges. There is a one-hop edge
-    in both the positive and negative $z$ direction. Likewise there is a two-hop
+    in both the positive and negative $z$ direction. Likewise, there is a two-hop
     edge in both the positive and negative $z$ direction. Let $A$ be the set
     of edge lengths, which has only 3 members, represented by $A = \{o,t,r\}$ for
     the one-hop, two-hop, and rail edge lengths.
@@ -694,9 +706,9 @@ axial length, of the two-hop edge is longer than the axial one-hop length.)
     and shortens one one-hop edge $o' < o$. Let $B = \{o',t' \} \cup A$ be the edge lengths of such a
     perturbed tetrahelix.
     The minimax of $B$ is greater than the minimax of $A$ since there is a single rail length which cannot be both greater
-    than $t'$ and $o'$ and less than $t'$ and $o'$.
+    than $o'$ and $t'$ and less than $o'$ and $t'$.
     Therefore, any optimal tetrahelix has all one-hop edges between all rails equal to each other, and
-    all two-hop edges equal to each other, the $z$ distances between rails equal. Therefore vertices are
+    all two-hop edges equal to each other, and the $z$ distances between rails equal. Therefore, vertices are
     $d/3$ from each other on the $z$-axis.
 \end{proof}
 
@@ -706,8 +718,8 @@ axial length, of the two-hop edge is longer than the axial one-hop length.)
 
 
 Taking all of these results together, 
-each helix in an optimal tetrahelix is congruent to the others, shares an axis, is the same radius, and are evenly spaced
-axially.
+each helix in an optimal tetrahelix is congruent to the others, shares an axis, is the same radius, and is evenly spaced
+axially with the others.
 An optimal tetrahelix is therefore a \emph{triple helix}, of a radius we have not yet demonstrated.
 
 \section{Parameterizing Tetrahelices via Rail Angle}
@@ -721,8 +733,8 @@ curvature is $0$, an important special case. The radius or the axial
 distance between two vertices on the same rail are possible choices, but
 perhaps the clearest choice is to build formulae that takes as their
 input the ``rail angle'' $\rho$. We define $\rho$ to be the angle
-formed in the X,Y plane with origin $O$: $\angle \vec{H}(0,0) O \vec{H}(0,1)$ projecting out the $z$
-axis and sighting along the positive $z$ axis. In other words, $\rho$
+formed in the X,Y plane with origin $O$: $\angle \vec{H}(0,0) O \vec{H}(0,1)$ projecting out the
+$z$-axis and sighting along the positive $z$a-xis. In other words, $\rho$
 controls how far a rail edge of a tetrahelix deviates from being
 parallel with the axis, or the ``twistiness'' of the tetrahelix. We use
 the parameter $\chi = 1$ to indicate a chirality of counter-clockwise,
@@ -768,7 +780,7 @@ Rewriting our formulation in terms of $\rho$:
 \end{align*} 
 
 
-$\vec{H}_{general}$ forces the user to select three values: $\rho$, $r_{\rho}$, and $d_{\rho}$ satisfying \cref{railangle}.
+$\vec{H}_{general}$ forces the user to select three values satisfying \cref{railangle}: $\rho$, $r_{\rho}$, and $d_{\rho}$.
 
 Note that when $\rho = 0$ then $d_{\rho} = 1$, but $r_{\rho}$ is not determined by
 \cref{railangle}.
@@ -776,7 +788,7 @@ Note that when $\rho = 0$ then $d_{\rho} = 1$, but $r_{\rho}$ is not determined 
 \begin{theorem}
   \label{generalformulaoptimal}
   For rail angles of magnitude at most $\rho_{bc}$, tetrahelices generated by
-  $\vec{H}_{general}$ are optimal in terms of minimum maximum ratio of member
+  $\vec{H}_{general}$ are optimal in terms of minimum maximum (minimax) ratio of member
   length when radius is chosen so that
   the length of the one-hop edge is equal to the rail length.
 \end{theorem}
@@ -833,7 +845,7 @@ This quantity will be equal to one of:
 \end{equation}
 
 We know that both one-hop($r$) and two-hop($r$) increase monotonically and continuously with increasing $r$.
-By inspection it seems likely that we will minimize this set by equating $\text{one-hop}(r)$ or $\text{two-hop}(r)$
+By inspection, it seems likely that we will minimize this set by equating $\text{one-hop}(r)$ or $\text{two-hop}(r)$
 to 1, but to be absolutely sure and to decide which one, we must examine the partial derivative of the ratio
  $\frac{\text{two-hop}(r)}{\text{one-hop}(r)}$ in this range.
 
@@ -866,18 +878,18 @@ Then:
 
 
 By graph inspection using Mathematica (\url{https://github.com/PubInv/tetrahelix/blob/master/tetrahelix.nb}), we see the partial derivative of this with respect to
-radius $r$ is always negative, for any $\rho \leq \rho_{bc}$. (When the rail angle approaches
+radius $r$ is always negative, for any $\rho \leq \rho_{bc}$. When the rail angle approaches
 $\pi$, corresponding to going almost to the other side of the tetrahelix, this is not necessarily true, hence the
-limitation in our statement of the theorem is meaningful.)
+limitation in our statement of the theorem is meaningful.
 Since the partial derivative of  $\frac{\text{two-hop}(r)}{\text{one-hop}(r)}$ with respect to the
 radius $r$ is negative for all $\rho$ up until $\rho_{bc}$, this ratio goes down
 as the radius goes up, and 
 we minimize the maximum edge-length ratio by choosing the largest radius
-up until one-hop $= 1$, the rail-edge length. If we attempted to increase the radius further
+up until one-hop $= 1$, the rail-edge length. If we attempted to further increase the radius
 we would not be optimal, because the ratio $\frac{\text{two-hop}(r)}{1}$ would become the
 largest ratio in our set of ratios \cref{eq:ratioset}.
 
-Therefore we decrease the minimax length
+Therefore, we decrease the minimax length
 of the whole system as we increase the radius
 up to the point that the shorter, one-hop distance is equal to the rail-length, $1$.
 In order to optimize the whole system so long as $\rho \leq \rho_{bc}$,
@@ -899,15 +911,15 @@ We can now give a formula for $ d_{opt} $ computed from $\rho, r_{opt}$ via the 
     d_{opt} &= \sqrt{1 - \frac{16 \sin^2(\rho / 2) }{ \cos(\rho) + 9( \sqrt{3} \sin(\rho/3) + \cos(\rho/3)) + 8 }}  \text{ .}  \numberthis  \label{dopt}  \\      
 \end{align*}
 
-Thus, by computing $r_{opt}$  and $d_{opt}$ as a function of $\rho$ from this equation, we can construct minimax optimal tetrahelix for an $0 \leq \rho \leq \rho_{bc}$.
+Thus, by computing $r_{opt}$  and $d_{opt}$ as a function of $\rho$ from this equation, we can construct minimax optimal tetrahelix where $0 \leq \rho \leq \rho_{bc}$.
 %% Add here references to these equations.
 \end{proof}
 
 \section{The Inradius}
 
-\begin{figure}[H]
+\begin{figure}
      \centering
-     \includegraphics[width=0.4\textwidth]{figures/AxialView.png}
+     \includegraphics[width=0.45\textwidth]{figures/AxialView.png}
      \caption{Axial view of a BC-Helix}
   \label{axialview}     
 \end{figure}
@@ -933,14 +945,14 @@ an optimal tetrahelix is a remarkably simple function of the radius $r$ and the 
 which can be seen from the trigonometry of a diagram of the projected one-hop edges
 connecting four sequentially numbered vertices:
 
-\begin{figure}[H]
+\begin{figure}
      \centering
-     \includegraphics[width=0.8\textwidth]{figures/ProjectionDiagram.png}
+     \includegraphics[width=0.45\textwidth]{figures/ProjectionDiagram.png}
      \caption{General One-hop Projection Diagram}
   \label{fig:projectiondiagram}
 \end{figure}
 
-From this equation with the help of symbolic computation we observe that inradius of the BC helix of unit rail length is $r_{in(\rho_{bc})} = \frac{3}{10\sqrt{2}} \approx 0.21$.
+From this equation, with the help of symbolic computation, we observe that inradius of the BC helix of unit rail length is $r_{in(\rho_{bc})} = \frac{3}{10\sqrt{2}} \approx 0.21$.
 
 \section{The Equitetrabeam}
 \label{sec:equitetrabeam}
@@ -1004,7 +1016,7 @@ since setting the angle in that equation to zero can produce only collinear poin
 The equitetrabeam may possibly be a novel construction.
 The fact that 6 members meet in a single point would have been a manufacturing disadvantage that
 may have dissuaded structural engineers from using this geometry.
-However, the advent of additive manufacturing, such a 3D printing, and the invention of two
+However, the advent of additive manufacturing, such as 3D printing, and the invention of two
 distinct concentric multimember joints\cite{song2003spherical,HamlinSandersonCMS} has improved that situation.
 
 Note that the equitetrabeam has chirality, which becomes important in our attempt to build a
@@ -1042,7 +1054,7 @@ solver, as we do on our website.
 For a pitch at least $ p \geq \frac{3  \sqrt{2}  \pi}{\sqrt{5}\rho_{bc}} \approx 9.64 $,
 using \cref{dopt} produces minimax optimal tetrahelices.
 
-In this way a rail angle can be chosen for any desired (sufficiently large) pitch, yielding
+In this way, a rail angle can be chosen for any desired (sufficiently large) pitch, yielding
 the optimum radius, the one-hop length, and the two-hop length that an engineer needs to
 construct a physical structure.
 
@@ -1058,7 +1070,7 @@ changing the length of the two-hop member, leaving the one-hop member
 and rail length equivalent within this continuum.\footnote{Before
 deriving  \cref{eqrhoopt}, we created a continuum by
 using a linear interpolation between the optimal radius for the
-Equitetrabeam and the BC Helix. This minimax optimum of this simpler
+equitetrabeam and the BC Helix. This minimax optimum of this simpler
 approach was at most 1\% worse than the optimum computed by
 \cref{eqrhoopt}.}
  However, it should
@@ -1066,7 +1078,7 @@ be noted that an engineer or architect may also use $\vec{H}_{general}$
 directly and interactively via \url{https://pubinv.github.io/tetrahelix/},
 and that minimax length optimality is a
 mathematical starting point rather than the final word on the beauty and utility of
-physical structures. For example, a structural engineer might increase
+physical structures. For example, a structural engineer might increase a
 radius past optimality in order to resist buckling.
 %% Add a figure here of a deep beam and of an arch.
 
@@ -1081,11 +1093,11 @@ Trusses and space frames remain an important design field in
 mechanical and structural engineering\cite{mikulas1985sequentially},
 including deployable and moving trusses\cite{claypool2012readily}.
 
-\begin{figure}[H] %float with two figures
+\begin{figure}
   \centering
-     \includegraphics[width=0.9\textwidth]{figures/MedCantedCropped.png}
+     \includegraphics[width=0.5\textwidth]{figures/MedCantedCropped.png}
      \caption{7-Tet Tetrobot in relaxed, or BC helix configuration}
-     \includegraphics[width=0.9\textwidth]{figures/EquitetrabeamCropped.png}
+     \includegraphics[width=0.5\textwidth]{figures/EquitetrabeamCropped.png}
      \caption{The Equitetrabeam: Fully Untwisted 7-Tet Tetrobot in Hexapod Configuration}
      \label{fig:tetrobot}
 \end{figure}
@@ -1096,12 +1108,12 @@ Starting twenty years ago, Sanderson\cite{sanderson1996modular},
 Hamlin,\cite{TetrobotBook}, Lee\cite{lee2002dynamic}, and others
  created a style of robotics based on changing
 the lengths of members joined at the center of a joint, thereby
-creating a connection to pure geometry. More recently NASA has
-experimented with tensegrities\cite{NTRT}, a different point in the
-same design spectrum. In particular the tetrahelix is related to the
+creating a connection to pure geometry. More recently, NASA has
+experimented with tensegrities\cite{NTRT,chen2017soft}, a different point in the
+same design spectrum. In particular, the tetrahelix is related to the
 tetraspline\cite{mirletz2014} concept used as a physical concept of a tensegrity robot.
 Although tensegrities are not member-for-member isomorphic to the tetrahelix
-as the tetrobot is, they often used repeated tetrahedral cells, so this
+as the tetrobot is, they often use repeated tetrahedral cells, so this
 work of pure geometry has some applied relevance to them.
 
 As suggested by Buckminster Fuller, the most convenient geometries to
@@ -1145,7 +1157,7 @@ The Tetrobot Project:\\
 \url{http://pubinv.github.io/tetrobot/} is part of Public Invention,
 a free-libre, open-source research, hardware, and software project that welcomes volunteers.
 To assist, contact:\\
-\email{read.robert@gmail.com}.
+\href{mailto:read.robert@gmail.com}{read.robert@gmail.com}.
 
 \bibliographystyle{siamplain}
 \bibliography{IEEEabrv,gluss}
