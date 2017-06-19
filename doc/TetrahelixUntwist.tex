@@ -36,7 +36,7 @@
 
 % See the ``Article customise'' template for come common customisations
 
-\title{Untwisting the Boerdijk-Coxeter Helix}
+\title{A Continuum of Optimal Tetrahelices between the Boerdijk-Coxeter Helix and a Planar-faced Tetrahelix}
 \author{Robert L. Read
   \affiliation{
     Founder, Public Invention \\
@@ -171,6 +171,55 @@ are taken.
 which is the main result of this
 paper. The closest helix is the BC helix, and the furthest
 is the equitetrabeam, defined in \cref{sec:equitetrabeam} and \cref{fig:naming,fig:equitetrabeam}.
+
+Trusses and space frames remain an important design field in
+mechanical and structural engineering\cite{mikulas1985sequentially},
+including deployable and moving trusses\cite{claypool2012readily,gezgin2017new}.
+
+\subsection{Utility for Robotics}
+
+
+\begin{figure}
+  \centering
+     \includegraphics[width=0.5\textwidth]{figures/MedCantedCropped.png}
+     \caption{7-Tet Tetrobot in relaxed, or BC helix configuration}
+     \includegraphics[width=0.5\textwidth]{figures/EquitetrabeamCropped.png}
+     \caption{The Equitetrabeam: Fully Untwisted 7-Tet Tetrobot in Hexapod Configuration}
+     \label{fig:tetrobot}
+\end{figure}
+
+Starting twenty years ago, Sanderson\cite{sanderson1996modular},
+Hamlin,\cite{TetrobotBook}, Lee\cite{lee2002dynamic}, and others
+ created a style of robotics based on changing
+the lengths of members joined at the center of a joint, thereby
+creating a connection to pure geometry. More recently, NASA has
+experimented with tensegrities\cite{NTRT,chen2017soft}, a different point in the
+same design spectrum. In particular, the tetrahelix is related to the
+tetraspline\cite{mirletz2014} concept used as a physical concept of a tensegrity robot.
+Although tensegrities are not member-for-member isomorphic to the tetrahelix
+as the tetrobot is, they often use repeated tetrahedral cells, so this
+work of pure geometry has some applied relevance to them.
+
+As suggested by Buckminster Fuller, the most convenient geometries to
+consider are those that have regular member lengths, in order to
+facilitate the inexpensive manufacture and construction of the robot.
+In a plane, the octet truss\cite{richard1961synergetic} is such a geometry, but in a line, the
+Boerdijk-Coxeter helix is a regular structure.
+
+However, a robot must move, and so it is interesting to consider the
+transmutations of these regular geometries. Developing a functional
+gait for our physical Tetrobot was in fact the motivation
+for this work.
+By changing only the length of the longer members that connect two
+distinct rails (the two-hop members), we can dynamically untwist a physical Tetrobot
+forming the Boerdijk-Coxeter configuration into the equitetrabeam which rests flat on the plane,
+as shown in \cref{fig:tetrobot}.
+
+By untwisting the tetrahelix so that is has a planar surface resting on the ground,
+we may consider each vertex touching the ground a foot or pseudopod. A robot can thus
+become a hexapod or $n$-pod tetrobot, and the already well-developed approaches to
+hexapod gaits may be applied to make the robot walk or crawl.
+
 
 \section{A Designer's Formulation of the BC Helix}
 
@@ -1134,52 +1183,6 @@ length changes curve the equitetrabeam into an arch.
 The ``colored'' approach of  \cref{eq:general} exposes these possibilities
 more than the approach of  \cref{graycoxeter}.
 
-Trusses and space frames remain an important design field in
-mechanical and structural engineering\cite{mikulas1985sequentially},
-including deployable and moving trusses\cite{claypool2012readily}.
-
-\begin{figure}
-  \centering
-     \includegraphics[width=0.5\textwidth]{figures/MedCantedCropped.png}
-     \caption{7-Tet Tetrobot in relaxed, or BC helix configuration}
-     \includegraphics[width=0.5\textwidth]{figures/EquitetrabeamCropped.png}
-     \caption{The Equitetrabeam: Fully Untwisted 7-Tet Tetrobot in Hexapod Configuration}
-     \label{fig:tetrobot}
-\end{figure}
-
-\section{Utility for Robotics}
-
-Starting twenty years ago, Sanderson\cite{sanderson1996modular},
-Hamlin,\cite{TetrobotBook}, Lee\cite{lee2002dynamic}, and others
- created a style of robotics based on changing
-the lengths of members joined at the center of a joint, thereby
-creating a connection to pure geometry. More recently, NASA has
-experimented with tensegrities\cite{NTRT,chen2017soft}, a different point in the
-same design spectrum. In particular, the tetrahelix is related to the
-tetraspline\cite{mirletz2014} concept used as a physical concept of a tensegrity robot.
-Although tensegrities are not member-for-member isomorphic to the tetrahelix
-as the tetrobot is, they often use repeated tetrahedral cells, so this
-work of pure geometry has some applied relevance to them.
-
-As suggested by Buckminster Fuller, the most convenient geometries to
-consider are those that have regular member lengths, in order to
-facilitate the inexpensive manufacture and construction of the robot.
-In a plane, the octet truss\cite{richard1961synergetic} is such a geometry, but in a line, the
-Boerdijk-Coxeter helix is a regular structure.
-
-However, a robot must move, and so it is interesting to consider the
-transmutations of these regular geometries. Developing a functional
-gait for our physical Tetrobot was in fact the motivation
-for this work.
-By changing only the length of the longer members that connect two
-distinct rails (the two-hop members), we can dynamically untwist a physical Tetrobot
-forming the Boerdijk-Coxeter configuration into the equitetrabeam which rests flat on the plane,
-as shown in \cref{fig:tetrobot}.
-
-By untwisting the tetrahelix so that is has a planar surface resting on the ground,
-we may consider each vertex touching the ground a foot or pseudopod. A robot can thus
-become a hexapod or $n$-pod tetrobot, and the already well-developed approaches to
-hexapod gaits may be applied to make the robot walk or crawl.
 
 \section{Conclusion}
 
@@ -1189,9 +1192,8 @@ other end a completely untwisted tetrahelix with equilateral cross
 section and planar faces, the equitetrabeam.
 By changing the length of only one out of three members by less than $16\%$,
 all configurations in the continuum may be reached.
-All such optimal may be generated by a simple equation giving coordinates or by
-selecting approprate edge-lengths.
-All such optimal tetrahelices are proven to be triple helices.
+All such optimal tetrahelices may be generated by a simple equation giving coordinates or by
+selecting approprate edge-lengths and are in fact triple helices.
 A machine, such as a robot or a variable-geometry truss, that can change
 the length of some of its members by $16\%$ can thus twist and untwist itself.
 A completely regular Tetrobot can untwist itself to create a planar
@@ -1205,7 +1207,7 @@ of any pitch, including rational ones.
 The Tetrobot Project:\\  
 \url{http://pubinv.github.io/tetrobot/} is part of Public Invention,
 a free-libre, open-source research, hardware, and software project that welcomes volunteers.
-To assist, contact:\\
+To assist, contact:
 \href{mailto:read.robert@gmail.com}{read.robert@gmail.com}.
 
 \bibliographystyle{asmems4}
