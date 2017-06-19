@@ -60,9 +60,9 @@
 %% TODO: Add something about Tetrobots into abstract.
 \begin{abstract}
   The Boerdijk-Coxeter helix (BC helix, or tetrahelix) is a
-  face-to-face stack of regular tetrahedra forming a helical column.  Considering the edges of
-  these tetrahedra as structural members, the resulting structure is attractive and
-  inherently rigid, and therefore interesting to architects,
+  face-to-face stack of regular tetrahedra forming a helical column.  Treating the edges of
+  these tetrahedra as structural members creates an attractive and
+  inherently rigid space frame, and therefore interesting to architects,
   mechanical engineers, and roboticists.  A formula is developed that matches the
   visually apparent helices forming the outer rails of the BC helix.
   This formula is generalized to a formula convenient to designers.
@@ -102,7 +102,7 @@ a face-to-face stack of tetrahedra that winds about a straight axis.
 Architects, structural engineers, and roboticists are inspired
 by and follow such regular mathematical models.
 However, since they can also build structures and
-machines of differing or even dynamically changing length, it is
+machines from members of differing or even dynamically changing length, it is
 useful to develop the mathematics of structures formed from tetrahedra
 where we relax regularity.
 
@@ -122,7 +122,8 @@ follow purely regular mathematical models such as the Boerdijk-Coxeter
 helix or the Octet Truss\cite{richard1961synergetic}.
 
 Buckminster Fuller called the BC helix a \emph{tetrahelix}\cite{fuller1982synergetics},
-a term now commonly used. In this paper, we reserve \emph{BC helix} to mean the purely regular structure and use \emph{tetrahelix} to refer
+a term now commonly used. In this paper, we reserve \emph{BC helix} to mean the purely
+regular structure and use \emph{tetrahelix} to refer
 to any structure isomorphic to the BC helix.
 
 \begin{figure}
@@ -195,7 +196,7 @@ the lengths of members joined at the center of a joint, thereby
 creating a connection to pure geometry. More recently, NASA has
 experimented with tensegrities\cite{NTRT,chen2017soft}, a different point in the
 same design spectrum. In particular, the tetrahelix is related to the
-tetraspline\cite{mirletz2014} concept used as a physical concept of a tensegrity robot.
+tetraspline\cite{mirletz2014} concept used as a model of a tensegrity robot.
 Although tensegrities are not member-for-member isomorphic to the tetrahelix
 as the tetrobot is, they often use repeated tetrahedral cells, so this
 work of pure geometry has some applied relevance to them.
@@ -204,20 +205,20 @@ As suggested by Buckminster Fuller, the most convenient geometries to
 consider are those that have regular member lengths, in order to
 facilitate the inexpensive manufacture and construction of the robot.
 In a plane, the octet truss\cite{richard1961synergetic} is such a geometry, but in a line, the
-Boerdijk-Coxeter helix is a regular structure.
+Boerdijk-Coxeter helix is such a regular structure.
 
 However, a robot must move, and so it is interesting to consider the
 transmutations of these regular geometries. Developing a functional
-gait for our physical Tetrobot was in fact the motivation
+gait for our physical Tetrobot (the 7-Tet Glussbot) was in fact the motivation
 for this work.
-By changing only the length of the longer members that connect two
-distinct rails (the two-hop members), we can dynamically untwist a physical Tetrobot
+By changing only the length of only one third of the members,
+we can dynamically untwist a physical Tetrobot
 forming the Boerdijk-Coxeter configuration into the equitetrabeam which rests flat on the plane,
 as shown in \cref{fig:tetrobot}.
 
 By untwisting the tetrahelix so that is has a planar surface resting on the ground,
 we may consider each vertex touching the ground a foot or pseudopod. A robot can thus
-become a hexapod or $n$-pod tetrobot, and the already well-developed approaches to
+become a hexapod or $n$-pod Tetrobot, and the already well-developed approaches to
 hexapod gaits may be applied to make the robot walk or crawl.
 
 
@@ -226,7 +227,7 @@ hexapod gaits may be applied to make the robot walk or crawl.
 We would like to design nearly regular tetrahelices with a formula that
 gives the vertices in space. Eventually, we would like to design them
 by choosing the lengths of a small set of members.
-In a space frame, this is a static design choice; in a tetrobot, it is a
+In a space frame, this is a static design choice; in a Tetrobot, it is a
 dynamic choice that can be used to twist the robot and/or exert linear or
 angular force on the environment.
 
@@ -236,7 +237,8 @@ this paper to relate the Cartesian coordinate approach and the member-length app
 generating a tetrahelix continuum.
 
 
-H.S.M Coxeter constructs the BC helix\cite{coxeter1985simplicial} as a repeated rotation and translation of the tetrahedra by showing the
+H.S.M Coxeter constructs the BC helix\cite{coxeter1985simplicial} as a repeated rotation and
+translation of the tetrahedra by showing the
 rotation is:
 \begin{equation}
 \theta_{bc} = \arccos(-2/3) 
@@ -454,12 +456,14 @@ edges are not parallel to the axis of the tetrahelix.  It is a famous and intere
 that the pitch is irrational. A BC helix never has two tetrahedra at
 precisely the same orientation around the $z$-axis. However, this is
 inconvenient to designers, who might prefer a rational pitch.
-The idea of developing a rational period by arranging solid tetrahedra by relaxing the face-to-face matching
+The idea of developing a rational period by arranging solid tetrahedra by relaxing
+the face-to-face matching
 has been explored\cite{sadler2013periodic}. 
-We develop, below, slightly irregular edge lengths that support, for example, a pitch of precisely 12
+We develop, below, slightly irregular edge lengths that support, for example,
+a pitch of precisely 12
 tetrahedra in one revolution which would allow an architect to
-design a pleasing column having the top and bottom tetrahedra in the same relationship to the capital and the basis to the
-viewer.
+design a pleasing column having the top and bottom tetrahedra in the same relationship to the
+viewer on both the capital and the basis.
 
 \section{Optimal Tetrahelices are Triple Helices}
 
@@ -515,7 +519,8 @@ shorter than the rail edges, and moving them apart slightly lengthens the betwee
 rails, improving the ratios.
 
 In the proof, below, we find it useful to consider projection diagrams that are the axial projection
-of a tetrahelix onto the $XY$-plane. \Cref{fig:projectiondiagram} is an example of such a diagram.
+of a tetrahelix onto the $XY$-plane. \Cref{fig:projectiondiagram,fig:wobble} are examples
+of such a diagram.
 \begin{lemma}
   If the rail angle $0 < \rho < \pi$ is a rational multiple of $\pi$, then the projection of
   edges in a helix of that rail angle  along the $z$-axis onto the $XY$-plane form a
@@ -579,9 +584,9 @@ of a tetrahelix onto the $XY$-plane. \Cref{fig:projectiondiagram} is an example 
   same pitch and the same axis, even if they do not have the same radius.
 
   \Cref{fig:wobble} illustrates this situation. Like most diagrams, it is
-  over specific, in that the two circles are drawn of the same radius but we do not
+  overspecific, in that the two circles are drawn of the same radius but we do not
   depend upon that in this proof.  The diagram represents the projection along the
-  $z$ axis of a few points into the $XY$-plane.
+  $z$-axis of a few points into the $XY$-plane.
 
   \begin{figure}
      \centering
@@ -656,8 +661,9 @@ In principle, any three helices generated with \cref{eq:triple}
 has at most nine distinct edge length classes. Each edge that connects
 two rails potentially has a longer length and shorter length we denote with
 a $+$ or $-$. So the classes are $\{ RR, BB, YY, RB_+, RB_-, BY_+, BY_-, RY_+, RY_- \}$.
-If when projecting all vertices onto the $z$-axis (dropping the $x$ and $y$ coordinates), the interval
-defined by the $z$ axis value of its endpoints contains no other vertices,
+If when projecting all vertices onto the $z$-axis (dropping the $x$ and $y$ coordinates),
+the interval
+defined by the $z$-axis value of its endpoints contains no other vertices,
 we call it a \emph{one-hop} edge, and if it does contain another vertex we
 call it a \emph{two-hop} edge, as illustrated in \cref{fig:naming}.
 Then there are 
@@ -669,7 +675,7 @@ where the two-hop length is at least the one-hop length.
 However, if we symmetrically generate the three helices  with \cref{eq:triple},
 many of these lengths will be the same.
 In fact, it is possible that there
-will be only two distinct such classes. In the purely regular BC helix there is only one length.
+will be only two distinct such classes, and in fact in  the purely regular BC helix there is only one length.
 
 \begin{theorem}
   Optimal tetrahelices have the same radius for all three helices.
@@ -737,14 +743,14 @@ axial length, of the two-hop edge is longer than the axial one-hop length.)
 
 \begin{theorem}
   \label{eventhirds}
-  An optimal tetrahelix of any rail angle $0 \leq \rho < \pi$ is a triple helix with all vertices evenly spaced at $d/3$ intervals on the $z$ axis.
+  An optimal tetrahelix of any rail angle $0 \leq \rho < \pi$ is a triple helix with all vertices evenly spaced at $d/3$ intervals on the $z$-axis.
   Any one tetrahedron in a tetrahelix has $1$ rail edge, $2$ one-hop edges connected to the rail, and $2$ two-hop edges connected to the rail.
   The sixth edge is opposite of the rail edge and is a one-hop edge.
 \end{theorem}
 
 \begin{proof}
     Consider a tetrahelix in which the vertices are evenly spaced at
-    $d/3$ intervals on the $z$ axis. Every edge is either a rail edge,
+    $d/3$ intervals on the $z$-axis. Every edge is either a rail edge,
     or it makes one hop, or two hops. All of the one-hop
     edges are equal length.  All of the two-hop edges are equal
     length.
@@ -787,7 +793,7 @@ distance between two vertices on the same rail are possible choices, but
 perhaps the clearest choice is to build formulae that takes as their
 input the ``rail angle'' $\rho$. We define $\rho$ to be the angle
 formed in the X,Y plane with origin $O$: $\angle \vec{H}(0,0) O \vec{H}(0,1)$ projecting out the
-$z$-axis and sighting along the positive $z$a-xis. In other words, $\rho$
+$z$-axis and sighting along the positive $z$-axis. In other words, $\rho$
 controls how far a rail edge of a tetrahelix deviates from being
 parallel with the axis, or the ``twistiness'' of the tetrahelix. We use
 the parameter $\chi = 1$ to indicate a chirality of counter-clockwise,
@@ -805,7 +811,7 @@ Checking the important special case of the BC helix, we find that this equation
 indeed holds true, treating $d$ in this equation as $3 h_{bc}$ as defined by
 Gray and Coxeter, that is, $d_{bc} = 3h_{bc}$, where they are using
 $h$ for the axial height from one vertex to
-the next of a different color, but we use $d$ to mean distance between vertices of
+the next of a different color, but we use $d$ to mean the axial distance between vertices of
 the  same color.
 
 The rail angle $\rho$ also has the meaning that $2 \pi / \rho$ is the number of
@@ -896,7 +902,7 @@ where: $  d_{\rho}^2 = 1 - 4 r^2 (\sin( \rho / 2)^2$.
 
 By similar algebra and trigonometry:
 \begin{equation}
-  \text{two-hop}  = \sqrt{\frac{4 d_{\rho}^2}{9} +  \sin^2(2\rho/3 + \frac{4\pi}{3})  + (1 - \cos(2\rho/3 + \frac{4\pi}{3}))^2)} \text{.}\\
+  \text{two-hop}  = \sqrt{\frac{4 d_{\rho}^2}{9} +  r^2(\sin^2(2\rho/3 + \frac{4\pi}{3})  + (1 - \cos(2\rho/3 + \frac{4\pi}{3}))^2)} \text{.}\\
 \end{equation}
 
 
@@ -1005,7 +1011,8 @@ and then rewrite:
 
 
 
-Thus, by computing $r_{opt}$  and $d_{opt}$ as a function of $\rho$ from this equation, we can construct minimax optimal tetrahelix where $0 \leq \rho \leq \rho_{bc}$.
+Thus, by computing $r_{opt}$  and $d_{opt}$ as a function of $\rho$ from this equation, we can
+construct a minimax optimal tetrahelix where $0 \leq \rho \leq \rho_{bc}$.
 %% Add here references to these equations.
 \end{proof}
 
@@ -1102,16 +1109,14 @@ In \cref{fig:series}, the furthest tetrahelix is the optimal equitetrabeam.
 To the extent that we value tetrabeams (that is, tetrahelices with a rail angle of $0$,
 and therefore zero curvature) as mathematical or engineering objects,
 we have motivated the development of $\vec{H}_{general}$ as a transformation of $\vec{V}(n)$ defined by
- \cref{graycoxeter} from Gray and Coxeter. It is difficult to see how
-the $\vec{V}(n)$ 
-formulation could ever give rise to a continuum producing the tetrabeam,
-since setting the angle in that equation to zero can produce only collinear points.
+\cref{graycoxeter} from Gray and Coxeter.
+
 
 The equitetrabeam may possibly be a novel construction.
 The fact that 6 members meet in a single point would have been a manufacturing disadvantage that
 may have dissuaded structural engineers from using this geometry.
 However, the advent of additive manufacturing, such as 3D printing, and the invention of two
-distinct concentric multimember joints\cite{song2003spherical,HamlinSandersonCMS} has improved that situation.
+distinct concentric multi-member joints\cite{song2003spherical,HamlinSandersonCMS} has improved that situation.
 
 Note that the equitetrabeam has chirality, which becomes important in our attempt to build a
 continuum of tetrahelices.
@@ -1186,14 +1191,15 @@ more than the approach of  \cref{graycoxeter}.
 
 \section{Conclusion}
 
-There exists a continuum of minimax edge-length optimal tetrahelices
-having as one end the Boerdijk-Coxeter Helix and at  the
+It is proven there exists a continuum of minimax edge-length optimal tetrahelices
+having as one end the completely regular Boerdijk-Coxeter Helix and at the
 other end a completely untwisted tetrahelix with equilateral cross
 section and planar faces, the equitetrabeam.
 By changing the length of only one out of three members by less than $16\%$,
 all configurations in the continuum may be reached.
-All such optimal tetrahelices may be generated by a simple equation giving coordinates or by
-selecting approprate edge-lengths and are in fact triple helices.
+All such optimal tetrahelices may provably be generated by a
+simple equation giving coordinates or by
+selecting appropriate edge lengths generated from the same equation. 
 A machine, such as a robot or a variable-geometry truss, that can change
 the length of some of its members by $16\%$ can thus twist and untwist itself.
 A completely regular Tetrobot can untwist itself to create a planar
