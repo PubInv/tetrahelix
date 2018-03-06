@@ -1,0 +1,227 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{color}
+\usepackage{cleveref}
+
+
+\newcommand{\highlighttext}[1] {\textcolor{red}{#1}}
+
+
+\title{Rebuttal: JMR-17-1184 (Research Paper), A Continuum of Optimal Tetrahelices between the Boerdijk-Coxeter Helix and a Planar-faced Tetrahelix}
+\author{Robert L. Read \\
+  Public Invention \\
+    Email: \href{mailto:read.robert@gmail.com}{read.robert@gmail.com}   
+	}
+
+\date{\today}
+% Hint: \title{what ever}, \author{who care} and \date{when ever} could stand 
+% before or after the \begin{document} command 
+% BUT the \maketitle command MUST come AFTER the \begin{document} command! 
+\begin{document}
+
+\maketitle
+
+\section{Thanks}
+
+The author wishes to thank the reviewers for their careful and attentive work. Each comment is responded
+to below, on a point-by-point basis.
+
+\section{Response to Reviewer \#1}
+
+\subsection{Overview}
+
+Slightly irregular edge lengths consisting the tetrahelix are introduced to develop one exact
+revolution of the tetrahelix structure using the integer number of the tetrahedron in this paper.
+Therefore, the efficient modeling of the tetrahelix using tetrahedral is proposed, and this research
+can be applied to the robot or architecture field.
+
+\subsection{Remarks}
+
+In this paper, the optimality criterion is proposed to minimize the minimax which means the
+difference between longest and shortest edge. For optimization, 7 conditions were considered.
+However, these 7 conditions are just based on the author’s experience, but is not fully supported
+by academic background such as kinematic measure to make any comparison between optimal
+design and non-optimal design.
+
+To parameterize the tetrahelix with respect to the rail angle, the relationship between one-hop edge,
+two-hop edge, and rail edge is proposed.
+
+The inradius of the tetrahelix was also calculated to consider the insertion of material inside the
+tetrahelix.
+
+The equitetrabeam is introduced as a special case that the rail angle is zero. It is proposed that
+transformation from tetrahelix to equitetrabeam is possible by changing the minimax ratio about
+16\%.
+
+Overall, this paper is acceptable, but requires some revision. The following includes some comments.
+
+\subsection{Modification}
+\begin{itemize}
+\item
+The sentences of this paper need to be compact. Please read several times and then clean
+the sentences.
+``without loss of generality'' $\rightarrow$ ``generally''
+\highlighttext{The term ``without loss of generality'' is being used as specifically as mathematical jargon\cite{wiki:wolog} to represent an assumption allowwed in proof because of symmetry or an ability to make
+  a choice that does not change the validity of the proof.
+  However, because this was in order to clarify this, I have added the word ``assume'' to the first use of the phrase ``without loss of generality'' and the phrase ``By symmetry'' to the second use.
+  }
+
+\highlighttext{TODO: reread looking for additional ways to make sentences more compact.}
+\item
+  The explantaion for figure 8 can be erased by drawing the general case for figure 8.
+  \item
+    Instead of sentence starting to ‘we……’ , the passive sentence is recommended.
+    \item 
+ The following sentence is obscure. You’d better suggest a way to measure optimality using
+ some kinematic indices :
+\begin{quote}
+ We have not yet proved that a two-class tetrahelix is optimal, but it suffices to show
+that there exists such a better tetrahelix to show that different radii imply a suboptimal
+tetrahelix.
+\end{quote}
+
+\highlighttext{This sentence has been clarified to show that ``not yet proved'' means
+  ``not yet reached the proof in this paper of that fact that'' by changing the sentence to refer
+  to the next theorem:
+  \begin{quote}
+  We have not yet {\em
+proved theorem 3 which asserts} that a two-class tetrahelix is optimal, but it suffices to show that there
+exists such a better tetrahelix to show that different radii imply a suboptimal
+tetrahelix.
+  \end{quote}
+  I unfortunately am not sure how to relate this notion of optimality to kinematic indexes, but
+  have attempted elsewhere to clarify why this definition of optimality is valuable for
+  Tetrobot-style robots.
+  }
+\item 
+ It is recommended to change:
+ ``conincident'' $\rightarrow$ ``coincident''
+ \highlighttext{Corrected--an embarassing mistake in my spelling correction software.}
+ \item
+\item In page 3, after the eq. (4)
+  In this formula, ``integral values of n'' $\rightarrow$ In this formula, ``integer values of n''
+  \highlighttext{Corrected.}
+  \item 
+In eq. (23), need to be changed as
+
+\begin{equation}
+  \begin{split}
+  \frac{\text{two-hop}(r)}{ \text{one-hop}(r)}  &=
+  \frac{\sqrt{\frac{4}{9}  + r^2(g_{\rho}+ j_{\rho})}}
+       {\sqrt{\frac{1}{9} +r^2(f_{\rho}+k_{\rho}) }} \text{.}
+  \end{split}       
+\end{equation}
+$\rightarrow$ 
+\begin{equation}
+  \begin{split}
+  \frac{\text{two-hop}(r)}{ \text{one-hop}(r)}  &=
+  \frac{\sqrt{\frac{4}{9}  + r^2(g_{\rho}+ k_{\rho})}}
+       {\sqrt{\frac{1}{9} +r^2(f_{\rho}+j_{\rho}) }} \text{.}
+  \end{split}       
+\end{equation}
+\highlighttext{This has been corrected, thanks for the careful catch of an embarassing mistake.}
+
+\item 
+- In page 8, the graph could not be observed through this following address,
+https://github.com/PubInv/tetrahelix/blob/master/tetrahelix.nb . For user not using the
+Mathematica, it is recommended to show the tendency of the graph of eq. (23) by setting
+rail angle as 0, 15, and 30(deg).
+
+\highlighttext{
+  In order to make this clearer and avoid forcing the user to follow a link, I have included the graphic
+  inline in the document with the following change to the relevant sentence:}
+
+\begin{quote}
+
+By inspection of the graph of the derivative of this ratio rendered in \cref{fig:partialderivativediagram} we see the partial derivative of this with respect to
+radius $r$ is always negative, for any $\rho \leq \rho_{bc}$.
+
+\begin{figure}
+     \centering
+     \includegraphics[width=0.45\textwidth]{figures/PartialDerivativeDiagram.png}
+     \caption{Partial Derivative against $\rho$ and $r$: $ \frac{\partial \frac{\text{two-hop}(r)}{ \text{one-hop}(r)}}{\partial \rho, r} $ }
+  \label{fig:partialderivativediagram}
+\end{figure}
+\end{quote}
+
+
+
+\item
+  - In eq. (27) and (28), it needs to be changed as 9/2 instead of 9.
+  \highlighttext{Corrected--thank you!}  
+  \item
+- Figure 12 interferes to understanding the related contents. It is recommended to change
+figure 12 referring the following figure,
+\item
+- It would be great to add the snapshot and explanation showing the application of this
+conclusion
+
+\highlighttext{In order to more clearly tie this to the actual research robot for which it was developed,
+  I have re-referenced the photograph which occurs early in the paper and modified the text:}
+
+\begin{quote}
+  \begin{figure}
+  \centering
+     \includegraphics[width=0.5\textwidth]{figures/MedCantedCropped.png}
+     \caption{7-Tet Tetrobot in relaxed, or BC helix configuration}
+     \includegraphics[width=0.5\textwidth]{figures/EquitetrabeamCropped.png}
+     \caption{The Equitetrabeam: Fully Untwisted 7-Tet Tetrobot in Hexapod Configuration}
+     \label{fig:tetrobot}
+\end{figure}
+
+A machine, such as \highlighttext{the} Tetrobot or a variable-geometry truss \highlighttext{ depicted in \cref{fig:tetrobot}}, that can change
+the length of some of its members by $16\%$ can thus twist and untwist itself.
+A completely regular Tetrobot can untwist itself to create a planar
+face on the ground for locomotion \highlighttext{via standard gaits}.
+\end{quote}
+
+\end{itemize}
+
+
+\section{Response to Reviewer \#2}
+
+Title: A Continuum of Optimal Tetrahelices between the Boerdijk-Coxeter Helix and a Planar-faced Tetrahelix 
+
+This paper proposed a method to transform the BC helix to Planar-faced tetrahelix by minimizing the difference between the longest and shortest edges, under some constraints. The author tried to explain his finding logically, and the background of the research is explained well. Also, the author shared the materials for this research at github. I have some comments for this paper as follows:
+
+\begin{enumerate}
+
+  \item
+ I can see the organization of this paper is as follows: 
+ Intro (2pages) – A designer’s formulation for the BC helix(2 pages) – Optimal tetrahelices are triple helix(3 pages) – Parameterizing tetrahelices via rail angle(2 pages) – The inradius(0.5 pages) – The Equitetrabeam (0.5 pages) – An Untwisted continuum (0.5 pages) – Conclusion
+ \item 
+I think the author tried to explain all the findings but I think the organization of the paper should be revised to be emphasized carefully. Even for the researchers in this field, I am not convinced the paper is clearly written to emphasize the contribution well. Some sections can be combined, and the organization should be changed to emphasize the major contribution of this paper. I think this is the most significant point to improve the readability of the paper.
+
+  \item
+    I think the explaining optimization part should be revised. For a certain optimization problem, I think mathematics definition or algorithmic explanation can be helpful to understand the problem quickly. I think the author should refer problem definition standards from other optimization papers to revise this.
+
+  \item    
+    In my opinion, the problem definition and proof of theorems looks being done based on personal experiences. I recommend using mathematical derivation or expression if possible.
+
+  \item    
+ I think the demonstration by experiment can be helpful to understand the idea. Video attachment is recommended. 
+
+\end{enumerate}
+
+Minors)
+
+\begin{itemize}
+  \item
+    I am very confusing to the term “An untwisted continuum” and “equitetrabeam.”
+    \highlighttext{I have attempted to clarify this by adding the phrase:
+      We call this the \emph{equitetrabeam}\textbf{, a portmanteau of ``equilateral tetrahedral beam''}.}
+    Some other terminologies should be checked for 
+“Conincident” should be “coincident”
+\item
+Title is little bit not easy to be understood. “A continuum of optimal tetrahelices” can be changed to some other expression.
+\end{itemize}
+
+
+\section{Conclusions}\label{conclusions}
+
+\bibliographystyle{asmems4}
+\bibliography{IEEEabrv,gluss}
+
+\end{document}
