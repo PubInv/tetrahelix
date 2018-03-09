@@ -119,15 +119,15 @@ The vertices of the tetrahedra lie upon
 three helices about the central axis.
 The 
 Tetrobot\cite{readglussbot,TetrobotBook} uses the regularity of
-this geometry to make a tentacle-like robot that can crawl like a slug
-or mollusk.  These modular robotic systems use mechanical actuators which can
+this geometry to make a tentacle-like robot that can crawl like a mollusk.
+These modular robotic systems use mechanical actuators which can
 change their length, connected by special joints,
 such as the 3D printable Song-Kwon-Kim\cite{song2003spherical} joint or the CMS joint\cite{HamlinSandersonCMS}
 used in the original Tetrobot.
 This allows many members to meet in a single point.
 Such machines can
 follow purely regular mathematical models such as the Boerdijk-Coxeter
-helix or the Octet Truss\cite{richard1961synergetic}.
+helix or the octet truss\cite{richard1961synergetic}.
 
 Buckminster Fuller called the BC helix a \emph{tetrahelix}\cite{fuller1982synergetics},
 a term now commonly used. \highlighttext{This paper} reserves \emph{BC helix} to mean the purely
@@ -155,7 +155,7 @@ Then imagine that each static edge is replaced with an
 actuator that can dynamically become shorter or longer in response to electronic control,
 and the vertices are joints that support sufficient angular displacement
 for this to be possible. An example of such a machine is a Tetrobot,
-shown in figs. [4] and \cref{fig:tetrobot}.
+shown in fig. 4 and \cref{fig:tetrobot}.
 
 A BC helix does not rest stably on a plane. It is convenient to
 be able to ``untwist'' it and to form a tetrahelix space frame that has a
@@ -245,7 +245,7 @@ The remainder of this  paper:
 \item gives a formula for the inradius of an optimal tetrahelix,
 \item describes a completely planar tetrahelix (the \emph{equitetrabeam}) useful as
   a structural beam or for applying standarod robot gaits to a tetrahedral robot, and
-\item discusses the continuum of optimal tetrahelices between the BC Helix and equitetrabeam.
+\item discusses the continuum of optimal tetrahelices between the BC helix and equitetrabeam.
 \end{enumerate}
 }
 
@@ -285,7 +285,7 @@ R.W. Gray's website\cite{graytetrahelix}, repeating a formula by Coxeter\cite{co
            y \\
            z
          \end{bmatrix}$
-for a counter-clockwise BC Helix in a right-handed coordinate system:
+for a counter-clockwise BC helix in a right-handed coordinate system:
 \begin{equation}
   \label{graycoxeter}
 \vec{V}(n) =
@@ -367,7 +367,7 @@ Although the vertices coincide,
  \cref{graycoxeter} evaluated
 at real values generates the black helix which runs through every vertex, and \cref{eq:colored} defines
 the red, yellow, and blue helices. In this figure,
-these rail helices have been rendered at a slightly higher radius than the vertices for clarity;
+these \highlighttext{continuous} rail helices have been rendered at a slightly higher radius than the vertices for clarity;
 in actuality, the maximum distance between the continuous, curved helix and the
 straight edges between vertices is much smaller than can be clearly rendered.
 
@@ -497,7 +497,7 @@ viewer on both the capital and the basis.
 
 \highlighttext{
 As engineers and roboticists it is desirable to design tetrahelices that
-are slightly irregular that ``untwist'' the BC Helix in an optimal way.
+are slightly irregular that ``untwist'' the BC helix in an optimal way.
 For machines
 made out of linear actuators with limited range of extension,
 the best definition of optimality is to minimize the difference in
@@ -521,7 +521,7 @@ $T(n_1,n_2) : \mathbb{Z} \times \mathbb{Z} \mapsto \mathbb{R} \cup \{\perp\} $.
 To describe a physically realizable machine, the function $T$ representing a tetrahelix
 is constrained:
 $(\forall n_1,n_2 : T(n_1,n_2) > 0)$.
-For a BC Helix, $(\forall x,y : T(x,y) \neq \perp \Rightarrow T(x,y) = 1)$.
+For a BC helix, $(\forall x,y : T(x,y) \neq \perp \Rightarrow T(x,y) = 1)$.
 }
 
 \highlighttext{
@@ -533,7 +533,7 @@ R(T) = \frac{\max \{T(n_1,n_2) | n_1,n_2 \in \mathbb{Z} \}}{\min \{T(n_1,n_2) | 
 }
 
 \highlighttext{
-  The ratio of the BC Helix is 1: $ R(H_{BC}) = 1$.
+  The ratio of the BC helix is 1: $ R(H_{BC}) = 1$.
   }
 \highlighttext{
 A \emph{triple helix} is three congruent helices that share an axis. The remainder of this
@@ -1141,7 +1141,7 @@ construct a minimax optimal tetrahelix where $0 \leq \rho \leq \rho_{bc}$.
   \label{axialview}     
 \end{figure}
 
-Since the axes are parallel, one may define the \emph{inradius}, represented by the letter $i$, of a
+Since the axes are parallel, one may define the \emph{inradius}, represented by \highlighttext{$r_{in}$}, of a
 tetrahelix to be the radius of the largest
 cylinder parallel to this axis that is surrounded by each tetrahelix and penetrated by no edge.
 
@@ -1259,7 +1259,7 @@ even further does produce a clockwise tetrahelix, but one in which the
  one-hop and two-hop lengths in the wrong places, that is, two-hop
  becomes shorter than one-hop.
  Likewise, $\rho > \rho_{bc}$ generates
- a tetrahelix, but \highlighttext{its optimality has not proved or investigated} in that range.
+ a tetrahelix, but \highlighttext{its optimality has not been proved or investigated} in that range.
  
  The pitch of a helix for a known $z$-axis travel $d$
  is trivial (see \cref{pitcheqn}).
@@ -1280,14 +1280,14 @@ The curvature of a rail helix is formally given by:
   \frac{|r_{\rho}|}{r_{\rho}^2 + (d_{\rho}/\rho)^2} \text{ .}
 \end{equation}
 which goes to $0$ as $\rho$ approaches $0$ (the equitetrabeam.)
-As $\rho$ increase up to $\rho_{bc}$ the curvature increases smoothly until the BC Helix is reached.
+As $\rho$ increase up to $\rho_{bc}$ the curvature increases smoothly until the BC helix is reached.
 
 Perhaps surprisingly, the optimal untwisting is accomplished only by
 changing the length of the two-hop member, leaving the one-hop member
 and rail length equivalent within this continuum.\footnote{Before
 deriving  \cref{eqrhoopt}, \highlighttext{a continuum was created} by
 using a linear interpolation between the optimal radius for the
-equitetrabeam and the BC Helix. This minimax optimum of this simpler
+equitetrabeam and the BC helix. This minimax optimum of this simpler
 approach was at most 1\% worse than the optimum computed by
 \cref{eqrhoopt}.}
  However, it should
@@ -1310,7 +1310,7 @@ more than the approach of  \cref{graycoxeter}.
 \section{Conclusion}
 
 It is proven there exists a continuum of minimax edge-length optimal tetrahelices
-having as one end the completely regular Boerdijk-Coxeter Helix and at the
+having as one end the completely regular Boerdijk-Coxeter helix and at the
 other end a completely untwisted tetrahelix with equilateral cross
 section and planar faces, the equitetrabeam.
 By changing the length of only one out of three members by less than $16\%$,
