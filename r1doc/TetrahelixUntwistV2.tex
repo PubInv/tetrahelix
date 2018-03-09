@@ -173,7 +173,7 @@ are taken.
 \end{figure}
 
 
-\Cref{fig:series} displays a continuum of tetrahelices optimal in a \highlighttext{in the sense of being
+\Cref{fig:series} displays a continuum of tetrahelices optimal \highlighttext{in the sense of being
 as regular as possible},
 which is the main result of this
 paper. The closest helix is the BC helix, and the furthest
@@ -231,16 +231,18 @@ hexapod gaits may be applied to make the robot walk or crawl.
 \highlighttext{
 The remainder of this  paper:
 \begin{enumerate}
-\item Provides a new formulation for the BC helix that is more natural for engineers,
-\item Defines a concept of minimum maximum edge-length optimality and proves that all
+\item provides a new formulation for the BC helix that is more natural for engineers,
+\item defines a concept of minimum maximum edge-length optimality that maintains
+  the structure as close to regularity as possible,
+  \item proves that all
     optimal tetrahelices are in fact triple helices,
-\item Provides formulae for constructing optimal tetrahelices of different twists or for optimally
+\item provides formulae for constructing optimal tetrahelices of different twists or for optimally
     transforming a
-    robot from a twisted to a planar configuration,
-\item Gives a formula for the inradius of an optimal tetrahelix,
-\item Describes a completely planar tetrahlix (the \emph{equitetrabeam}) useful as
+    robot from a twisted to a planar configuration in a way that maintains optimum regularity,
+\item gives a formula for the inradius of an optimal tetrahelix,
+\item describes a completely planar tetrahlix (the \emph{equitetrabeam}) useful as
   a structural beam or for applying standard robot gaits to a tetrahedral robot, and
-\item Discusses the continuum of optimal tetrahelices between the BC Helix and equitetrabeam.
+\item discusses the continuum of optimal tetrahelices between the BC Helix and equitetrabeam.
 \end{enumerate}
 }
 
@@ -709,7 +711,7 @@ of such a diagram.
     $\vec{B}(n) = \vec{B'}(n)$, and all three axes are coincident.
 \end{proof}
 
-Now that \highlighttext{it is provent that the} axes are coincident and parallel and that the pitches
+Now that \highlighttext{it is proven that the} axes are coincident and parallel and that the pitches
 are the same for all helices, any optimum tetrahelix can
 be generated with a \highlighttext{simple} equation for helices:
 \begin{equation}
@@ -731,18 +733,16 @@ which would be much more complicated if the axes where not coincident.
 \highlighttext{
 Having not yet investigated in the general case the relationships beteween
 $\alpha$, $r$, $\phi$ and $d$ in \cref{eq:triple} for the three helices
-(the relationships are developed in \cref{eqrhoopt}) these are denoted with a $c$ subscript to show
+ these are denoted with a $c$ subscript to show
 they are dependent on the color ($c \in \{R,B,Y\}$).
+In \cref{sec:parameterizing}, we give a more specific version (\cref{eqrhoopt}) of this formula which
+generates optimal tetrahelices.
 Since any optimal tetrahelix is described by \cref{eq:triple},
 \[
 rad(\vec{V}_{triple}(n,c)) = max \{r_R, r_B, r_Y\}
 \]
 }
 
-\highlighttext{This equation does not completely explain} the  relationships beteween
-$\alpha$, $r$, $\phi$ and $d$ in \cref{eq:triple}.
-In \cref{sec:parameterizing}, we give a more specific version of this formula which
-generates optimal tetrahelices.
 \highlighttext{Observe} that when $\alpha = 0$, the helices are degenerate, having curvature of $0$,
 but because of the $\phi_c$ term, they are not collinear.
 
