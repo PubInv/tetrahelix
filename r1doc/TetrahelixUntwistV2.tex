@@ -66,14 +66,17 @@
   The Boerdijk-Coxeter helix (BC helix, or tetrahelix) is a
   face-to-face stack of regular tetrahedra forming a helical column.  Treating the edges of
   these tetrahedra as structural members creates an attractive and
-  inherently rigid space frame, and therefore interesting to architects,
+  inherently rigid space frame, and therefore is interesting to architects,
   mechanical engineers, and roboticists.  A formula is developed that matches the
   visually apparent helices forming the outer rails of the BC helix.
   This formula is generalized to a formula convenient to designers.
   Formulae for 
   computing the
   parameters that give proven edge-length minimax-optimal tetrahelices
-  are given, defining a continuum of optimum tetrahelices of varying curvature.
+  are given,
+  \highlighttext{
+  allowing transformation through a continnum of 
+  of optimum tetrahelices of varying curvature while maximizing regularity.}
   The endpoints of this continuum are the BC helix and
   a structure of zero curvature, the \emph{equitetrabeam}.
  Only one out of three members in the system change their length \highlighttext{ to transform
@@ -152,7 +155,7 @@ Then imagine that each static edge is replaced with an
 actuator that can dynamically become shorter or longer in response to electronic control,
 and the vertices are joints that support sufficient angular displacement
 for this to be possible. An example of such a machine is a Tetrobot,
-shown in \cref{fig:tetrobot}.
+shown in figs. [4] and \cref{fig:tetrobot}.
 
 A BC helix does not rest stably on a plane. It is convenient to
 be able to ``untwist'' it and to form a tetrahelix space frame that has a
@@ -249,7 +252,7 @@ The remainder of this  paper:
 \section{A Designer's Formulation of the BC Helix}
 
 \highlighttext{Engineers} would like to design nearly regular tetrahelices with a formula that
-gives the vertices in space. Eventually, \highlighttext{this would be done}
+gives the vertices in space. Ideally, \highlighttext{this would be done}
 by choosing the lengths of a small set of members.
 In a space frame, this is a static design choice; in a Tetrobot, it is a
 dynamic choice that can be used to twist the robot and/or exert linear or
@@ -425,7 +428,7 @@ introduce 3 into the denominator...
   c  ( \rho_{bc} +  2 \pi) /3  \text{.}
 \end{equation}  
 
-This allows us to redefine:
+This \highlighttext{allows \cref{eq:colored} to be rewritten}:
 
 %% Actually, I am not sure if this is a clearer formulation...it might be, and need to put it in general!!!
 \begin{equation}
@@ -560,9 +563,9 @@ is the result of the \cref{sec:parameterizing}.
 \begin{proof}
 \highlighttext{  
 Suppose that all three rails do not have the same pitch.
-Let $n1$ be a node on a  shortest edge between
-two rails. Let $n2$ be a node on a different rail.
-Increasing the difference $\|n2-n1\|$, increasing edge lengths $T(n_1,n_2)$
+Let $n_1$ be a node on a  shortest edge between
+two rails. Let $n_2$ be a node on a different rail.
+Increasing the difference $\|n_2-n_1\|$ increases edge lengths $T(n_1,n_2)$
 without bound,
 which is not physically realizable.
 }
@@ -770,7 +773,7 @@ lengths $\{ RB_{+}, BY_+, RY_+ \}$ between each pair of 3 rails,
 where the two-hop length is at least the one-hop length.
 However, \highlighttext{generating} the three helices with \cref{eq:triple}
 \highlighttext{ will cause }
-many of these lengths will be the same.
+many of these lengths to be the same.
 In fact, it is possible that there
 will be only two distinct such classes, and in fact in  the purely regular BC helix there is only one length.
 
@@ -866,7 +869,7 @@ axial length, of the two-hop edge is longer than the axial one-hop length.)
     Any attempt to perturb any rail in either $z$ direction lengthens one two-hop edge to $t'$, where $t' > t$
     and shortens one one-hop edge $o' < o$. Let $B = \{o',t' \} \cup A$ be the edge lengths of such a
     perturbed tetrahelix.
-    \highlighttext{The minimax of $R(B)$ is greater than the minimax of $R(A)$} since there is a
+    \highlighttext{The minimax of $B$ is greater than the minimax of $A$: $R(B) > R(A) $} since there is a
     single rail length which cannot be both greater
     than $o'$ and $t'$ and less than $o'$ and $t'$.
     Therefore, any optimal tetrahelix has all one-hop edges between all rails equal to each other, and
@@ -965,7 +968,7 @@ tetrahelix by formulae universally quantified by $n$ and $c$:
 \begin{equation}
   \begin{split}
   1 = \text{rail} &= || \vec{H}_{general}(n,c,\rho,d_{\rho},r)  - \\
-  &  \vec{H}_{general}(n+1,c,\rho,d_{\rho}),r))  \text{ ,} \\
+  &  \vec{H}_{general}(n+1,c,\rho,d_{\rho}),r)) || \text{ ,} \\
   \end{split}
 \end{equation}
 \begin{equation}
@@ -1138,7 +1141,7 @@ construct a minimax optimal tetrahelix where $0 \leq \rho \leq \rho_{bc}$.
   \label{axialview}     
 \end{figure}
 
-Since the axes are parallel, may define the \emph{inradius}, represented by the letter $i$, of a
+Since the axes are parallel, one may define the \emph{inradius}, represented by the letter $i$, of a
 tetrahelix to be the radius of the largest
 cylinder parallel to this axis that is surrounded by each tetrahelix and penetrated by no edge.
 
