@@ -92,6 +92,8 @@ title: Untwisting the Tetrahelix
         <section id="textsection" style="{border: red;}">    
       <h1 id="message_banner">
     Untwisting the Tetrahelix </h1>
+    <h2> This is an interactive 3D simulation.  To change the view, place your mouse in the view area, and hold and "drag" the mouse to rotate the image.
+    The mouse wheel or a drag on your trackpad should zoom you in or out.</h2>
 <p>
     A mathematical investigation of the Tetrahelix and <a href="https://en.wikipedia.org/wiki/Boerdijk%E2%80%93Coxeter_helix">Boerdijk-Coxeter helix</a>, which provides a new
 formulaic way of producing a continuum of untwisted tetrahelices.
@@ -171,7 +173,13 @@ mocha
 
     </p>
 
-</section>
+    <h2> Thanks and Open-Source software used </h2>
+    
+    <p> This page is using a lot of open source software, in particular Three.js. However,
+special thanks to Ricky Reusser for a simple little
+    <a href="https://github.com/scijs/newton-raphson-method">Newton-Raphson solver</a>.
+</p>     
+
 
 <div id="table-wrapper">
   <div id="table-scroll">
@@ -1064,6 +1072,7 @@ function add_equitetrabeam_helix(am,chi,lambda,rho,radius,pvec,len) {
     load_NTetHelix(am,am.helices.slice(-1)[0],
 		   am.NUMBER_OF_TETRAHEDRA,
 		   pvec,hp);
+//    build_central();    
         return hp;
 }
 
@@ -1084,22 +1093,22 @@ function compute_helix_minimax(helix) {
 	var b = member.b.mesh.position;
 	var d = a.distanceTo(b);
 	if (i < 100) {
-	    console.log("member:",i);
-	    console.log("a:",member.a.mesh.position);
-	    console.log("b:",member.b.mesh.position);
+//	    console.log("member:",i);
+//	    console.log("a:",member.a.mesh.position);
+//	    console.log("b:",member.b.mesh.position);
 	    var q0 = 180*Math.atan2(member.a.mesh.position.x,
 	    			    member.a.mesh.position.y)/Math.PI;
 	    var q1 = 180*Math.atan2(member.b.mesh.position.x,
 	    			    member.b.mesh.position.y)/Math.PI;
 	    
-	    console.log("distance:",d,q1-q0);
+//	    console.log("distance:",d,q1-q0);
 	}
 	
 	if (min > d) min = d;
 	if (max < d) max = d;
     }
-    console.log("min, max", min, max);
-    console.log("score: ", (100*max/min -100) + "%");
+//    console.log("min, max", min, max);
+//    console.log("score: ", (100*max/min -100) + "%");
 
     return [min,max,(100*max/min -100)];
 }
@@ -1129,47 +1138,6 @@ function draw_central() {
     draw_and_register();
 }
 
-// function draw_helix(pvec,rail,hparams) {
-//     var lineGeometry = new THREE.Geometry();
-//     var path = new THREE.Group();
-
-//     var material = new THREE.MeshBasicMaterial( {color: 0x000000} );
-    
-//     am.scene.add(path);
-//     var currentPosition = new THREE.Vector3(0, 0, 0); 
-//     var lastPosition = new THREE.Vector3(0, 0, 0);
-    
-//     var tets = 20;
-
-//     var len = hparams.len;
-//     var rho = hparams.rho;
-//     var d = hparams.d;
-//     var fudge = 1.05;
-//     var radius = hparams.radius*fudge;
-//     var lambda = hparams.lambda;
-
-//     var big = tets*d;
-    
-//     var limit = 1000.0;
-//     var geometry = new THREE.Geometry();
-//     for(var i = 0; i < limit; i++) {
-// 	var chi = hparams.chirality;
-// 	// This is clearly an issue...n is not right!
-// 	var n = i * (big / limit);
-// 	console.log(n);
-// 	var q = tm.H_general(chi,n,rail,rho,d,radius);
-// 	var v = new THREE.Vector3(q[0], q[1], q[2]);
-// 	v = v.add(pvec);
-// 	currentPosition = v;
-// 	lineGeometry.vertices.push(lastPosition, currentPosition);
-// 	var line = new THREE.LineSegments(lineGeometry, material);
-// 	lastPosition = currentPosition;
-// //	path.add(line);	
-//     }
-//     var line = new MeshLine();
-//     line.setGeometry(geometry);
-//     line.setGeometry( geometry, function( p ) { return 2; } ); // makes width 2 * lineWidth
-// }
 
 function draw_and_register() {
     var pvec0 = new THREE.Vector3(0,HELIX_RADIUS*3,-3);
@@ -1201,31 +1169,25 @@ function draw_many() {
 }
 
 function build_central() {
-    var pvec0 = new THREE.Vector3(0,0,0);    
+//    var pvec0 = new THREE.Vector3(0,0,0);
+    var pvec0 = new THREE.Vector3(0,HELIX_RADIUS*3,-3);    
 
     // I can't figure out if HELIX_RADIUS is wrong, if
     // my formula is wrong, or if the CylinderGeometry is wrong....
-    // The formula checks out in the 2-D case.
-    var ir = tm.inradius_assumption1(Math.PI*RAIL_ANGLE_RHO_d/180,HELIX_RADIUS);
+    // The formula checks out in the 2-D 2case.
+    var ir1 = tm.inradius_assumption1(Math.PI*RAIL_ANGLE_RHO_d/180,HELIX_RADIUS);
+    var ir2 = tm.inradius_assumption2(Math.PI*RAIL_ANGLE_RHO_d/180,HELIX_RADIUS);    
 
-
-    // Why do I have to divide by 2?
-    console.log("inradius", ir);
+    console.log("inradius1", ir1);
+    console.log("inradius2", ir2);    
     {
-	var geometry = new THREE.CylinderGeometry( ir, ir, 3, 32 );
+	var geometry = new THREE.CylinderGeometry( ir1, ir1, 3, 32 );
 	var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
 	var cylinder = new THREE.Mesh( geometry, material );
 	cylinder.rotateX(Math.PI/2);
+	cylinder.translateZ(-HELIX_RADIUS*3);
 	am.scene.add( cylinder );
     }
-    // {
-    // var geometry = new THREE.CylinderGeometry( HELIX_RADIUS, HELIX_RADIUS, 3, 32 );
-    // var material = new THREE.MeshBasicMaterial( {color: 0xff0000} );
-    // var cylinder = new THREE.Mesh( geometry, material );
-    // cylinder.rotateX(Math.PI/2);
-    // 	am.scene.add( cylinder );
-    // }
-    
 }
 
 
@@ -1315,6 +1277,7 @@ function draw_helix(pvec,rail,hparams,factor,color,fudge,lw) {
 if (OPERATION == "normal") {
     draw_and_register();
     // draw_many();
+
 
     for(var i = 0; i < am.helices.length; i++) {
 	console.log(am.helix_params[i]);
