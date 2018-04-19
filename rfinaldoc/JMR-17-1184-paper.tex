@@ -291,13 +291,13 @@ for a counter-clockwise BC helix in a right-handed coordinate system:
    $ n h_{bc}  $
   \end{tabular}
   \right ],
-\end{equation}
-\text{where: \qquad}
+\text{ \qquad where: \qquad}
   \begin{tabular}{l}
  $ r_{bc} = \frac{3\sqrt{3}}{10} \approx 0.5196 $,\\
  $ h_{bc} = 1/\sqrt{10} \approx 0.3162 $, and \\
  $ \theta_{bc} = \arccos(-2/3) $  \text{,}\\
   \end{tabular}      
+\end{equation}
 
 and $n$ represents each integer numbered vertex in succession on the $z$-axis.
 
@@ -334,13 +334,13 @@ Such a helix can be written:
    $ 3 h_{bc} (n + c/3)  $
   \end{tabular}
   \right ],
-\end{equation}
-\text{where:  \qquad}
+\text{ \qquad where:  \qquad}
   \begin{tabular}{l}
  $ r_{bc} = \frac{3\sqrt{3}}{10} $,\\
  $ h_{bc} = 1/\sqrt{10} $, and \\
  $ \theta_{bc} = \arccos(-2/3) $ \text{.}\\
   \end{tabular}      
+\end{equation}
 
 In this formula, integer values of $n$ may be taken as a vertex number for one rail and used to compute
 its Cartesian
@@ -435,14 +435,13 @@ This allows \cref{eq:colored} to be rewritten:
    $ (n+c/3)  h_{bc} $
   \end{tabular}
   \right ],
-\end{equation}
-\text{where: \qquad}
+\text{\qquad where: \qquad}
   \begin{tabular}{l}
 %%  $\kappa = n + c/3$ \\
     $\rho_{bc} = (3 \theta_{bc} - 2 \pi)$, and \\
     $ h_{bc} = 1/\sqrt{10} $. \\    
   \end{tabular}      
-
+\end{equation}
 
 Recall that $c \in \{0,1,2\}$, but $n$ is continuous (rational or real-valued).
 It can now be asserted that in \cref{fig:helixcomparison} the black helix winds at
@@ -566,10 +565,9 @@ the optimal tetrahelix as the pitch of its three rail helices $(R,B,Y)$, even th
 three such helices of equivalent pitch.
 Since the axes of helices of any physical tetrahelix are parallel, take
 them to be parallel to the $z$ axis. Define the radius of the tetrahelix:
-\begin{multline*}
-rad(T) = \text{the radius of the smallest cylinder} \\
-\text{which contains all of nodes of the tetrahelix } T
-\end{multline*}
+\begin{align*}
+rad(T) = \text{the radius of the smallest cylinder which contains all of nodes of the tetrahelix } T
+\end{align*}
 Define a \emph{minimax edge-length optimal tetrahelix} or just an
 \emph{optimal tetrahelix} to be a tetrahelix for which there exists
 no other tetrahelix  of the same radius with lower ratio of longest edge length to
@@ -707,11 +705,11 @@ be generated with a simple equation for helices:
    $ \frac{d(n +c / 3)}{3}   $
   \end{tabular}
   \right ],
-\end{equation}
-\text{where: \qquad}
+\text{\qquad where: \qquad}
 \begin{tabular}{l}
   $c \in \{0,1,2\}$,
-  \end{tabular}      
+\end{tabular}
+\end{equation}
 which would be much more complicated if the axes where not coincident.
 Having not yet investigated in the general case the relationships beteween
 $\alpha$, $r$, $\phi$ and $d$ in \cref{eq:triple} for the three helices,
@@ -908,7 +906,7 @@ Rewriting our formulation in terms of $\rho$:
 \begin{equation}
   \begin{split}
   \label{eq:general}  
-\vec{H}_{general}(\chi,n,c,\rho,d_{\rho},r_{\rho}) = \\ 
+\vec{H}_{general}(\chi,n,c,\rho,d_{\rho},r_{\rho}) =  
  \left [
   \begin{tabular}{c}
    $ r_{\rho} \cos(\chi \cdot (n \rho + c(\rho +  2 \pi) /3)) $\\
@@ -917,13 +915,12 @@ Rewriting our formulation in terms of $\rho$:
   \end{tabular}
   \right ] \\
    \end{split}
-\end{equation}  
-\text{where: \qquad} 
+\text{\qquad where: } 
 \begin{tabular}{l}
   $   1 = d_{\rho}^2 + 4 r_{\rho}^2 (\sin{ \rho / 2})^2 $, and \\
     $\chi \in \{-1,1\}$ \text{.} \\  
 \end{tabular}
-
+\end{equation}  
 
 
 $\vec{H}_{general}$ forces the user to select three values satisfying \cref{railangle}: $\rho$, $r_{\rho}$, and $d_{\rho}$.
@@ -945,20 +942,20 @@ By \cref{thm:eventhirds}, one can compute the (at most) three edge-lengths of an
 tetrahelix by formulae universally quantified by $n$ and $c$:
 \begin{equation}
   \begin{split}
-  1 = \text{rail} &= || \vec{H}_{general}(n,c,\rho,d_{\rho},r)  - \\
-  &  \vec{H}_{general}(n+1,c,\rho,d_{\rho}),r)) || \text{ ,} \\
+  1 = \text{rail} &= || \vec{H}_{general}(n,c,\rho,d_{\rho},r)  - 
+  \vec{H}_{general}(n+1,c,\rho,d_{\rho}),r)) || \text{ ,} \\
   \end{split}
 \end{equation}
 \begin{equation}
   \begin{split}  
-  \text{one-hop} &= || \vec{H}_{general}(n,c,\rho,d_{\rho},r)  - \\
-  &  \vec{H}_{general}(n,c+1,\rho,d_{\rho},r)) || \text{ and,} \\
+  \text{one-hop} &= || \vec{H}_{general}(n,c,\rho,d_{\rho},r)  - 
+   \vec{H}_{general}(n,c+1,\rho,d_{\rho},r)) || \text{\qquad and,} \\
   \end{split}  
 \end{equation}  
   \begin{equation}
   \begin{split}    
-  \text{two-hop} &= || \vec{H}_{general}(n,c,\rho,d_{\rho},r)  - \\
-  &  \vec{H}_{general}(n,c+2,\rho,d_{\rho},r)) || \text{ .}\\
+  \text{two-hop} &= || \vec{H}_{general}(n,c,\rho,d_{\rho},r)  - 
+   \vec{H}_{general}(n,c+2,\rho,d_{\rho},r)) || \text{ .}\\
   \end{split}  
 \end{equation}  
 
@@ -972,10 +969,10 @@ This syntax just represents the Euclidean distance between vertices. Thus:
 %%  \text{one-hop}  &= \sqrt{\frac{d_{\rho}^2}{9} + r^2\sin^2(\rho/3 + \frac{2\pi}{3})  +
 %%    r^2(1 - \cos(\rho/3 + \frac{2\pi}{3}))^2} \\
   %% Formula above checks at sqrt(8/27), 1, 0, and rho_bc, h_bc, r_bc.
-  \text{one-hop}  = \sqrt{\frac{d_{\rho}^2}{9} + r^2(\sin^2(\rho/3 + \frac{2\pi}{3})  + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2)} 
+  \text{one-hop}  = \sqrt{\frac{d_{\rho}^2}{9} + r^2(\sin^2(\rho/3 + \frac{2\pi}{3})  + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2)} \text{\qquad where: \qquad}   d_{\rho}^2 = 1 - 4 r^2 (\sin( \rho / 2)^2.
 \end{equation}
 
-where: $  d_{\rho}^2 = 1 - 4 r^2 (\sin( \rho / 2)^2$.
+
 
 %% so we substitute:
 %% \begin{align*}
@@ -1073,10 +1070,7 @@ equate one-hop to $1$ to find the optimum radius:
 
 \begin{equation}
   1 =  \sqrt{
-    \begin{tabular}{ccc}
-    $  \frac{1}{9} $ & + & $ r_{opt}^2(-\frac{4 (\sin^2( \rho / 2))}{9} \; \;+ $\\
-$      \sin^2(\rho/3+ \frac{2\pi}{3}) $ & + & $ (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2) $
-    \end{tabular}
+      \frac{1}{9}   +   r_{opt}^2(-\frac{4 (\sin^2( \rho / 2))}{9} \; \;+ \sin^2(\rho/3+ \frac{2\pi}{3}) + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2) 
     }
 \end{equation}    
 from which it follows that:
