@@ -278,7 +278,6 @@ and the translation:
 \begin{equation}
 h_{bc} = 1/\sqrt{10}.
 \end{equation}
-
 Note that $\theta_{bc}$ is approximately $0.37 \cdot 2 \pi$ radians or  $131.81$ degrees.
 The angle $\theta_{bc}$ is the rotation of \emph{each} tetrahedron, not the tetrahedra along a rail.  In \cref{fig:closeup},
 each tetrahedron has either a yellow, blue, or red outer edge or rail.
@@ -307,7 +306,6 @@ for a counter-clockwise BC helix in a right-handed coordinate system:
  $ \theta_{bc} = \arccos(-2/3) $  \text{,}\\
   \end{tabular}      
 \end{equation}
-
 and $n$ represents each integer numbered vertex in succession on the $z$-axis.
 
 The apparent rotation of a vertex on an outer-edge, that is $\vec{V}(n)$ relative from $\vec{V}(n+3)$
@@ -350,7 +348,6 @@ Such a helix can be written:
  $ \theta_{bc} = \arccos(-2/3) $ \text{.}\\
   \end{tabular}      
 \end{equation}
-
 In this formula, integer values of $n$ may be taken as a vertex number for one rail and used to compute
 its Cartesian
 coordinates. Allowing $n$ to take non-integer values defines a continuous
@@ -431,9 +428,7 @@ to finally obtain:
 \begin{equation}
   c  ( \rho_{bc} +  2 \pi) /3  \text{.}
 \end{equation}  
-
 This allows \cref{eq:colored} to be rewritten:
-
 %% Actually, I am not sure if this is a clearer formulation...it might be, and need to put it in general!!!
 \begin{equation}
 \vec{H}_{BCcolored}(n,c) =
@@ -451,7 +446,6 @@ This allows \cref{eq:colored} to be rewritten:
     $ h_{bc} = 1/\sqrt{10} $. \\    
   \end{tabular}      
 \end{equation}
-
 Recall that $c \in \{0,1,2\}$, but $n$ is continuous (rational or real-valued).
 It can now be asserted that in \cref{fig:helixcomparison} the black helix winds at
 $\frac{3 \theta_{bc}}{\rho_{bc}} \approx 11.16 $ times the rate of a rail helix.
@@ -469,7 +463,6 @@ where $\rho \neq 0$ is:
   \label{pitcheqn}
 p(\rho) = \frac{2 \pi  d}{\rho} \text{.}
 \end{equation}
-
 The pitch of the Boerdijk-Coxeter helix of edge length $1$ is the length of three tetrahedra times
 $p(\rho_{bc})$:
 \begin{equation}
@@ -478,8 +471,6 @@ $p(\rho_{bc})$:
    \approx 9.64
  \text{.}
 \end{equation}
-
-
 The pitch is less than the number of tetrahedra because the tetrahedra
 edges are not parallel to the axis of the tetrahelix.  It is a famous and interesting result
 that the pitch is irrational. A BC helix never has two tetrahedra at
@@ -529,7 +520,6 @@ The ratio of the longest member in a testrahelix to the shortest is:
 R(T) = \frac{\max \{T(n_1,n_2) | n_1,n_2 \in \mathbb{Z} \}}{\min \{T(n_1,n_2) | n_1,n_2 \in \mathbb{Z} \}}
 \label{eq:optdef}
 \end{equation}
-
  The ratio of the BC helix is 1: $ R(H_{BC}) = 1$.
 
 A \emph{triple helix} is three congruent helices that share an axis. The remainder of this
@@ -585,7 +575,6 @@ shortest edge length
   OPT(T) \equiv \neg (\exists S : R(S) < R(T) \wedge rad(S) = rad(T))
   \label{eq:optdef}
 \end{equation}
-
 \begin{lemma}
   A tetrahelix where all points lie on the same line is not optimal.
     \label{lemma:notpoint}
@@ -930,8 +919,6 @@ Rewriting our formulation in terms of $\rho$:
     $\chi \in \{-1,1\}$ \text{.} \\  
 \end{tabular}
 \end{equation}  
-
-
 $\vec{H}_{general}$ forces the user to select three values satisfying \cref{railangle}: $\rho$, $r_{\rho}$, and $d_{\rho}$.
 
 Note that when $\rho = 0$ then $d_{\rho} = 1$, but $r_{\rho}$ is not determined by
@@ -980,22 +967,16 @@ This syntax just represents the Euclidean distance between vertices. Thus:
   %% Formula above checks at sqrt(8/27), 1, 0, and rho_bc, h_bc, r_bc.
   \text{one-hop}  = \sqrt{\frac{d_{\rho}^2}{9} + r^2(\sin^2(\rho/3 + \frac{2\pi}{3})  + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2)} \text{\qquad where: \qquad}   d_{\rho}^2 = 1 - 4 r^2 (\sin( \rho / 2)^2.
 \end{equation}
-
-
-
 %% so we substitute:
 %% \begin{align*}
 %%   %% Formula above checks at sqrt(8/27), 1, 0, and rho_bc, h_bc, r_bc.  
 %%   \text{one-hop}  &= \sqrt{\frac{1}{9}  + r^2(-\frac{4 (\sin^2( \rho / 2))}{9} + \sin^2(\rho/3+ \frac{2\pi}{3})  + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2)} \text{.}\\
 %%   %% Formula above checks at sqrt(8/27), 1, 0, and rho_bc, h_bc, r_bc.    
 %% \end{align*}
-
 By similar algebra and trigonometry:
 \begin{equation}
   \text{two-hop}  = \sqrt{\frac{4 d_{\rho}^2}{9} +  r^2(\sin^2(2\rho/3 + \frac{4\pi}{3})  + (1 - \cos(2\rho/3 + \frac{4\pi}{3}))^2)} \text{.}\\
 \end{equation}
-
-
 By definition of minimax edge length optimality \cref{eq:optdef}, we are trying to minimize:
 \[
 R(T(r)) = \frac{\max{\{1,\text{one-hop}(r),\text{two-hop}(r)}\}}{\min{\{1,\text{one-hop}(r),\text{two-hop}(r)}\}} \text{.}
@@ -1012,7 +993,6 @@ This quantity will be equal to one of:
 \frac{\text{two-hop}(r)}{\text{one-hop}(r)} \text{.}
 \label{eq:ratioset}
 \end{equation}
-
 We know that both one-hop($r$) and two-hop($r$) increase monotonically and continuously with increasing $r$.
 By inspection, it seems likely that we will minimize this set by equating $\text{one-hop}(r)$ or $\text{two-hop}(r)$
 to 1, but to be absolutely sure and to decide which one, we must examine the partial derivative of the ratio
@@ -1036,7 +1016,6 @@ and:
 \begin{equation}
   k_{\rho} = \sin^2(2\rho/3 + \frac{4\pi}{3})  + (1 - \cos(2\rho/3 + \frac{4\pi}{3}))^2 \text{.}
 \end{equation}
-
 Then:
 \begin{equation}
   \begin{split}
@@ -1045,9 +1024,6 @@ Then:
        {\sqrt{\frac{1}{9} +r^2(f_{\rho}+j_{\rho}) }} \text{.}
   \end{split}       
 \end{equation}
-
-
-
   By inspection of the graph of the derivative of this ratio rendered in \cref{fig:partialderivativediagram}
   observe that the partial derivative of this with respect to
 radius $r$ is always negative, for any $\rho \leq \rho_{bc}$.
@@ -1076,21 +1052,16 @@ of the whole system as the radius increases
 up to the point that the shorter, one-hop distance is equal to the rail-length, $1$.
 In order to optimize the whole system so long as $\rho \leq \rho_{bc}$,
 equate one-hop to $1$ to find the optimum radius:
-
 \begin{equation}
   1 =  \sqrt{
       \frac{1}{9}   +   r_{opt}^2(-\frac{4 (\sin^2( \rho / 2))}{9} \; \;+ \sin^2(\rho/3+ \frac{2\pi}{3}) + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2) 
     }
 \end{equation}    
 from which it follows that:
-
 \begin{equation}
   r_{opt} = \frac{2}{\sqrt{\frac{9}{2} \cdot ( \sqrt{3} sin(\rho/3) + \cos(\rho/3)) + \cos(\rho)+ 8 }} \text{ .} \numberthis  \label{eqrhoopt}
 \end{equation}
-
-
 This leads to a formula for $ d_{opt} $ computed from $\rho, r_{opt}$ via the rail angle equation \cref{railangle}:
-
 \begin{equation}
   %%  d_{opt}^2 &= 1 - 4 (\frac{2}{\sqrt{\frac{9}{2} \cdot ( \sqrt{3} \sin(\rho/3) + \cos(\rho/3)) + \cos(\rho)+ 8 }})^2 (\sin{ \rho / 2})^2   \\
   d_{opt}^2 = 1 - 4 (r_{opt})^2 (\sin{ \rho / 2})^2,
@@ -1105,9 +1076,6 @@ and then rewrite:
 %%  d_{opt}^2 &= 1 - \frac{16 \sin^2(\rho / 2) }{ \cos(\rho) + 9( \sqrt{3} \sin(\rho/3) + \cos(\rho/3)) + 8 }   \\
     d_{opt} = \sqrt{1 - \frac{16 \sin^2(\rho / 2) }{ \cos(\rho) + \frac{9}{2} ( \sqrt{3} \sin(\rho/3) + \cos(\rho/3)) + 8 }}  \text{ .}  \numberthis  \label{dopt}  \\      
 \end{equation}
-
-
-
 Thus, by computing $r_{opt}$  and $d_{opt}$ as a function of $\rho$ from this equation, one can
 construct a minimax optimal tetrahelix where $0 \leq \rho \leq \rho_{bc}$.
 %% Add here references to these equations.
@@ -1169,8 +1137,7 @@ without the split into three rails introduced by \cref{eq:colored} and completed
 
 
 \begin{corollary}
-  The equitetrabeam with minimum maximum edge ratio is produced
-  \newline by $\vec{H}_{general}$ when $ r = \sqrt{\frac{8}{27}} $ and the longest member is $\frac{2}{\sqrt{3}}$,
+  The equitetrabeam with minimum maximum edge ratio is produced by $\vec{H}_{general}$ when $ r = \sqrt{\frac{8}{27}} $ and the longest member is $\frac{2}{\sqrt{3}}$,
   which is less than $16\%$ longer
   than the shortest member.
 \end{corollary}
