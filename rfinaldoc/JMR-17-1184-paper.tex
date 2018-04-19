@@ -14,6 +14,15 @@
 \usepackage{cleveref}
 
 \usepackage{color}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\fancyhead{} % clear all header fields
+\renewcommand{\headrulewidth}{0pt} % no line in header area
+\fancyfoot{} % clear all footer fields
+\lfoot{JMR-17-1184}
+\cfoot{\thepage}           % page number in "outer" position of footer line
+\rfoot{Read}
 
 % \usepackage{float}
 
@@ -275,7 +284,7 @@ The angle $\theta_{bc}$ is the rotation of \emph{each} tetrahedron, not the tetr
 each tetrahedron has either a yellow, blue, or red outer edge or rail.
 That is, a blue-rail tetrahedron is rotated slightly more than a $1/3$ of a revolution to match the face of the yellow tetrahedron.
 
-R.W. Gray's website\cite{graytetrahelix}, repeating a formula by Coxeter\cite{coxeter1985simplicial} in a more accessible form, gives the Cartesian coordinates $\begin{bmatrix}
+R.W. Gray's website\cite{graytetrahelix}, repeating a formula by Coxeter\cite{coxeter1985simplicial} in a more accessible form, gives the Cartesian coordinates in the form: $\begin{bmatrix}
            x \\
            y \\
            z
@@ -727,7 +736,7 @@ but because of the $\phi_c$ term, they are not collinear.
 
 \begin{figure}
   \centering
-     \includegraphics[width=0.45\textwidth]{figures/edge-diagram.png}
+     \includegraphics[width=0.65\textwidth]{figures/edge-diagram.png}
      \caption{Edge Naming}
   \label{fig:naming}
 \end{figure}
@@ -809,7 +818,7 @@ In fact, the vertices must be distributed in even thirds
 
 \begin{figure}
      \centering
-     \includegraphics[width=0.45\textwidth]{figures/EquitetrabeamCloseUp.png}
+     \includegraphics[width=0.65\textwidth]{figures/EquitetrabeamCloseUp.png}
      \caption{Equitetrabeam}
   \label{fig:equitetrabeam}
 \end{figure}
@@ -1301,7 +1310,7 @@ of any pitch, including rational ones.
 
 \subsection{Contact and Getting Involved}
 
-The Tetrobot Project:\\  
+The Tetrobot Project:  
 \url{http://pubinv.github.io/tetrobot/} is part of Public Invention,
 a free-libre, open-source research, hardware, and software project that welcomes volunteers.
 To assist, contact:

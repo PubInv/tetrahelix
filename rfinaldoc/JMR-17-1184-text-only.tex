@@ -15,6 +15,14 @@
 
 \usepackage{color}
 
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\fancyhead{} % clear all header fields
+\renewcommand{\headrulewidth}{0pt} % no line in header area
+\fancyfoot{} % clear all footer fields
+\cfoot{\thepage}           % page number in "outer" position of footer line
+
 % \usepackage{float}
 
 \newtheorem{theorem}{Theorem}
@@ -27,6 +35,8 @@
 
 % \usepackage{draftwatermark}
 
+\usepackage{setspace}
+\doublespacing
 
 
 % \SetWatermarkText{DRAFT}
@@ -133,13 +143,13 @@ to any structure isomorphic to the BC helix.
 
 \begin{figure}
   \centering
-     \includegraphics[width=0.45\textwidth]{figures/BCHelixCloseUp.png}
+     %% \includegraphics[width=0.45\textwidth]{figures/BCHelixCloseUp.png}
      \caption{BC Helix Close-up (partly along axis)}
   \label{fig:closeup}     
 \end{figure}
 \begin{figure}
   \centering
-     \includegraphics[width=0.45\textwidth]{figures/VerticalCloseUp.png}
+%%     \includegraphics[width=0.45\textwidth]{figures/VerticalCloseUp.png}
      \caption{BC Helix Close-up (orthogonal)}
   \label{fig:closeuporthog}
 \end{figure}
@@ -167,7 +177,7 @@ are taken.
 
 \begin{figure}
   \centering
-     \includegraphics[width=0.45\textwidth]{figures/TetrahelixSeries2.png}
+%%     \includegraphics[width=0.45\textwidth]{figures/TetrahelixSeries2.png}
      \caption{A Continuum of Tetrahelices}
   \label{fig:series}
 \end{figure}
@@ -187,9 +197,9 @@ including deployable and moving trusses\cite{claypool2012readily,gezgin2017new}.
 
 \begin{figure}
   \centering
-     \includegraphics[width=0.5\textwidth]{figures/MedCantedCropped.png}
+%%     \includegraphics[width=0.5\textwidth]{figures/MedCantedCropped.png}
      \caption{7-Tet Tetrobot in relaxed, or BC helix configuration}
-     \includegraphics[width=0.5\textwidth]{figures/EquitetrabeamCropped.png}
+%%     \includegraphics[width=0.5\textwidth]{figures/EquitetrabeamCropped.png}
      \caption{The Equitetrabeam: Fully Untwisted 7-Tet Tetrobot in Hexapod Configuration}
      \label{fig:tetrobot}
 \end{figure}
@@ -275,7 +285,7 @@ The angle $\theta_{bc}$ is the rotation of \emph{each} tetrahedron, not the tetr
 each tetrahedron has either a yellow, blue, or red outer edge or rail.
 That is, a blue-rail tetrahedron is rotated slightly more than a $1/3$ of a revolution to match the face of the yellow tetrahedron.
 
-R.W. Gray's website\cite{graytetrahelix}, repeating a formula by Coxeter\cite{coxeter1985simplicial} in a more accessible form, gives the Cartesian coordinates $\begin{bmatrix}
+R.W. Gray's website\cite{graytetrahelix}, repeating a formula by Coxeter\cite{coxeter1985simplicial} in a more accessible form, gives the Cartesian coordinates in the form: $\begin{bmatrix}
            x \\
            y \\
            z
@@ -291,13 +301,13 @@ for a counter-clockwise BC helix in a right-handed coordinate system:
    $ n h_{bc}  $
   \end{tabular}
   \right ],
-\end{equation}
-\text{where: \qquad}
+\text{ \qquad where: \qquad}
   \begin{tabular}{l}
  $ r_{bc} = \frac{3\sqrt{3}}{10} \approx 0.5196 $,\\
  $ h_{bc} = 1/\sqrt{10} \approx 0.3162 $, and \\
  $ \theta_{bc} = \arccos(-2/3) $  \text{,}\\
   \end{tabular}      
+\end{equation}
 
 and $n$ represents each integer numbered vertex in succession on the $z$-axis.
 
@@ -334,13 +344,13 @@ Such a helix can be written:
    $ 3 h_{bc} (n + c/3)  $
   \end{tabular}
   \right ],
-\end{equation}
-\text{where:  \qquad}
+\text{ \qquad where:  \qquad}
   \begin{tabular}{l}
  $ r_{bc} = \frac{3\sqrt{3}}{10} $,\\
  $ h_{bc} = 1/\sqrt{10} $, and \\
  $ \theta_{bc} = \arccos(-2/3) $ \text{.}\\
   \end{tabular}      
+\end{equation}
 
 In this formula, integer values of $n$ may be taken as a vertex number for one rail and used to compute
 its Cartesian
@@ -351,7 +361,7 @@ values.
 
 \begin{figure}
   \centering
-     \includegraphics[width=0.45\textwidth]{figures/Unified.png}
+%%     \includegraphics[width=0.45\textwidth]{figures/Unified.png}
      \caption{Rail helices (H) vs. Coxeter/Gray helix (V) }
   \label{fig:helixcomparison}  
 \end{figure}
@@ -374,7 +384,7 @@ This quantity appears so often that we call it the ``rail angle, $\rho$''. For t
 
 \begin{figure}
      \centering
-     \includegraphics[width=0.45\textwidth]{figures/RailAngleGeometry.png}
+%%     \includegraphics[width=0.45\textwidth]{figures/RailAngleGeometry.png}
      \caption{Rail Angle Geometry}
   \label{railanglefig}
 \end{figure}
@@ -435,14 +445,13 @@ This allows \cref{eq:colored} to be rewritten:
    $ (n+c/3)  h_{bc} $
   \end{tabular}
   \right ],
-\end{equation}
-\text{where: \qquad}
+\text{\qquad where: \qquad}
   \begin{tabular}{l}
 %%  $\kappa = n + c/3$ \\
     $\rho_{bc} = (3 \theta_{bc} - 2 \pi)$, and \\
     $ h_{bc} = 1/\sqrt{10} $. \\    
   \end{tabular}      
-
+\end{equation}
 
 Recall that $c \in \{0,1,2\}$, but $n$ is continuous (rational or real-valued).
 It can now be asserted that in \cref{fig:helixcomparison} the black helix winds at
@@ -480,7 +489,7 @@ inconvenient to designers, who might prefer a rational pitch.
 The idea of developing a rational period by arranging solid tetrahedra by relaxing
 the face-to-face matching
 has been explored\cite{sadler2013periodic}. 
-The next sections develop} slightly irregular edge lengths that support, for example,
+The next sections develop slightly irregular edge lengths that support, for example,
 a pitch of precisely 12
 tetrahedra in one revolution which would allow an architect to
 design a pleasing column having the top and bottom tetrahedra in the same relationship to the
@@ -566,10 +575,9 @@ the optimal tetrahelix as the pitch of its three rail helices $(R,B,Y)$, even th
 three such helices of equivalent pitch.
 Since the axes of helices of any physical tetrahelix are parallel, take
 them to be parallel to the $z$ axis. Define the radius of the tetrahelix:
-\begin{multline*}
-rad(T) = \text{the radius of the smallest cylinder} \\
-\text{which contains all of nodes of the tetrahelix } T
-\end{multline*}
+\begin{align*}
+rad(T) = \text{the radius of the smallest cylinder which contains all of nodes of the tetrahelix } T
+\end{align*}
 Define a \emph{minimax edge-length optimal tetrahelix} or just an
 \emph{optimal tetrahelix} to be a tetrahelix for which there exists
 no other tetrahelix  of the same radius with lower ratio of longest edge length to
@@ -664,7 +672,7 @@ of such a diagram.
 
   \begin{figure}
      \centering
-     \includegraphics[width=0.45\textwidth]{figures/WobbleDiagram2.png}
+%%     \includegraphics[width=0.45\textwidth]{figures/WobbleDiagram2.png}
      \caption{Wobble Vectors from Non-Coincident Axes}
   \label{fig:wobble}
 \end{figure}
@@ -707,11 +715,11 @@ be generated with a simple equation for helices:
    $ \frac{d(n +c / 3)}{3}   $
   \end{tabular}
   \right ],
-\end{equation}
-\text{where: \qquad}
+\text{\qquad where: \qquad}
 \begin{tabular}{l}
   $c \in \{0,1,2\}$,
-  \end{tabular}      
+\end{tabular}
+\end{equation}
 which would be much more complicated if the axes where not coincident.
 Having not yet investigated in the general case the relationships beteween
 $\alpha$, $r$, $\phi$ and $d$ in \cref{eq:triple} for the three helices,
@@ -729,7 +737,7 @@ but because of the $\phi_c$ term, they are not collinear.
 
 \begin{figure}
   \centering
-     \includegraphics[width=0.45\textwidth]{figures/edge-diagram.png}
+%%     \includegraphics[width=0.45\textwidth]{figures/edge-diagram.png}
      \caption{Edge Naming}
   \label{fig:naming}
 \end{figure}
@@ -811,7 +819,7 @@ In fact, the vertices must be distributed in even thirds
 
 \begin{figure}
      \centering
-     \includegraphics[width=0.45\textwidth]{figures/EquitetrabeamCloseUp.png}
+%%     \includegraphics[width=0.45\textwidth]{figures/EquitetrabeamCloseUp.png}
      \caption{Equitetrabeam}
   \label{fig:equitetrabeam}
 \end{figure}
@@ -908,7 +916,7 @@ Rewriting our formulation in terms of $\rho$:
 \begin{equation}
   \begin{split}
   \label{eq:general}  
-\vec{H}_{general}(\chi,n,c,\rho,d_{\rho},r_{\rho}) = \\ 
+\vec{H}_{general}(\chi,n,c,\rho,d_{\rho},r_{\rho}) =  
  \left [
   \begin{tabular}{c}
    $ r_{\rho} \cos(\chi \cdot (n \rho + c(\rho +  2 \pi) /3)) $\\
@@ -917,13 +925,12 @@ Rewriting our formulation in terms of $\rho$:
   \end{tabular}
   \right ] \\
    \end{split}
-\end{equation}  
-\text{where: \qquad} 
+\text{\qquad where: } 
 \begin{tabular}{l}
   $   1 = d_{\rho}^2 + 4 r_{\rho}^2 (\sin{ \rho / 2})^2 $, and \\
     $\chi \in \{-1,1\}$ \text{.} \\  
 \end{tabular}
-
+\end{equation}  
 
 
 $\vec{H}_{general}$ forces the user to select three values satisfying \cref{railangle}: $\rho$, $r_{\rho}$, and $d_{\rho}$.
@@ -945,20 +952,20 @@ By \cref{thm:eventhirds}, one can compute the (at most) three edge-lengths of an
 tetrahelix by formulae universally quantified by $n$ and $c$:
 \begin{equation}
   \begin{split}
-  1 = \text{rail} &= || \vec{H}_{general}(n,c,\rho,d_{\rho},r)  - \\
-  &  \vec{H}_{general}(n+1,c,\rho,d_{\rho}),r)) || \text{ ,} \\
+  1 = \text{rail} &= || \vec{H}_{general}(n,c,\rho,d_{\rho},r)  - 
+  \vec{H}_{general}(n+1,c,\rho,d_{\rho}),r)) || \text{ ,} \\
   \end{split}
 \end{equation}
 \begin{equation}
   \begin{split}  
-  \text{one-hop} &= || \vec{H}_{general}(n,c,\rho,d_{\rho},r)  - \\
-  &  \vec{H}_{general}(n,c+1,\rho,d_{\rho},r)) || \text{ and,} \\
+  \text{one-hop} &= || \vec{H}_{general}(n,c,\rho,d_{\rho},r)  - 
+   \vec{H}_{general}(n,c+1,\rho,d_{\rho},r)) || \text{\qquad and,} \\
   \end{split}  
 \end{equation}  
   \begin{equation}
   \begin{split}    
-  \text{two-hop} &= || \vec{H}_{general}(n,c,\rho,d_{\rho},r)  - \\
-  &  \vec{H}_{general}(n,c+2,\rho,d_{\rho},r)) || \text{ .}\\
+  \text{two-hop} &= || \vec{H}_{general}(n,c,\rho,d_{\rho},r)  - 
+   \vec{H}_{general}(n,c+2,\rho,d_{\rho},r)) || \text{ .}\\
   \end{split}  
 \end{equation}  
 
@@ -972,10 +979,10 @@ This syntax just represents the Euclidean distance between vertices. Thus:
 %%  \text{one-hop}  &= \sqrt{\frac{d_{\rho}^2}{9} + r^2\sin^2(\rho/3 + \frac{2\pi}{3})  +
 %%    r^2(1 - \cos(\rho/3 + \frac{2\pi}{3}))^2} \\
   %% Formula above checks at sqrt(8/27), 1, 0, and rho_bc, h_bc, r_bc.
-  \text{one-hop}  = \sqrt{\frac{d_{\rho}^2}{9} + r^2(\sin^2(\rho/3 + \frac{2\pi}{3})  + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2)} 
+  \text{one-hop}  = \sqrt{\frac{d_{\rho}^2}{9} + r^2(\sin^2(\rho/3 + \frac{2\pi}{3})  + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2)} \text{\qquad where: \qquad}   d_{\rho}^2 = 1 - 4 r^2 (\sin( \rho / 2)^2.
 \end{equation}
 
-where: $  d_{\rho}^2 = 1 - 4 r^2 (\sin( \rho / 2)^2$.
+
 
 %% so we substitute:
 %% \begin{align*}
@@ -1053,14 +1060,14 @@ Since the partial derivative of  $\frac{\text{two-hop}(r)}{\text{one-hop}(r)}$ w
 radius $r$ is negative for all $\rho$ up until $\rho_{bc}$, this ratio goes down
 as the radius goes up, and 
 one minimizes the maximum edge-length ratio by choosing the largest radius
-up until one-hop $= 1$, the rail-edge length. If \highlighttext{one} attempted to further increase the radius
+up until one-hop $= 1$, the rail-edge length. If one attempted to further increase the radius
 the tetrahelix would not be optimal,
 because the ratio $\frac{\text{two-hop}(r)}{1}$ would become the
 largest ratio in our set of ratios \cref{eq:ratioset}.
 
 \begin{figure}
      \centering
-     \includegraphics[width=0.45\textwidth]{figures/PartialDerivativeDiagram.png}
+%%     \includegraphics[width=0.45\textwidth]{figures/PartialDerivativeDiagram.png}
      \caption{Partial Derivative against $\rho$ and $r$: $ \frac{\partial \frac{\text{two-hop}(r)}{ \text{one-hop}(r)}}{\partial \rho, r} $ }
   \label{fig:partialderivativediagram}
 \end{figure}
@@ -1073,10 +1080,7 @@ equate one-hop to $1$ to find the optimum radius:
 
 \begin{equation}
   1 =  \sqrt{
-    \begin{tabular}{ccc}
-    $  \frac{1}{9} $ & + & $ r_{opt}^2(-\frac{4 (\sin^2( \rho / 2))}{9} \; \;+ $\\
-$      \sin^2(\rho/3+ \frac{2\pi}{3}) $ & + & $ (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2) $
-    \end{tabular}
+      \frac{1}{9}   +   r_{opt}^2(-\frac{4 (\sin^2( \rho / 2))}{9} \; \;+ \sin^2(\rho/3+ \frac{2\pi}{3}) + (1 - \cos(\rho/3 + \frac{2\pi}{3}))^2) 
     }
 \end{equation}    
 from which it follows that:
@@ -1114,7 +1118,7 @@ construct a minimax optimal tetrahelix where $0 \leq \rho \leq \rho_{bc}$.
 
 \begin{figure}
      \centering
-     \includegraphics[width=0.45\textwidth]{figures/AxialView.png}
+%%     \includegraphics[width=0.45\textwidth]{figures/AxialView.png}
      \caption{Axial view of a BC-Helix}
   \label{axialview}     
 \end{figure}
@@ -1142,7 +1146,7 @@ connecting four sequentially numbered vertices, shown in \cref{fig:projectiondia
 
 \begin{figure}
      \centering
-     \includegraphics[width=0.45\textwidth]{figures/GeneralProjectionDiagramV2.png}
+%%     \includegraphics[width=0.45\textwidth]{figures/GeneralProjectionDiagramV2.png}
      \caption{General One-hop Projection Diagram}
   \label{fig:projectiondiagram}
 \end{figure}
@@ -1320,5 +1324,40 @@ The author thanks the reviewers for their useful suggestions.
 
 \bibliographystyle{asmems4}
 \bibliography{IEEEabrv,gluss}
+
+\section{Table Caption List}
+
+No tables are used in this paper.
+
+\section{Figure Caption List}
+
+\begin{enumerate}
+\item
+  BC Helix Close-up (partly along axis)
+\item
+  BC Helix Close-up (orthogonal)
+\item
+  A Continuum of Tetrahelices
+\item
+  7-Tet Tetrobot in relaxed, or BC helix configuration
+\item
+  The Equitetrabeam: Fully Untwisted 7-Tet Tetrobot in Hexapod Configuration
+\item
+  Rail helices (H) vs. Coxeter/Gray helix (V)
+\item
+  Rail Angle Geometry
+\item
+  Wobble Vectors from Non-Coincident Axes
+\item
+  Edge Naming
+\item
+  Equitetrabeam
+\item
+  Partial Derivative against $\rho$ and $r$: $ \frac{\partial \frac{\text{two-hop}(r)}{ \text{one-hop}(r)}}{\partial \rho, r} $
+\item
+  Axial view of a BC-Helix
+\item
+  General One-hop Projection Diagram
+\end{enumerate}
 
 \end{document}
